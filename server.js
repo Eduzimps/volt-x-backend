@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const app = express();
 
 app.use(cors());
@@ -8,10 +9,30 @@ app.use(express.static("public"));
 
 const ADMIN_PASSWORD = "Eduardo123R";
 const SCRIPT = `loadstring(game:HttpGet("https://seusite.com/script.lua"))()`;
+const MONGO_URI = process.env.MONGO_URI;
 
-// Banco de dados em memória
-const revendedores = {}; // { username: { senha, keys: [], vendas: 0, vendasSemana: 0, ultimaSemana: "" } }
-const keysAtivas = new Set(); // keys válidas para clientes
+mongoose.connect(MONGO_URI).then(() => console.log("MongoDB conectado!"));
+
+// ===== SCHEMAS =====
+
+const keySchema = new mongoose.Schema({
+  key: { type: String, unique: true },
+  usada: { type: Boolean, default: false },
+  revendedor: String
+});
+
+const revSchema = new mongoose.Schema({
+  username: { type: String, unique: true },
+  senha: String,
+  vendas: { type: Number, default: 0 },
+  vendasSemana: { type: Number, default: 0 },
+  ultimaSemana: { type: String, default: "" }
+});
+
+const Key = mongoose.model("Key", keySchema);
+const Revendedor = mongoose.model("Revendedor", revSchema);
+
+// ===== UTILS =====
 
 function gerarKey() {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -26,108 +47,107 @@ function semanaAtual() {
   return `${now.getFullYear()}-W${week}`;
 }
 
-// ==================== ADMIN ====================
+// ===== ADMIN =====
 
-// Criar revendedor
-app.post("/admin/revendedor", (req, res) => {
+app.post("/admin/revendedores", async (req, res) => {
+  const { senha } = req.body;
+  if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
+  const lista = await Revendedor.find();
+  const result = await Promise.all(lista.map(async r => {
+    const totalKeys = await Key.countDocuments({ revendedor: r.username });
+    const keysDisponiveis = await Key.countDocuments({ revendedor: r.username, usada: false });
+    return { username: r.username, totalKeys, keysDisponiveis, vendas: r.vendas, vendasSemana: r.vendasSemana };
+  }));
+  res.json({ revendedores: result });
+});
+
+app.post("/admin/revendedor", async (req, res) => {
   const { senha, username, senhaRev } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
-  if (revendedores[username]) return res.status(400).json({ error: "Revendedor já existe" });
-  revendedores[username] = { senha: senhaRev, keys: [], vendas: 0, vendasSemana: 0, ultimaSemana: semanaAtual() };
-  res.json({ ok: true });
+  try {
+    await Revendedor.create({ username, senha: senhaRev });
+    res.json({ ok: true });
+  } catch {
+    res.status(400).json({ error: "Revendedor já existe" });
+  }
 });
 
-// Remover revendedor
-app.delete("/admin/revendedor", (req, res) => {
+app.delete("/admin/revendedor", async (req, res) => {
   const { senha, username } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
-  delete revendedores[username];
+  await Revendedor.deleteOne({ username });
+  await Key.deleteMany({ revendedor: username });
   res.json({ ok: true });
 });
 
-// Adicionar keys para revendedor
-app.post("/admin/addkeys", (req, res) => {
+app.post("/admin/addkeys", async (req, res) => {
   const { senha, username, quantidade } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
-  if (!revendedores[username]) return res.status(404).json({ error: "Revendedor não encontrado" });
+  const rev = await Revendedor.findOne({ username });
+  if (!rev) return res.status(404).json({ error: "Revendedor não encontrado" });
   const novas = [];
   for (let i = 0; i < quantidade; i++) {
     const key = gerarKey();
+    await Key.create({ key, revendedor: username });
     novas.push(key);
-    revendedores[username].keys.push({ key, usada: false });
   }
   res.json({ keys: novas });
 });
 
-// Ver todos revendedores
-app.post("/admin/revendedores", (req, res) => {
-  const { senha } = req.body;
-  if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
-  const lista = Object.entries(revendedores).map(([username, data]) => ({
-    username,
-    totalKeys: data.keys.length,
-    keysDisponiveis: data.keys.filter(k => !k.usada).length,
-    vendas: data.vendas,
-    vendasSemana: data.vendasSemana
-  }));
-  res.json({ revendedores: lista });
-});
+// ===== REVENDEDOR =====
 
-// ==================== REVENDEDOR ====================
-
-// Login revendedor
-app.post("/rev/login", (req, res) => {
+app.post("/rev/login", async (req, res) => {
   const { username, senha } = req.body;
-  const rev = revendedores[username];
-  if (!rev || rev.senha !== senha) return res.status(403).json({ error: "Login inválido" });
+  const rev = await Revendedor.findOne({ username, senha });
+  if (!rev) return res.status(403).json({ error: "Login inválido" });
   res.json({ ok: true });
 });
 
-// Ver keys do revendedor
-app.post("/rev/keys", (req, res) => {
+app.post("/rev/keys", async (req, res) => {
   const { username, senha } = req.body;
-  const rev = revendedores[username];
-  if (!rev || rev.senha !== senha) return res.status(403).json({ error: "Acesso negado" });
-  res.json({ keys: rev.keys });
+  const rev = await Revendedor.findOne({ username, senha });
+  if (!rev) return res.status(403).json({ error: "Acesso negado" });
+  const keys = await Key.find({ revendedor: username });
+  res.json({ keys });
 });
 
-// Revendedor distribui key (marca como usada e ativa para cliente)
-app.post("/rev/distribuir", (req, res) => {
+app.post("/rev/distribuir", async (req, res) => {
   const { username, senha, key } = req.body;
-  const rev = revendedores[username];
-  if (!rev || rev.senha !== senha) return res.status(403).json({ error: "Acesso negado" });
-  const item = rev.keys.find(k => k.key === key && !k.usada);
+  const rev = await Revendedor.findOne({ username, senha });
+  if (!rev) return res.status(403).json({ error: "Acesso negado" });
+  const item = await Key.findOne({ key, revendedor: username, usada: false });
   if (!item) return res.status(404).json({ error: "Key não encontrada ou já usada" });
   item.usada = true;
-  keysAtivas.add(key);
+  await item.save();
 
-  // Atualiza vendas
   const semana = semanaAtual();
   if (rev.ultimaSemana !== semana) { rev.vendasSemana = 0; rev.ultimaSemana = semana; }
   rev.vendas++;
   rev.vendasSemana++;
+  await rev.save();
 
   res.json({ ok: true });
 });
 
-// ==================== RANKING ====================
+// ===== RANKING =====
 
-app.get("/ranking", (req, res) => {
+app.get("/ranking", async (req, res) => {
   const semana = semanaAtual();
-  const lista = Object.entries(revendedores).map(([username, data]) => ({
-    username,
-    vendasSemana: data.ultimaSemana === semana ? data.vendasSemana : 0,
-    vendas: data.vendas
-  }));
-  lista.sort((a, b) => b.vendasSemana - a.vendasSemana);
-  res.json({ ranking: lista.slice(0, 10) });
+  const lista = await Revendedor.find();
+  const ranking = lista.map(r => ({
+    username: r.username,
+    vendasSemana: r.ultimaSemana === semana ? r.vendasSemana : 0,
+    vendas: r.vendas
+  })).sort((a, b) => b.vendasSemana - a.vendasSemana).slice(0, 10);
+  res.json({ ranking });
 });
 
-// ==================== CLIENTE ====================
+// ===== CLIENTE =====
 
-app.post("/verify", (req, res) => {
+app.post("/verify", async (req, res) => {
   const { key } = req.body;
-  if (keysAtivas.has(key)) {
+  const item = await Key.findOne({ key, usada: true });
+  if (item) {
     res.json({ valid: true, script: SCRIPT });
   } else {
     res.json({ valid: false });
