@@ -22,6 +22,7 @@ const menus = tipo === "admin"
       { id: "gerarKey", icon: "🔑", label: "Gerar Keys" },
       { id: "adminKeys", icon: "📋", label: "Todas as Keys" },
       { id: "revendedores", icon: "👥", label: "Revendedores" },
+      { id: "clientes", icon: "👤", label: "Clientes" },
       { id: "ranking", icon: "🏆", label: "Ranking" }
     ]
   : [
@@ -51,6 +52,7 @@ function navegar(pagina, el) {
   if (pagina === "minhasKeys") renderMinhasKeys();
   if (pagina === "revendedores") renderRevendedores();
   if (pagina === "adminKeys") renderAdminKeys();
+  if (pagina === "clientes") renderClientes();
   if (pagina === "ranking") renderRanking();
 }
 
@@ -327,6 +329,48 @@ async function deletarRev(user) {
   if (!confirm(`Remover revendedor "${user}"? Todas as keys dele serão apagadas.`)) return;
   await fetch("/admin/revendedor", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senha, username: user }) });
   carregarRevs();
+}
+
+// ===== CLIENTES =====
+async function renderClientes() {
+  document.getElementById("pageClientes").innerHTML = `
+    <div class="page-title">Clientes</div>
+    <p class="page-sub">Gerencie os clientes e promova para revendedor</p>
+    <div class="card"><p style="color:var(--gray-dim)">Carregando...</p></div>
+  `;
+  const res = await fetch("/admin/clientes", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senha }) });
+  const data = await res.json();
+  const lista = data.clientes || [];
+
+  document.getElementById("pageClientes").innerHTML = `
+    <div class="page-title">Clientes</div>
+    <p class="page-sub">Gerencie os clientes e promova para revendedor</p>
+    <div class="card">
+      <div class="rev-grid">
+        ${lista.length ? lista.map(c => `
+          <div class="rev-row">
+            <span class="rev-name">👤 ${c.username}</span>
+            <span class="badge pendente">Cliente</span>
+            <button class="btn-green" onclick="promover('${c.username}')" style="padding:7px 14px;font-size:0.8rem">⬆️ Promover</button>
+            <button class="btn-red" onclick="deletarUser('${c.username}')">🗑️</button>
+          </div>
+        `).join("") : '<p style="color:var(--gray-dim)">Nenhum cliente cadastrado.</p>'}
+      </div>
+    </div>
+  `;
+}
+
+async function promover(user) {
+  if (!confirm(`Promover "${user}" para revendedor?`)) return;
+  const res = await fetch("/admin/promover", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senha, username: user }) });
+  const data = await res.json();
+  if (data.ok) renderClientes();
+}
+
+async function deletarUser(user) {
+  if (!confirm(`Remover usuário "${user}"?`)) return;
+  await fetch("/admin/revendedor", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senha, username: user }) });
+  renderClientes();
 }
 
 // ===== RANKING =====

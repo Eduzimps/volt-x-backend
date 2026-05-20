@@ -24,12 +24,85 @@
 
     <button class="btn-primary" onclick="fazerLogin()">ACESSAR</button>
     <div id="loginStatus" class="status-msg"></div>
+
+    <div style="text-align:center;margin-top:18px">
+      <span style="color:#7D7D7D;font-size:0.82rem">Não tem conta? </span>
+      <button onclick="mostrarRegistro()" style="background:none;border:none;color:#00FF62;font-size:0.82rem;cursor:pointer;font-family:Inter,sans-serif;font-weight:600">Criar conta</button>
+    </div>
+  </div>
+
+  <!-- REGISTRO -->
+  <div class="login-box" id="registroBox" style="display:none">
+    <div class="login-logo">⚡ VOLT-X</div>
+    <p class="login-sub">C H E A T S</p>
+    <h2 class="login-title">Criar Conta</h2>
+    <p class="login-desc">Crie sua conta de cliente</p>
+
+    <label class="field-label">Usuário</label>
+    <input type="text" id="regUser" class="field-input" placeholder="Escolha um usuário"/>
+
+    <label class="field-label">Senha</label>
+    <div class="password-wrap">
+      <input type="password" id="regSenha" class="field-input" placeholder="Escolha uma senha"/>
+      <button class="eye-btn" onclick="toggleSenhaReg()">👁</button>
+    </div>
+
+    <button class="btn-primary" onclick="registrar()">CRIAR CONTA</button>
+    <div id="regStatus" class="status-msg"></div>
+
+    <div style="text-align:center;margin-top:18px">
+      <span style="color:#7D7D7D;font-size:0.82rem">Já tem conta? </span>
+      <button onclick="mostrarLogin()" style="background:none;border:none;color:#00FF62;font-size:0.82rem;cursor:pointer;font-family:Inter,sans-serif;font-weight:600">Fazer login</button>
+    </div>
   </div>
 
   <script>
     function toggleSenha() {
       const input = document.getElementById("loginSenha");
       input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function toggleSenhaReg() {
+      const input = document.getElementById("regSenha");
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function mostrarRegistro() {
+      document.querySelector(".login-box").style.display = "none";
+      document.getElementById("registroBox").style.display = "block";
+    }
+
+    function mostrarLogin() {
+      document.querySelector(".login-box").style.display = "block";
+      document.getElementById("registroBox").style.display = "none";
+    }
+
+    async function registrar() {
+      const username = document.getElementById("regUser").value.trim();
+      const senha = document.getElementById("regSenha").value.trim();
+      const status = document.getElementById("regStatus");
+      status.className = "status-msg";
+
+      if (!username || !senha) { status.className = "status-msg error"; status.textContent = "❌ Preencha todos os campos."; return; }
+
+      try {
+        const res = await fetch("/registro", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, senha })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          status.className = "status-msg success";
+          status.textContent = "✅ Conta criada! Faça login para continuar.";
+          setTimeout(() => mostrarLogin(), 1500);
+        } else {
+          status.className = "status-msg error";
+          status.textContent = `❌ ${data.error}`;
+        }
+      } catch {
+        status.className = "status-msg error";
+        status.textContent = "⚠️ Erro ao conectar.";
+      }
     }
 
     async function fazerLogin() {
@@ -69,6 +142,12 @@
           sessionStorage.setItem("senha", senha);
           sessionStorage.setItem("username", username);
           sessionStorage.setItem("creditos", data.creditos);
+          if (data.role === "cliente") {
+            const status = document.getElementById("loginStatus");
+            status.className = "status-msg error";
+            status.textContent = "❌ Sua conta é de cliente. Aguarde ser promovido a revendedor pelo admin.";
+            return;
+          }
           window.location.href = "painel.html";
           return;
         }

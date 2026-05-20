@@ -14,9 +14,10 @@ mongoose.connect(MONGO_URI).then(() => console.log("MongoDB conectado!"));
 
 // ===== SCHEMAS =====
 
-const revSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   senha: String,
+  role: { type: String, default: "cliente" }, // cliente, revendedor
   creditos: { type: Number, default: 0 },
   vendas: { type: Number, default: 0 },
   vendasSemana: { type: Number, default: 0 },
@@ -36,7 +37,7 @@ const keySchema = new mongoose.Schema({
   script: { type: String, default: "" }
 });
 
-const Revendedor = mongoose.model("Revendedor", revSchema);
+const User = mongoose.model("User", userSchema);
 const Key = mongoose.model("Key", keySchema);
 
 // ===== UTILS =====
@@ -79,7 +80,7 @@ app.post("/admin/login", (req, res) => {
 app.post("/admin/revendedores", async (req, res) => {
   const { senha } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
-  const lista = await Revendedor.find();
+  const lista = await User.find({ role: "revendedor" });
   const result = await Promise.all(lista.map(async r => {
     const totalKeys = await Key.countDocuments({ revendedor: r.username });
     const keysAtivas = await Key.countDocuments({ revendedor: r.username, status: "ativa" });
@@ -88,21 +89,40 @@ app.post("/admin/revendedores", async (req, res) => {
   res.json({ revendedores: result });
 });
 
-app.post("/admin/revendedor", async (req, res) => {
-  const { senha, username, senhaRev } = req.body;
+// Lista clientes (não revendedores)
+app.post("/admin/clientes", async (req, res) => {
+  const { senha } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
-  try {
-    await Revendedor.create({ username, senha: senhaRev });
-    res.json({ ok: true });
-  } catch {
-    res.status(400).json({ error: "Revendedor já existe" });
-  }
+  const lista = await User.find({ role: "cliente" }, "username");
+  res.json({ clientes: lista });
+});
+
+// Promover cliente para revendedor
+app.post("/admin/promover", async (req, res) => {
+  const { senha, username } = req.body;
+  if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
+  const user = await User.findOne({ username });
+  if (!user) return res.status(404).json({ error: "Usuário não encontrado" });
+  user.role = "revendedor";
+  await user.save();
+  res.json({ ok: true });
+});
+
+// Rebaixar revendedor para cliente
+app.post("/admin/rebaixar", async (req, res) => {
+  const { senha, username } = req.body;
+  if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
+  const user = await User.findOne({ username });
+  if (!user) return res.status(404).json({ error: "Usuário não encontrado" });
+  user.role = "cliente";
+  await user.save();
+  res.json({ ok: true });
 });
 
 app.delete("/admin/revendedor", async (req, res) => {
   const { senha, username } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
-  await Revendedor.deleteOne({ username });
+  await User.deleteOne({ username });
   await Key.deleteMany({ revendedor: username });
   res.json({ ok: true });
 });
@@ -110,14 +130,13 @@ app.delete("/admin/revendedor", async (req, res) => {
 app.post("/admin/creditos", async (req, res) => {
   const { senha, username, quantidade } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
-  const rev = await Revendedor.findOne({ username });
-  if (!rev) return res.status(404).json({ error: "Revendedor não encontrado" });
-  rev.creditos += quantidade;
-  await rev.save();
-  res.json({ ok: true, creditos: rev.creditos });
+  const user = await User.findOne({ username, role: "revendedor" });
+  if (!user) return res.status(404).json({ error: "Revendedor não encontrado" });
+  user.creditos += quantidade;
+  await user.save();
+  res.json({ ok: true, creditos: user.creditos });
 });
 
-// Admin gera key com opção de dispositivos
 app.post("/admin/gerarkey", async (req, res) => {
   const { senha, dias, dispositivos, quantidade } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
@@ -132,23 +151,35 @@ app.post("/admin/gerarkey", async (req, res) => {
 
 // ===== REVENDEDOR =====
 
+// Registro de novo usuário (vira cliente)
+app.post("/registro", async (req, res) => {
+  const { username, senha } = req.body;
+  if (!username || !senha) return res.status(400).json({ error: "Preencha todos os campos" });
+  try {
+    await User.create({ username, senha, role: "cliente" });
+    res.json({ ok: true });
+  } catch {
+    res.status(400).json({ error: "Usuário já existe" });
+  }
+});
+
 app.post("/rev/login", async (req, res) => {
   const { username, senha } = req.body;
-  const rev = await Revendedor.findOne({ username, senha });
-  if (!rev) return res.status(403).json({ error: "Login inválido" });
-  res.json({ ok: true, creditos: rev.creditos });
+  const user = await User.findOne({ username, senha });
+  if (!user) return res.status(403).json({ error: "Login inválido" });
+  res.json({ ok: true, role: user.role, creditos: user.creditos });
 });
 
 app.post("/rev/gerar", async (req, res) => {
   const { username, senha, dias, quantidade } = req.body;
-  const rev = await Revendedor.findOne({ username, senha });
-  if (!rev) return res.status(403).json({ error: "Acesso negado" });
+  const user = await User.findOne({ username, senha, role: "revendedor" });
+  if (!user) return res.status(403).json({ error: "Acesso negado" });
 
   const custoUnitario = PLANOS[String(dias)];
   if (!custoUnitario) return res.status(400).json({ error: "Plano inválido" });
   const custoTotal = custoUnitario * quantidade;
 
-  if (rev.creditos < custoTotal) return res.status(400).json({ error: "Créditos insuficientes" });
+  if (user.creditos < custoTotal) return res.status(400).json({ error: "Créditos insuficientes" });
 
   const novas = [];
   for (let i = 0; i < quantidade; i++) {
@@ -157,30 +188,30 @@ app.post("/rev/gerar", async (req, res) => {
     novas.push(key);
   }
 
-  rev.creditos -= custoTotal;
-  rev.vendas += quantidade;
+  user.creditos -= custoTotal;
+  user.vendas += quantidade;
   const semana = semanaAtual();
-  if (rev.ultimaSemana !== semana) { rev.vendasSemana = 0; rev.ultimaSemana = semana; }
-  rev.vendasSemana += quantidade;
-  await rev.save();
+  if (user.ultimaSemana !== semana) { user.vendasSemana = 0; user.ultimaSemana = semana; }
+  user.vendasSemana += quantidade;
+  await user.save();
 
-  res.json({ keys: novas, creditosRestantes: rev.creditos });
+  res.json({ keys: novas, creditosRestantes: user.creditos });
 });
 
 app.post("/rev/keys", async (req, res) => {
   const { username, senha } = req.body;
-  const rev = await Revendedor.findOne({ username, senha });
-  if (!rev) return res.status(403).json({ error: "Acesso negado" });
+  const user = await User.findOne({ username, senha, role: "revendedor" });
+  if (!user) return res.status(403).json({ error: "Acesso negado" });
   await verificarExpiradas();
   const keys = await Key.find({ revendedor: username }).sort({ criadaEm: -1 });
-  res.json({ keys, creditos: rev.creditos });
+  res.json({ keys, creditos: user.creditos });
 });
 
 // ===== RANKING =====
 
 app.get("/ranking", async (req, res) => {
   const semana = semanaAtual();
-  const lista = await Revendedor.find();
+  const lista = await User.find({ role: "revendedor" });
   const ranking = lista.map(r => ({
     username: r.username,
     vendasSemana: r.ultimaSemana === semana ? r.vendasSemana : 0,
