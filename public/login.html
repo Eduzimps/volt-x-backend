@@ -138,16 +138,10 @@
         });
         const data = await res.json();
         if (data.ok) {
-          sessionStorage.setItem("tipo", "rev");
+          sessionStorage.setItem("tipo", data.role === "cliente" ? "cliente" : "rev");
           sessionStorage.setItem("senha", senha);
           sessionStorage.setItem("username", username);
           sessionStorage.setItem("creditos", data.creditos);
-          if (data.role === "cliente") {
-            const status = document.getElementById("loginStatus");
-            status.className = "status-msg error";
-            status.textContent = "❌ Sua conta é de cliente. Aguarde ser promovido a revendedor pelo admin.";
-            return;
-          }
           window.location.href = "painel.html";
           return;
         }

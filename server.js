@@ -42,12 +42,8 @@ const Key = mongoose.model("Key", keySchema);
 
 // ===== UTILS =====
 
-const PLANOS = {
-  "1": 1,
-  "7": 5,
-  "30": 15,
-  "0": 30 // 0 = permanente
-};
+const PLANOS_REV = { "1": 1, "7": 5, "30": 15, "0": 30 };
+const PLANOS_CLI = { "1": 3, "7": 13, "30": 38, "0": 75 };
 
 function gerarKey() {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -172,10 +168,11 @@ app.post("/rev/login", async (req, res) => {
 
 app.post("/rev/gerar", async (req, res) => {
   const { username, senha, dias, quantidade } = req.body;
-  const user = await User.findOne({ username, senha, role: "revendedor" });
-  if (!user) return res.status(403).json({ error: "Acesso negado" });
+  const user = await User.findOne({ username, senha });
+  if (!user || (user.role !== "revendedor" && user.role !== "cliente")) return res.status(403).json({ error: "Acesso negado" });
 
-  const custoUnitario = PLANOS[String(dias)];
+  const planos = user.role === "cliente" ? PLANOS_CLI : PLANOS_REV;
+  const custoUnitario = planos[String(dias)];
   if (!custoUnitario) return res.status(400).json({ error: "Plano inválido" });
   const custoTotal = custoUnitario * quantidade;
 
@@ -200,11 +197,11 @@ app.post("/rev/gerar", async (req, res) => {
 
 app.post("/rev/keys", async (req, res) => {
   const { username, senha } = req.body;
-  const user = await User.findOne({ username, senha, role: "revendedor" });
-  if (!user) return res.status(403).json({ error: "Acesso negado" });
+  const user = await User.findOne({ username, senha });
+  if (!user || (user.role !== "revendedor" && user.role !== "cliente")) return res.status(403).json({ error: "Acesso negado" });
   await verificarExpiradas();
   const keys = await Key.find({ revendedor: username }).sort({ criadaEm: -1 });
-  res.json({ keys, creditos: user.creditos });
+  res.json({ keys, creditos: user.creditos, planos: user.role === "cliente" ? PLANOS_CLI : PLANOS_REV });
 });
 
 // ===== RANKING =====

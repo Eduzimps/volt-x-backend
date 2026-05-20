@@ -4,7 +4,9 @@ const username = sessionStorage.getItem("username");
 
 if (!tipo) window.location.href = "login.html";
 
-const PLANOS = { "1": 1, "7": 5, "30": 15, "0": 30 };
+const PLANOS_REV = { "1": 1, "7": 5, "30": 15, "0": 30 };
+const PLANOS_CLI = { "1": 3, "7": 13, "30": 38, "0": 75 };
+const PLANOS = tipo === "cliente" ? PLANOS_CLI : PLANOS_REV;
 const PLANO_NOMES = { "1": "1 Dia", "7": "7 Dias", "30": "30 Dias", "0": "Permanente" };
 
 let creditos = parseInt(sessionStorage.getItem("creditos") || "0");
@@ -81,10 +83,10 @@ function renderGerarKey() {
         <div class="form-group">
           <label class="field-label">Validade *</label>
           <select class="select-input" id="gDias" onchange="calcularCusto()">
-            <option value="1">1 Dia (1 crédito)</option>
-            <option value="7">7 Dias (5 créditos)</option>
-            <option value="30">30 Dias (15 créditos)</option>
-            <option value="0">Permanente (30 créditos)</option>
+            <option value="1">1 Dia (${PLANOS["1"]} crédito${PLANOS["1"]>1?'s':''})</option>
+            <option value="7">7 Dias (${PLANOS["7"]} créditos)</option>
+            <option value="30">30 Dias (${PLANOS["30"]} créditos)</option>
+            <option value="0">Permanente (${PLANOS["0"]} créditos)</option>
           </select>
         </div>
 
