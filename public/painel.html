@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Volt-X | Painel</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="container wide" id="app">
+
+    <div class="logo">⚡ VOLT-X</div>
+    <p class="subtitle">P A I N E L</p>
+
+    <!-- LOGIN -->
+    <div class="card" id="loginBox">
+      <h2>Login</h2>
+      <p class="desc">Entre com suas credenciais</p>
+      <input type="text" id="loginUser" placeholder="Usuário" class="full-input"/>
+      <input type="password" id="loginSenha" placeholder="Senha" class="full-input"/>
+      <button class="full-btn" onclick="fazerLogin()">ENTRAR</button>
+      <div id="loginStatus" class="status hidden"></div>
+    </div>
+
+    <!-- PAINEL ADMIN -->
+    <div id="painelAdmin" class="hidden">
+      <div class="card">
+        <div class="painel-header">
+          <h2>👑 Admin</h2>
+          <button class="sair-btn" onclick="sair()">Sair</button>
+        </div>
+
+        <div class="section">
+          <h3>➕ Criar Revendedor</h3>
+          <div class="input-row">
+            <input type="text" id="novoUser" placeholder="Usuário"/>
+            <input type="password" id="novaSenha" placeholder="Senha"/>
+            <button onclick="criarRev()">Criar</button>
+          </div>
+          <div id="criarStatus" class="status hidden"></div>
+        </div>
+
+        <div class="section">
+          <h3>🔑 Adicionar Keys ao Revendedor</h3>
+          <div class="input-row">
+            <input type="text" id="revAlvo" placeholder="Usuário do revendedor"/>
+            <input type="number" id="qtdKeys" placeholder="Quantidade" min="1" value="1"/>
+            <button onclick="adicionarKeys()">Adicionar</button>
+          </div>
+          <div id="addKeyStatus" class="status hidden"></div>
+          <div id="keysGeradas" class="keys-geradas hidden"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <h3>👥 Revendedores</h3>
+            <button onclick="carregarRevs()">🔄 Atualizar</button>
+          </div>
+          <div id="revList" class="rev-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAINEL REVENDEDOR -->
+    <div id="painelRev" class="hidden">
+      <div class="card">
+        <div class="painel-header">
+          <h2>👤 <span id="nomeRev"></span></h2>
+          <button class="sair-btn" onclick="sair()">Sair</button>
+        </div>
+        <p class="desc">Suas keys</p>
+        <div class="stats-row">
+          <div class="stat"><span id="totalKeys">0</span><small>Total</small></div>
+          <div class="stat"><span id="dispKeys">0</span><small>Disponíveis</small></div>
+          <div class="stat"><span id="usadasKeys">0</span><small>Usadas</small></div>
+        </div>
+        <div id="keysList" class="keys-list"></div>
+      </div>
+    </div>
+
+    <div class="links">
+      <a href="index.html">🏠 Site</a>
+      <a href="https://discord.gg/xuqVucvgmW" target="_blank">📢 Discord</a>
+    </div>
+  </div>
+
+  <script src="painel.js"></script>
+</body>
+</html>
