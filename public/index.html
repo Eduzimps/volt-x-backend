@@ -6,38 +6,96 @@
   <title>Volt-X Cheats</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
-  <div class="particles" id="particles"></div>
-  <div class="container">
-    <div class="logo">⚡ VOLT-X</div>
-    <p class="subtitle">C H E A T S</p>
+<body class="login-page" style="background:#000;flex-direction:column;gap:20px">
 
-    <div class="card">
-      <h2>Key System</h2>
-      <p class="desc">Insira sua key para acessar o script</p>
-      <div class="input-group">
-        <input type="text" id="keyInput" placeholder="Digite sua key aqui..."/>
-        <button onclick="checkKey()">VERIFICAR</button>
-      </div>
-      <div id="status" class="status hidden"></div>
-      <div id="scriptBox" class="script-box hidden">
-        <p>Copie e execute no seu executor:</p>
-        <code id="scriptCode"></code>
-        <button class="copy-btn" onclick="copyScript()">📋 Copiar Script</button>
-      </div>
-    </div>
+  <div style="text-align:center">
+    <div style="font-size:3rem;font-weight:800;color:#00FF62;letter-spacing:4px">⚡ VOLT-X</div>
+    <p style="color:#7D7D7D;letter-spacing:8px;font-size:0.75rem;margin-top:4px">C H E A T S</p>
+  </div>
 
-    <div class="card ranking-card">
-      <h2>🏆 Ranking da Semana</h2>
-      <p class="desc">Top revendedores</p>
-      <div id="rankingList"><p class="desc">Carregando...</p></div>
-    </div>
+  <div class="login-box" style="max-width:480px">
+    <h2 class="login-title">Key System</h2>
+    <p class="login-desc">Insira sua key para acessar o script</p>
 
-    <div class="links">
-      <a href="https://discord.gg/xuqVucvgmW" target="_blank">📢 Discord</a>
-      <a href="revendedor.html">🔑 Área do Revendedor</a>
+    <label class="field-label">Sua Key</label>
+    <input type="text" id="keyInput" class="field-input" placeholder="VOLT-X-XXXX-XXXX-XXXX"/>
+
+    <button class="btn-primary" onclick="checkKey()">VERIFICAR KEY</button>
+    <div id="keyStatus" class="status-msg"></div>
+
+    <div id="scriptBox" class="hidden" style="margin-top:16px;background:#0d0d0d;border:1px solid #1f1f1f;border-radius:12px;padding:16px">
+      <p style="color:#7D7D7D;font-size:0.78rem;margin-bottom:8px">Execute no seu executor:</p>
+      <code id="scriptCode" style="display:block;color:#00FF62;font-family:monospace;font-size:0.82rem;word-break:break-all;background:#000;padding:10px;border-radius:8px;margin-bottom:10px"></code>
+      <button onclick="copiarScript()" style="background:transparent;border:1px solid #00FF62;color:#00FF62;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:0.78rem;font-family:Inter,sans-serif">📋 Copiar Script</button>
     </div>
   </div>
-  <script src="script.js"></script>
+
+  <!-- RANKING -->
+  <div style="width:100%;max-width:480px;background:#0d0d0d;border:1px solid #1f1f1f;border-radius:12px;padding:24px">
+    <div style="font-size:1rem;font-weight:700;margin-bottom:4px">🏆 Ranking da Semana</div>
+    <p style="color:#7D7D7D;font-size:0.82rem;margin-bottom:16px">Top revendedores</p>
+    <div id="rankingList"><p style="color:#7D7D7D;font-size:0.85rem">Carregando...</p></div>
+  </div>
+
+  <div style="display:flex;gap:20px">
+    <a href="https://discord.gg/xuqVucvgmW" target="_blank" style="color:#7D7D7D;text-decoration:none;font-size:0.85rem">📢 Discord</a>
+    <a href="login.html" style="color:#7D7D7D;text-decoration:none;font-size:0.85rem">🔑 Área do Revendedor</a>
+  </div>
+
+  <script>
+    async function checkKey() {
+      const key = document.getElementById("keyInput").value.trim();
+      const status = document.getElementById("keyStatus");
+      const box = document.getElementById("scriptBox");
+      status.className = "status-msg";
+      status.textContent = "⏳ Verificando...";
+      status.style.display = "block";
+      box.classList.add("hidden");
+
+      try {
+        const res = await fetch("/verify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ key }) });
+        const data = await res.json();
+        if (data.valid) {
+          status.className = "status-msg success";
+          status.textContent = "✅ Key válida! Acesso liberado.";
+          document.getElementById("scriptCode").textContent = `loadstring(game:HttpGet("https://seusite.com/script.lua"))()`;
+          box.classList.remove("hidden");
+        } else {
+          status.className = "status-msg error";
+          status.textContent = `❌ ${data.motivo || "Key inválida ou expirada."}`;
+        }
+      } catch {
+        status.className = "status-msg error";
+        status.textContent = "⚠️ Erro ao conectar.";
+      }
+    }
+
+    function copiarScript() {
+      navigator.clipboard.writeText(document.getElementById("scriptCode").textContent).then(() => {
+        const btn = event.target;
+        btn.textContent = "✅ Copiado!";
+        setTimeout(() => btn.textContent = "📋 Copiar Script", 2000);
+      });
+    }
+
+    async function carregarRanking() {
+      const res = await fetch("/ranking");
+      const data = await res.json();
+      const lista = data.ranking || [];
+      const medalhas = ["🥇","🥈","🥉"];
+      const el = document.getElementById("rankingList");
+      if (!lista.length) { el.innerHTML = '<p style="color:#7D7D7D;font-size:0.85rem">Nenhuma venda ainda.</p>'; return; }
+      el.innerHTML = lista.map((r, i) => `
+        <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:#111;border-radius:10px;margin-bottom:8px;border:1px solid ${i===0?'#f5c400':i===1?'#aaa':i===2?'#cd7f32':'#1f1f1f'}">
+          <span style="font-size:1.1rem;width:24px;text-align:center">${medalhas[i]||'#'+(i+1)}</span>
+          <span style="flex:1;font-weight:600;font-size:0.88rem">${r.username}</span>
+          <span style="color:#00FF62;font-weight:700;font-size:0.88rem">${r.vendasSemana} vendas</span>
+        </div>
+      `).join("");
+    }
+
+    document.getElementById("keyInput").addEventListener("keydown", e => { if (e.key === "Enter") checkKey(); });
+    carregarRanking();
+  </script>
 </body>
 </html>

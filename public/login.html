@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Volt-X | Login</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="login-page" style="background:#000">
+  <div class="login-box">
+    <div class="login-logo">⚡ VOLT-X</div>
+    <p class="login-sub">C H E A T S</p>
+    <h2 class="login-title">Bem-vindo de volta</h2>
+    <p class="login-desc">Entre na sua conta para continuar</p>
+
+    <label class="field-label">Usuário</label>
+    <input type="text" id="loginUser" class="field-input" placeholder="Seu usuário"/>
+
+    <label class="field-label">Senha</label>
+    <div class="password-wrap">
+      <input type="password" id="loginSenha" class="field-input" placeholder="Sua senha"/>
+      <button class="eye-btn" onclick="toggleSenha()">👁</button>
+    </div>
+
+    <button class="btn-primary" onclick="fazerLogin()">ACESSAR</button>
+    <div id="loginStatus" class="status-msg"></div>
+  </div>
+
+  <script>
+    function toggleSenha() {
+      const input = document.getElementById("loginSenha");
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    async function fazerLogin() {
+      const username = document.getElementById("loginUser").value.trim();
+      const senha = document.getElementById("loginSenha").value.trim();
+      const status = document.getElementById("loginStatus");
+      status.className = "status-msg";
+      status.textContent = "";
+
+      if (!senha) { status.className = "status-msg error"; status.textContent = "❌ Preencha todos os campos."; return; }
+
+      // Tenta admin
+      try {
+        const res = await fetch("/admin/login", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ senha })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          sessionStorage.setItem("tipo", "admin");
+          sessionStorage.setItem("senha", senha);
+          sessionStorage.setItem("username", "Admin");
+          window.location.href = "painel.html";
+          return;
+        }
+      } catch {}
+
+      // Tenta revendedor
+      try {
+        const res = await fetch("/rev/login", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, senha })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          sessionStorage.setItem("tipo", "rev");
+          sessionStorage.setItem("senha", senha);
+          sessionStorage.setItem("username", username);
+          sessionStorage.setItem("creditos", data.creditos);
+          window.location.href = "painel.html";
+          return;
+        }
+      } catch {}
+
+      status.className = "status-msg error";
+      status.textContent = "❌ Usuário ou senha incorretos.";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("loginSenha").addEventListener("keydown", e => { if (e.key === "Enter") fazerLogin(); });
+    });
+  </script>
+</body>
+</html>
