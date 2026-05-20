@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Volt-X Cheats | Key System</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Volt-X Cheats</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div class="particles" id="particles"></div>
@@ -15,14 +15,11 @@
     <div class="card">
       <h2>Key System</h2>
       <p class="desc">Insira sua key para acessar o script</p>
-
       <div class="input-group">
-        <input type="text" id="keyInput" placeholder="Digite sua key aqui..." />
+        <input type="text" id="keyInput" placeholder="Digite sua key aqui..."/>
         <button onclick="checkKey()">VERIFICAR</button>
       </div>
-
       <div id="status" class="status hidden"></div>
-
       <div id="scriptBox" class="script-box hidden">
         <p>Copie e execute no seu executor:</p>
         <code id="scriptCode"></code>
@@ -30,12 +27,17 @@
       </div>
     </div>
 
+    <div class="card ranking-card">
+      <h2>🏆 Ranking da Semana</h2>
+      <p class="desc">Top revendedores</p>
+      <div id="rankingList"><p class="desc">Carregando...</p></div>
+    </div>
+
     <div class="links">
       <a href="https://discord.gg/xuqVucvgmW" target="_blank">📢 Discord</a>
-      <a href="#" target="_blank">🔑 Pegar Key</a>
+      <a href="revendedor.html">🔑 Área do Revendedor</a>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

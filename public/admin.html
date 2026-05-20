@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Volt-X | Admin</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="container wide">
+    <div class="logo">⚡ VOLT-X</div>
+    <p class="subtitle">P A I N E L &nbsp; A D M I N</p>
+
+    <div class="card" id="loginBox">
+      <h2>Login Admin</h2>
+      <input type="password" id="adminSenha" placeholder="Senha admin" class="full-input"/>
+      <button class="full-btn" onclick="loginAdmin()">ENTRAR</button>
+      <div id="loginStatus" class="status hidden"></div>
+    </div>
+
+    <div id="painelAdmin" class="hidden">
+      <div class="card">
+        <div class="painel-header">
+          <h2>Painel Admin</h2>
+          <button class="sair-btn" onclick="sair()">Sair</button>
+        </div>
+
+        <!-- Criar revendedor -->
+        <div class="section">
+          <h3>➕ Criar Revendedor</h3>
+          <div class="input-row">
+            <input type="text" id="novoUser" placeholder="Usuário"/>
+            <input type="password" id="novaSenha" placeholder="Senha"/>
+            <button onclick="criarRev()">Criar</button>
+          </div>
+          <div id="criarStatus" class="status hidden"></div>
+        </div>
+
+        <!-- Adicionar keys -->
+        <div class="section">
+          <h3>🔑 Adicionar Keys</h3>
+          <div class="input-row">
+            <input type="text" id="revAlvo" placeholder="Usuário do revendedor"/>
+            <input type="number" id="qtdKeys" placeholder="Quantidade" min="1" value="1"/>
+            <button onclick="adicionarKeys()">Adicionar</button>
+          </div>
+          <div id="addKeyStatus" class="status hidden"></div>
+          <div id="keysGeradas" class="keys-geradas hidden"></div>
+        </div>
+
+        <!-- Lista de revendedores -->
+        <div class="section">
+          <div class="section-header">
+            <h3>👥 Revendedores</h3>
+            <button onclick="carregarRevs()">🔄 Atualizar</button>
+          </div>
+          <div id="revList" class="rev-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="admin.js"></script>
+</body>
+</html>

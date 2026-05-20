@@ -15,9 +15,7 @@ async function checkKey() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ key: input })
     });
-
     const data = await res.json();
-
     if (data.valid) {
       status.textContent = "✅ Key válida! Acesso liberado.";
       status.classList.add("success");
@@ -34,18 +32,36 @@ async function checkKey() {
 }
 
 function copyScript() {
-  const code = document.getElementById("scriptCode").textContent;
-  navigator.clipboard.writeText(code).then(() => {
+  navigator.clipboard.writeText(document.getElementById("scriptCode").textContent).then(() => {
     const btn = document.querySelector(".copy-btn");
     btn.textContent = "✅ Copiado!";
     setTimeout(() => btn.textContent = "📋 Copiar Script", 2000);
   });
 }
 
+async function carregarRanking() {
+  const list = document.getElementById("rankingList");
+  try {
+    const res = await fetch("/ranking");
+    const data = await res.json();
+    if (!data.ranking.length) { list.innerHTML = '<p class="desc">Nenhuma venda ainda esta semana.</p>'; return; }
+    const medalhas = ["🥇", "🥈", "🥉"];
+    const classes = ["top1", "top2", "top3"];
+    list.innerHTML = data.ranking.map((r, i) => `
+      <div class="rank-item ${classes[i] || ''}">
+        <span class="rank-pos">${medalhas[i] || `#${i+1}`}</span>
+        <span class="rank-name">${r.username}</span>
+        <span class="rank-vendas">${r.vendasSemana} vendas</span>
+      </div>
+    `).join("");
+  } catch {
+    list.innerHTML = '<p class="desc">Erro ao carregar ranking.</p>';
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("keyInput").addEventListener("keydown", e => {
-    if (e.key === "Enter") checkKey();
-  });
+  document.getElementById("keyInput").addEventListener("keydown", e => { if (e.key === "Enter") checkKey(); });
+  carregarRanking();
 
   const container = document.getElementById("particles");
   for (let i = 0; i < 40; i++) {

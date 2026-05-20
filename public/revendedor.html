@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Volt-X | Revendedor</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <div class="logo">⚡ VOLT-X</div>
+    <p class="subtitle">Á R E A &nbsp; D O &nbsp; R E V E N D E D O R</p>
+
+    <div class="card" id="loginBox">
+      <h2>Login</h2>
+      <p class="desc">Entre com suas credenciais</p>
+      <input type="text" id="revUser" placeholder="Usuário" class="full-input"/>
+      <input type="password" id="revSenha" placeholder="Senha" class="full-input"/>
+      <button class="full-btn" onclick="loginRev()">ENTRAR</button>
+      <div id="loginStatus" class="status hidden"></div>
+    </div>
+
+    <div id="painelRev" class="hidden">
+      <div class="card">
+        <div class="painel-header">
+          <h2>Bem-vindo, <span id="nomeRev"></span></h2>
+          <button class="sair-btn" onclick="sair()">Sair</button>
+        </div>
+        <p class="desc">Suas keys disponíveis</p>
+
+        <div class="stats-row">
+          <div class="stat"><span id="totalKeys">0</span><small>Total</small></div>
+          <div class="stat"><span id="dispKeys">0</span><small>Disponíveis</small></div>
+          <div class="stat"><span id="usadasKeys">0</span><small>Usadas</small></div>
+        </div>
+
+        <div id="keysList" class="keys-list"></div>
+      </div>
+    </div>
+
+    <div class="links">
+      <a href="index.html">🏠 Início</a>
+      <a href="https://discord.gg/xuqVucvgmW" target="_blank">📢 Discord</a>
+    </div>
+  </div>
+  <script src="rev.js"></script>
+</body>
+</html>
