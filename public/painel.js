@@ -25,11 +25,13 @@ const menus = tipo === "admin"
       { id: "adminKeys", icon: "📋", label: "Todas as Keys" },
       { id: "revendedores", icon: "👥", label: "Revendedores" },
       { id: "clientes", icon: "👤", label: "Clientes" },
+      { id: "tickets", icon: "🎫", label: "Tickets" },
       { id: "ranking", icon: "🏆", label: "Ranking" }
     ]
   : [
       { id: "gerarKey", icon: "🔑", label: "Gerar Keys" },
       { id: "minhasKeys", icon: "📋", label: "Minhas Keys" },
+      { id: "tickets", icon: "🎫", label: "Suporte" },
       { id: "ranking", icon: "🏆", label: "Ranking" }
     ];
 
@@ -55,6 +57,7 @@ function navegar(pagina, el) {
   if (pagina === "revendedores") renderRevendedores();
   if (pagina === "adminKeys") renderAdminKeys();
   if (pagina === "clientes") renderClientes();
+  if (pagina === "tickets") renderTickets();
   if (pagina === "ranking") renderRanking();
 }
 
@@ -331,6 +334,160 @@ async function deletarRev(user) {
   if (!confirm(`Remover revendedor "${user}"? Todas as keys dele serão apagadas.`)) return;
   await fetch("/admin/revendedor", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ senha, username: user }) });
   carregarRevs();
+}
+
+// ===== TICKETS =====
+
+const CATEGORIAS = ["Erro na Key", "Pagamento", "Login", "Bug", "Outros"];
+const STATUS_CORES = { aberto: "#00FF62", aguardando: "#ffcc00", resolvido: "#888" };
+
+async function renderTickets() {
+  const el = document.getElementById("pageTickets");
+  const isAdmin = tipo === "admin";
+
+  el.innerHTML = `
+    <div class="page-title">${isAdmin ? "🎫 Tickets de Suporte" : "🎫 Suporte"}</div>
+    <p class="page-sub">${isAdmin ? "Gerencie todos os tickets" : "Abra um ticket para receber ajuda"}</p>
+
+    ${!isAdmin ? `
+    <div class="card" style="margin-bottom:16px">
+      <div class="section-header"><span class="section-title">➕ Abrir Ticket</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <select class="select-input" id="tkCategoria">
+          ${CATEGORIAS.map(c => `<option>${c}</option>`).join("")}
+        </select>
+        <input type="text" class="input-inline" id="tkTitulo" placeholder="Título do problema"/>
+        <textarea class="input-inline" id="tkMensagem" placeholder="Descreva seu problema..." rows="3" style="resize:vertical"></textarea>
+        <button class="btn-green" onclick="abrirTicket()" style="padding:11px 20px;align-self:flex-start">📨 Enviar Ticket</button>
+      </div>
+      <div id="tkStatus" class="status-msg" style="margin-top:10px"></div>
+    </div>` : ""}
+
+    <div class="card">
+      <div class="section-header">
+        <span class="section-title">${isAdmin ? "Todos os Tickets" : "Meus Tickets"}</span>
+        <button class="btn-outline" onclick="renderTickets()">🔄 Atualizar</button>
+      </div>
+      <div id="tkLista"><p style="color:var(--gray-dim)">Carregando...</p></div>
+    </div>
+
+    <!-- MODAL TICKET -->
+    <div id="tkModal" class="hidden" style="position:fixed;inset:0;background:#000000cc;display:flex;align-items:center;justify-content:center;z-index:999">
+      <div style="background:#0d0d0d;border:1px solid #1f1f1f;border-radius:16px;padding:28px;width:100%;max-width:520px;max-height:80vh;overflow-y:auto">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h3 id="tkModalTitulo" style="font-size:1rem;font-weight:700"></h3>
+          <button onclick="fecharModal()" style="background:none;border:none;color:#888;font-size:1.2rem;cursor:pointer">✕</button>
+        </div>
+        <div id="tkMensagens" style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px"></div>
+        <textarea class="input-inline" id="tkResposta" placeholder="Digite sua resposta..." rows="3" style="resize:vertical;margin-bottom:10px"></textarea>
+        <div style="display:flex;gap:10px">
+          <button class="btn-green" onclick="responderTicket()" style="padding:10px 20px">Responder</button>
+          ${isAdmin ? `
+            <button class="btn-outline" onclick="mudarStatus('resolvido')" style="color:#00FF62;border-color:#00FF62">✅ Resolver</button>
+            <button class="btn-outline" onclick="mudarStatus('aberto')" style="color:#ffcc00;border-color:#ffcc00">🔄 Reabrir</button>
+          ` : ""}
+        </div>
+      </div>
+    </div>
+  `;
+
+  carregarTickets();
+}
+
+let ticketAtual = null;
+
+async function carregarTickets() {
+  const isAdmin = tipo === "admin";
+  const url = isAdmin ? "/admin/tickets" : "/ticket/meus";
+  const body = isAdmin ? { senha } : { username, senha };
+  const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const data = await res.json();
+  const lista = data.tickets || [];
+  const el = document.getElementById("tkLista");
+  if (!lista.length) { el.innerHTML = '<p style="color:var(--gray-dim)">Nenhum ticket encontrado.</p>'; return; }
+
+  el.innerHTML = lista.map(t => `
+    <div style="display:flex;align-items:center;gap:12px;background:#111;border:1px solid #1f1f1f;border-radius:10px;padding:12px 16px;margin-bottom:8px;cursor:pointer" onclick="abrirModal('${t.id}')">
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:0.88rem">${t.titulo}</div>
+        <div style="color:#7D7D7D;font-size:0.75rem">${t.categoria} • ${isAdmin ? t.username + " • " : ""}${t.mensagens.length} mensagem(s)</div>
+      </div>
+      <span style="padding:3px 10px;border-radius:999px;font-size:0.72rem;font-weight:600;border:1px solid ${STATUS_CORES[t.status]};color:${STATUS_CORES[t.status]}">${t.status}</span>
+    </div>
+  `).join("");
+
+  // Guarda tickets para o modal
+  window._tickets = lista;
+}
+
+async function abrirTicket() {
+  const categoria = document.getElementById("tkCategoria").value;
+  const titulo = document.getElementById("tkTitulo").value.trim();
+  const mensagem = document.getElementById("tkMensagem").value.trim();
+  const status = document.getElementById("tkStatus");
+  status.className = "status-msg";
+  if (!titulo || !mensagem) { status.className = "status-msg error"; status.textContent = "❌ Preencha todos os campos."; return; }
+  const res = await fetch("/ticket/abrir", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username, senha, categoria, titulo, mensagem }) });
+  const data = await res.json();
+  if (data.ok) {
+    status.className = "status-msg success";
+    status.textContent = "✅ Ticket aberto com sucesso!";
+    document.getElementById("tkTitulo").value = "";
+    document.getElementById("tkMensagem").value = "";
+    carregarTickets();
+  } else {
+    status.className = "status-msg error";
+    status.textContent = `❌ ${data.error}`;
+  }
+}
+
+function abrirModal(id) {
+  ticketAtual = (window._tickets || []).find(t => t.id === id);
+  if (!ticketAtual) return;
+  document.getElementById("tkModalTitulo").textContent = `${ticketAtual.id} — ${ticketAtual.titulo}`;
+  renderMensagens();
+  document.getElementById("tkModal").classList.remove("hidden");
+  document.getElementById("tkModal").style.display = "flex";
+}
+
+function renderMensagens() {
+  const el = document.getElementById("tkMensagens");
+  el.innerHTML = ticketAtual.mensagens.map(m => `
+    <div style="background:${m.autor === "Admin" ? "#001a0d" : "#111"};border:1px solid ${m.autor === "Admin" ? "#00FF6233" : "#1f1f1f"};border-radius:10px;padding:12px 14px">
+      <div style="font-size:0.75rem;color:#7D7D7D;margin-bottom:4px">${m.autor} • ${new Date(m.data).toLocaleString("pt-BR")}</div>
+      <div style="font-size:0.88rem">${m.texto}</div>
+    </div>
+  `).join("");
+}
+
+function fecharModal() {
+  document.getElementById("tkModal").classList.add("hidden");
+  document.getElementById("tkModal").style.display = "none";
+  ticketAtual = null;
+}
+
+async function responderTicket() {
+  const texto = document.getElementById("tkResposta").value.trim();
+  if (!texto) return;
+  const isAdmin = tipo === "admin";
+  await fetch("/ticket/responder", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username: isAdmin ? "Admin" : username, senha: isAdmin ? senha : senha, ticketId: ticketAtual.id, mensagem: texto })
+  });
+  document.getElementById("tkResposta").value = "";
+  // Atualiza mensagens localmente
+  ticketAtual.mensagens.push({ autor: isAdmin ? "Admin" : username, texto, data: new Date() });
+  renderMensagens();
+  carregarTickets();
+}
+
+async function mudarStatus(status) {
+  await fetch("/admin/ticket/status", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ senha, ticketId: ticketAtual.id, status })
+  });
+  ticketAtual.status = status;
+  carregarTickets();
 }
 
 // ===== CLIENTES =====

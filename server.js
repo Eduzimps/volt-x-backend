@@ -37,7 +37,21 @@ const keySchema = new mongoose.Schema({
   script: { type: String, default: "" }
 });
 
-const User = mongoose.model("User", userSchema);
+const ticketSchema = new mongoose.Schema({
+  id: { type: String, unique: true },
+  username: String,
+  categoria: String,
+  titulo: String,
+  status: { type: String, default: "aberto" }, // aberto, aguardando, resolvido
+  mensagens: [{
+    autor: String,
+    texto: String,
+    data: { type: Date, default: Date.now }
+  }],
+  criadoEm: { type: Date, default: Date.now }
+});
+
+const Ticket = mongoose.model("Ticket", ticketSchema);
 const Key = mongoose.model("Key", keySchema);
 
 // ===== UTILS =====
@@ -202,6 +216,68 @@ app.post("/rev/keys", async (req, res) => {
   await verificarExpiradas();
   const keys = await Key.find({ revendedor: username }).sort({ criadaEm: -1 });
   res.json({ keys, creditos: user.creditos, planos: user.role === "cliente" ? PLANOS_CLI : PLANOS_REV });
+});
+
+// ===== TICKETS =====
+
+function gerarIdTicket() {
+  return "TKT-" + Date.now().toString(36).toUpperCase();
+}
+
+// Abrir ticket
+app.post("/ticket/abrir", async (req, res) => {
+  const { username, senha, categoria, titulo, mensagem } = req.body;
+  const user = await User.findOne({ username, senha });
+  if (!user) return res.status(403).json({ error: "Acesso negado" });
+  const ticket = await Ticket.create({
+    id: gerarIdTicket(),
+    username,
+    categoria,
+    titulo,
+    mensagens: [{ autor: username, texto: mensagem }]
+  });
+  res.json({ ok: true, ticket });
+});
+
+// Ver tickets do usuário
+app.post("/ticket/meus", async (req, res) => {
+  const { username, senha } = req.body;
+  const user = await User.findOne({ username, senha });
+  if (!user) return res.status(403).json({ error: "Acesso negado" });
+  const tickets = await Ticket.find({ username }).sort({ criadoEm: -1 });
+  res.json({ tickets });
+});
+
+// Responder ticket (usuário ou admin)
+app.post("/ticket/responder", async (req, res) => {
+  const { username, senha, ticketId, mensagem } = req.body;
+  const isAdmin = senha === ADMIN_PASSWORD;
+  if (!isAdmin) {
+    const user = await User.findOne({ username, senha });
+    if (!user) return res.status(403).json({ error: "Acesso negado" });
+  }
+  const ticket = await Ticket.findOne({ id: ticketId });
+  if (!ticket) return res.status(404).json({ error: "Ticket não encontrado" });
+  ticket.mensagens.push({ autor: isAdmin ? "Admin" : username, texto: mensagem });
+  ticket.status = isAdmin ? "aguardando" : "aberto";
+  await ticket.save();
+  res.json({ ok: true });
+});
+
+// Admin: ver todos os tickets
+app.post("/admin/tickets", async (req, res) => {
+  const { senha } = req.body;
+  if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
+  const tickets = await Ticket.find().sort({ criadoEm: -1 });
+  res.json({ tickets });
+});
+
+// Admin: mudar status do ticket
+app.post("/admin/ticket/status", async (req, res) => {
+  const { senha, ticketId, status } = req.body;
+  if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
+  await Ticket.updateOne({ id: ticketId }, { status });
+  res.json({ ok: true });
 });
 
 // ===== RANKING =====
