@@ -51,8 +51,9 @@ const ticketSchema = new mongoose.Schema({
   criadoEm: { type: Date, default: Date.now }
 });
 
-const Ticket = mongoose.model("Ticket", ticketSchema);
+const User = mongoose.model("User", userSchema);
 const Key = mongoose.model("Key", keySchema);
+const Ticket = mongoose.model("Ticket", ticketSchema);
 
 // ===== UTILS =====
 
