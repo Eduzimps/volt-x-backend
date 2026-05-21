@@ -218,6 +218,15 @@ app.post("/rev/keys", async (req, res) => {
   res.json({ keys, creditos: user.creditos, planos: user.role === "cliente" ? PLANOS_CLI : PLANOS_REV });
 });
 
+// Limpar todos usuários exceto admin (não tem usuário admin no banco)
+app.post("/admin/limpar-usuarios", async (req, res) => {
+  const { senha } = req.body;
+  if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
+  await User.deleteMany({});
+  await Key.deleteMany({});
+  res.json({ ok: true });
+});
+
 // ===== TICKETS =====
 
 function gerarIdTicket() {
