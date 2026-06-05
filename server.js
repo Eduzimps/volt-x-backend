@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 app.use(express.static("public"));
 
 const ADMIN_PASSWORD = "Eduardo123R";
@@ -17,7 +17,7 @@ mongoose.connect(MONGO_URI).then(() => console.log("MongoDB conectado!"));
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   senha: String,
-  role: { type: String, default: "cliente" }, // cliente, revendedor
+  role: { type: String, default: "cliente" },
   creditos: { type: Number, default: 0 },
   vendas: { type: Number, default: 0 },
   vendasSemana: { type: Number, default: 0 },
@@ -28,9 +28,9 @@ const keySchema = new mongoose.Schema({
   key: { type: String, unique: true },
   revendedor: String,
   dias: Number,
-  dispositivos: { type: Number, default: 1 }, // -1 = ilimitado
+  dispositivos: { type: Number, default: 1 },
   dispositvosUsados: { type: [String], default: [] },
-  status: { type: String, default: "ativa" }, // ativa, expirada
+  status: { type: String, default: "ativa" },
   criadaEm: { type: Date, default: Date.now },
   ativadaEm: { type: Date, default: null },
   expiraEm: { type: Date, default: null },
@@ -42,7 +42,7 @@ const ticketSchema = new mongoose.Schema({
   username: String,
   categoria: String,
   titulo: String,
-  status: { type: String, default: "aberto" }, // aberto, aguardando, resolvido
+  status: { type: String, default: "aberto" },
   mensagens: [{
     autor: String,
     texto: String,
@@ -51,9 +51,18 @@ const ticketSchema = new mongoose.Schema({
   criadoEm: { type: Date, default: Date.now }
 });
 
+const replaySchema = new mongoose.Schema({
+  key: String,
+  filename: String,
+  jsonData: String,
+  binData: String,
+  criadoEm: { type: Date, default: Date.now }
+});
+
 const User = mongoose.model("User", userSchema);
 const Key = mongoose.model("Key", keySchema);
 const Ticket = mongoose.model("Ticket", ticketSchema);
+const Replay = mongoose.model("Replay", replaySchema);
 
 // ===== UTILS =====
 
@@ -100,7 +109,6 @@ app.post("/admin/revendedores", async (req, res) => {
   res.json({ revendedores: result });
 });
 
-// Lista clientes (não revendedores)
 app.post("/admin/clientes", async (req, res) => {
   const { senha } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
@@ -108,7 +116,6 @@ app.post("/admin/clientes", async (req, res) => {
   res.json({ clientes: lista });
 });
 
-// Promover cliente para revendedor
 app.post("/admin/promover", async (req, res) => {
   const { senha, username } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
@@ -119,7 +126,6 @@ app.post("/admin/promover", async (req, res) => {
   res.json({ ok: true });
 });
 
-// Rebaixar revendedor para cliente
 app.post("/admin/rebaixar", async (req, res) => {
   const { senha, username } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
@@ -162,7 +168,6 @@ app.post("/admin/gerarkey", async (req, res) => {
 
 // ===== REVENDEDOR =====
 
-// Registro de novo usuário (vira cliente)
 app.post("/registro", async (req, res) => {
   const { username, senha } = req.body;
   if (!username || !senha) return res.status(400).json({ error: "Preencha todos os campos" });
@@ -219,7 +224,6 @@ app.post("/rev/keys", async (req, res) => {
   res.json({ keys, creditos: user.creditos, planos: user.role === "cliente" ? PLANOS_CLI : PLANOS_REV });
 });
 
-// Limpar todos usuários exceto admin (não tem usuário admin no banco)
 app.post("/admin/limpar-usuarios", async (req, res) => {
   const { senha } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
@@ -234,7 +238,6 @@ function gerarIdTicket() {
   return "TKT-" + Date.now().toString(36).toUpperCase();
 }
 
-// Abrir ticket
 app.post("/ticket/abrir", async (req, res) => {
   const { username, senha, categoria, titulo, mensagem } = req.body;
   const user = await User.findOne({ username, senha });
@@ -249,7 +252,6 @@ app.post("/ticket/abrir", async (req, res) => {
   res.json({ ok: true, ticket });
 });
 
-// Ver tickets do usuário
 app.post("/ticket/meus", async (req, res) => {
   const { username, senha } = req.body;
   const user = await User.findOne({ username, senha });
@@ -258,7 +260,6 @@ app.post("/ticket/meus", async (req, res) => {
   res.json({ tickets });
 });
 
-// Responder ticket (usuário ou admin)
 app.post("/ticket/responder", async (req, res) => {
   const { username, senha, ticketId, mensagem } = req.body;
   const isAdmin = senha === ADMIN_PASSWORD;
@@ -274,7 +275,6 @@ app.post("/ticket/responder", async (req, res) => {
   res.json({ ok: true });
 });
 
-// Admin: ver todos os tickets
 app.post("/admin/tickets", async (req, res) => {
   const { senha } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
@@ -282,7 +282,6 @@ app.post("/admin/tickets", async (req, res) => {
   res.json({ tickets });
 });
 
-// Admin: mudar status do ticket
 app.post("/admin/ticket/status", async (req, res) => {
   const { senha, ticketId, status } = req.body;
   if (senha !== ADMIN_PASSWORD) return res.status(403).json({ error: "Acesso negado" });
@@ -311,7 +310,6 @@ app.post("/verify", async (req, res) => {
   const item = await Key.findOne({ key });
   if (!item || item.status === "expirada") return res.json({ valid: false, motivo: "Key inválida ou expirada" });
 
-  // Primeira vez usando
   if (!item.ativadaEm) {
     item.ativadaEm = new Date();
     if (item.dias > 0) {
@@ -324,7 +322,6 @@ app.post("/verify", async (req, res) => {
     return res.json({ valid: true });
   }
 
-  // Verificar dispositivo
   if (hwid) {
     if (item.dispositivos !== -1 && !item.dispositvosUsados.includes(hwid)) {
       if (item.dispositvosUsados.length >= item.dispositivos) {
@@ -336,6 +333,33 @@ app.post("/verify", async (req, res) => {
   }
 
   res.json({ valid: true });
+});
+
+// ===== REPLAYS =====
+
+app.post("/replay/upload", async (req, res) => {
+  const { key, filename, jsonData, binData } = req.body;
+  const item = await Key.findOne({ key, status: "ativa" });
+  if (!item) return res.json({ ok: false, erro: "Key inválida" });
+  await Replay.deleteMany({ key, filename });
+  await Replay.create({ key, filename, jsonData, binData });
+  res.json({ ok: true });
+});
+
+app.post("/replay/download", async (req, res) => {
+  const { key } = req.body;
+  const item = await Key.findOne({ key, status: "ativa" });
+  if (!item) return res.json({ ok: false, erro: "Key inválida" });
+  const replays = await Replay.find({ key }).sort({ criadoEm: -1 });
+  res.json({ ok: true, replays });
+});
+
+app.post("/replay/limpar", async (req, res) => {
+  const { key } = req.body;
+  const item = await Key.findOne({ key, status: "ativa" });
+  if (!item) return res.json({ ok: false, erro: "Key inválida" });
+  await Replay.deleteMany({ key });
+  res.json({ ok: true });
 });
 
 const PORT = process.env.PORT || 3000;
