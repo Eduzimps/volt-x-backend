@@ -1,0 +1,293 @@
+...............FFFF.FFFFFFFFF..........F.                                [100%]
+=================================== FAILURES ===================================
+________________________ test_duplicate_order_rejected _________________________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+
+    def test_duplicate_order_rejected(client, headers):
+        client.post('/api/queue',json={'brawler':'shelly'},headers=headers)
+        response=client.post('/api/queue/reorder',json={'order':['shelly','shelly']},headers=headers)
+>       assert response.status_code==400
+E       assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+
+tests/test_audit.py:39: AssertionError
+______________ test_invalid_json_shape_is_client_error[payload0] _______________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+payload = ['wrong']
+
+    @pytest.mark.parametrize('payload',[['wrong'], 'wrong', 5])
+    def test_invalid_json_shape_is_client_error(client,headers,payload):
+>       assert client.post('/api/queue',json=payload,headers=headers).status_code==400
+E       AssertionError: assert 500 == 400
+E        +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+E        +    where <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]> = post('/api/queue', json=['wrong'], headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where post = <FlaskClient <Flask 'webui.app'>>.post
+
+tests/test_audit.py:44: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    webui.app:app.py:191 Unhandled request error at /api/queue
+Traceback (most recent call last):
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/app.py", line 201, in add_queue
+    items = data_service.add_or_update_queue_item(payload)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 378, in add_or_update_queue_item
+    normalized = self.normalize_queue_entry(item)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 281, in normalize_queue_entry
+    target_type = str(entry.get("type", "trophies")).strip().lower()
+                      ^^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+________________ test_invalid_json_shape_is_client_error[wrong] ________________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+payload = 'wrong'
+
+    @pytest.mark.parametrize('payload',[['wrong'], 'wrong', 5])
+    def test_invalid_json_shape_is_client_error(client,headers,payload):
+>       assert client.post('/api/queue',json=payload,headers=headers).status_code==400
+E       AssertionError: assert 500 == 400
+E        +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+E        +    where <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]> = post('/api/queue', json='wrong', headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where post = <FlaskClient <Flask 'webui.app'>>.post
+
+tests/test_audit.py:44: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    webui.app:app.py:191 Unhandled request error at /api/queue
+Traceback (most recent call last):
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/app.py", line 201, in add_queue
+    items = data_service.add_or_update_queue_item(payload)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 378, in add_or_update_queue_item
+    normalized = self.normalize_queue_entry(item)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 281, in normalize_queue_entry
+    target_type = str(entry.get("type", "trophies")).strip().lower()
+                      ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+__________________ test_invalid_json_shape_is_client_error[5] __________________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+payload = 5
+
+    @pytest.mark.parametrize('payload',[['wrong'], 'wrong', 5])
+    def test_invalid_json_shape_is_client_error(client,headers,payload):
+>       assert client.post('/api/queue',json=payload,headers=headers).status_code==400
+E       AssertionError: assert 500 == 400
+E        +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+E        +    where <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]> = post('/api/queue', json=5, headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where post = <FlaskClient <Flask 'webui.app'>>.post
+
+tests/test_audit.py:44: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    webui.app:app.py:191 Unhandled request error at /api/queue
+Traceback (most recent call last):
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/app.py", line 201, in add_queue
+    items = data_service.add_or_update_queue_item(payload)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 378, in add_or_update_queue_item
+    normalized = self.normalize_queue_entry(item)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 281, in normalize_queue_entry
+    target_type = str(entry.get("type", "trophies")).strip().lower()
+                      ^^^^^^^^^
+AttributeError: 'int' object has no attribute 'get'
+_________________ test_storage_failure_does_not_report_success _________________
+
+application = <Flask 'webui.app'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f6eec08a790>
+
+    def test_storage_failure_does_not_report_success(application,monkeypatch):
+        import webui.services as services
+        data=application.config['data_service']
+        def fail(*a,**k):raise OSError('simulated disk failure')
+        monkeypatch.setattr(services,'save_brawler_data',fail)
+>       with pytest.raises(OSError):data.save_queue_data([{'brawler':'shelly'}])
+E       Failed: DID NOT RAISE OSError
+
+tests/test_audit.py:54: Failed
+------------------------------ Captured log call -------------------------------
+ERROR    webui.services:services.py:330 Failed to save queue data to file: simulated disk failure
+___________________ test_failed_serialization_preserves_file ___________________
+
+application = <Flask 'webui.app'>
+
+    def test_failed_serialization_preserves_file(application):
+        import utils
+        utils.save_brawler_data([{'brawler':'shelly'}])
+        before=utils.resolve_project_path('latest_brawler_data.json').read_bytes()
+        with pytest.raises(TypeError):utils.save_brawler_data([{'invalid':object()}])
+>       assert utils.resolve_project_path('latest_brawler_data.json').read_bytes()==before
+E       assert b'[\n    {\n ...  "invalid": ' == b'[\n    {\n ...ly"\n    }\n]'
+E         
+E         At index 17 diff: b'i' != b'b'
+E         Use -v to get more diff
+
+tests/test_audit.py:62: AssertionError
+_____________ test_invalid_settings_are_rejected[general-updates0] _____________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+section = 'general', updates = {'max_fps': 0}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+>       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = put(('/api/settings/' + 'general'), json={'max_fps': 0}, headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where put = <FlaskClient <Flask 'webui.app'>>.put
+
+tests/test_audit.py:66: AssertionError
+_____________ test_invalid_settings_are_rejected[general-updates1] _____________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+section = 'general', updates = {'used_threads': -2}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+>       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = put(('/api/settings/' + 'general'), json={'used_threads': -2}, headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where put = <FlaskClient <Flask 'webui.app'>>.put
+
+tests/test_audit.py:66: AssertionError
+_____________ test_invalid_settings_are_rejected[general-updates2] _____________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+section = 'general', updates = {'emulator_port': 70000}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+>       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = put(('/api/settings/' + 'general'), json={'emulator_port': 70000}, headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where put = <FlaskClient <Flask 'webui.app'>>.put
+
+tests/test_audit.py:66: AssertionError
+_______________ test_invalid_settings_are_rejected[bot-updates3] _______________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+section = 'bot', updates = {'wall_detection_confidence': 2}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+>       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = put(('/api/settings/' + 'bot'), json={'wall_detection_confidence': 2}, headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where put = <FlaskClient <Flask 'webui.app'>>.put
+
+tests/test_audit.py:66: AssertionError
+_____________ test_invalid_settings_are_rejected[timers-updates4] ______________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+section = 'timers', updates = {'state_check': -1}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+>       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = put(('/api/settings/' + 'timers'), json={'state_check': -1}, headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where put = <FlaskClient <Flask 'webui.app'>>.put
+
+tests/test_audit.py:66: AssertionError
+______________ test_invalid_settings_are_rejected[debug-updates5] ______________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+section = 'debug', updates = {'debug_view_fps': 0}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+>       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = put(('/api/settings/' + 'debug'), json={'debug_view_fps': 0}, headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where put = <FlaskClient <Flask 'webui.app'>>.put
+
+tests/test_audit.py:66: AssertionError
+_______________ test_invalid_settings_are_rejected[bot-updates6] _______________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+section = 'bot', updates = {'minimum_movement_delay': nan}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+>       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = put(('/api/settings/' + 'bot'), json={'minimum_movement_delay': nan}, headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where put = <FlaskClient <Flask 'webui.app'>>.put
+
+tests/test_audit.py:66: AssertionError
+________________ test_discord_requires_explicit_authorized_user ________________
+
+application = <Flask 'webui.app'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f6eebe0c650>
+
+    def test_discord_requires_explicit_authorized_user(application,monkeypatch):
+        bot=application.config['discord_bot']
+        monkeypatch.setattr(bot,'get_authorized_user_id',lambda:None)
+        interaction=SimpleNamespace(user=SimpleNamespace(id=123),response=SimpleNamespace(send_message=AsyncMock()))
+>       assert asyncio.run(bot.require_authorized_user(interaction)) is False
+E       AssertionError: assert True is False
+E        +  where True = <function run at 0x7f6f30307c40>(<coroutine object DiscordBot.require_authorized_user at 0x7f6eebeee340>)
+E        +    where <function run at 0x7f6f30307c40> = asyncio.run
+E        +    and   <coroutine object DiscordBot.require_authorized_user at 0x7f6eebeee340> = require_authorized_user(namespace(user=namespace(id=123), response=namespace(send_message=<AsyncMock id='140114381336208'>)))
+E        +      where require_authorized_user = <discord_bot.DiscordBot object at 0x7f6eec026f10>.require_authorized_user
+
+tests/test_audit.py:107: AssertionError
+=============================== warnings summary ===============================
+tests/test_audit.py::test_local_read_routes[/]
+  /workspace/pyla-audit/venv/lib/python3.11/site-packages/discord/player.py:30: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+    import audioop
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_audit.py::test_duplicate_order_rejected - assert 200 == 400
+FAILED tests/test_audit.py::test_invalid_json_shape_is_client_error[payload0]
+FAILED tests/test_audit.py::test_invalid_json_shape_is_client_error[wrong] - ...
+FAILED tests/test_audit.py::test_invalid_json_shape_is_client_error[5] - Asse...
+FAILED tests/test_audit.py::test_storage_failure_does_not_report_success - Fa...
+FAILED tests/test_audit.py::test_failed_serialization_preserves_file - assert...
+FAILED tests/test_audit.py::test_invalid_settings_are_rejected[general-updates0]
+FAILED tests/test_audit.py::test_invalid_settings_are_rejected[general-updates1]
+FAILED tests/test_audit.py::test_invalid_settings_are_rejected[general-updates2]
+FAILED tests/test_audit.py::test_invalid_settings_are_rejected[bot-updates3]
+FAILED tests/test_audit.py::test_invalid_settings_are_rejected[timers-updates4]
+FAILED tests/test_audit.py::test_invalid_settings_are_rejected[debug-updates5]
+FAILED tests/test_audit.py::test_invalid_settings_are_rejected[bot-updates6]
+FAILED tests/test_audit.py::test_discord_requires_explicit_authorized_user - ...
+14 failed, 27 passed, 1 warning in 1.50s

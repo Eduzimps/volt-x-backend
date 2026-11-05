@@ -1,0 +1,15 @@
+.venv*/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+build/
+dist/
+test-results/
+latest_brawler_data.json
+debug_frames/
+match_logs/
+clips/
+recordings/
+*.log
+*.env

@@ -1,0 +1,173 @@
+[
+  {
+    "module": "debug_view",
+    "source": "debug_view.py",
+    "source_sha256": "f01ade129565bbfc92d17bb7f160d5ba2aa37c34ffacb2255efc606b0574dd6a",
+    "exact_module_match": true,
+    "matching_code_objects": 34,
+    "total_original_code_objects": 34,
+    "differences": []
+  },
+  {
+    "module": "desktop",
+    "source": "desktop.py",
+    "source_sha256": "e35bf60cbe7d4f2d1f86f8752d21ce7e306dbcdebeea625d02baa2aa268ef467",
+    "exact_module_match": true,
+    "matching_code_objects": 10,
+    "total_original_code_objects": 10,
+    "differences": []
+  },
+  {
+    "module": "detect",
+    "source": "detect.py",
+    "source_sha256": "8597e4ba98db58865cde3ca8cec14460f12cca8e6f646afdd3ff4d2a6c69ef66",
+    "exact_module_match": true,
+    "matching_code_objects": 16,
+    "total_original_code_objects": 16,
+    "differences": []
+  },
+  {
+    "module": "discord_bot",
+    "source": "discord_bot.py",
+    "source_sha256": "3ffb68a735bb1bf179cf0580bb7bc24c9c2d020e95ea80aad4b1b10640fef8e2",
+    "exact_module_match": true,
+    "matching_code_objects": 24,
+    "total_original_code_objects": 24,
+    "differences": []
+  },
+  {
+    "module": "entity_model",
+    "source": "entity_model.py",
+    "source_sha256": "34d86db33c466078694f50ddb6a32a9ebdcd97eb672fd500a4178514d491f421",
+    "exact_module_match": true,
+    "matching_code_objects": 5,
+    "total_original_code_objects": 5,
+    "differences": []
+  },
+  {
+    "module": "lobby_automation",
+    "source": "lobby_automation.py",
+    "source_sha256": "e8b86133b641c8ff13579eac53d7748d9a792b398dcc2cdcda3ac135e1ff3fc5",
+    "exact_module_match": true,
+    "matching_code_objects": 7,
+    "total_original_code_objects": 7,
+    "differences": []
+  },
+  {
+    "module": "match_logger",
+    "source": "match_logger.py",
+    "source_sha256": "02cc581b87ac30973907eabd22145079d62168ed4de44695ec7b7cdf9620c0ef",
+    "exact_module_match": true,
+    "matching_code_objects": 16,
+    "total_original_code_objects": 16,
+    "differences": []
+  },
+  {
+    "module": "play",
+    "source": "play.py",
+    "source_sha256": "aad36930a087ef888d4945a89c484e22e2020b3fb9184a503cd5cc94f1e0795a",
+    "exact_module_match": true,
+    "matching_code_objects": 56,
+    "total_original_code_objects": 56,
+    "differences": []
+  },
+  {
+    "module": "stage_manager",
+    "source": "stage_manager.py",
+    "source_sha256": "3178a19db13bbb8247074b51395fab14fdfff97f7a8b26d629593e41278ba697",
+    "exact_module_match": true,
+    "matching_code_objects": 17,
+    "total_original_code_objects": 17,
+    "differences": []
+  },
+  {
+    "module": "state_finder",
+    "source": "state_finder.py",
+    "source_sha256": "c5fb4e2bd74cd6dc82c5bfc30582236e240152cd8cf90f6441b697f92eaf835a",
+    "exact_module_match": true,
+    "matching_code_objects": 19,
+    "total_original_code_objects": 19,
+    "differences": []
+  },
+  {
+    "module": "time_management",
+    "source": "time_management.py",
+    "source_sha256": "ece3d14d15cc09b05a5ebe483c87a56ee48062ca66005fcb37d1d119856ebb4b",
+    "exact_module_match": true,
+    "matching_code_objects": 10,
+    "total_original_code_objects": 10,
+    "differences": []
+  },
+  {
+    "module": "trophy_observer",
+    "source": "trophy_observer.py",
+    "source_sha256": "210bc7fe9a3e312b7d965149b208490b76d59b0cbe6cdd331ef13998316c3744",
+    "exact_module_match": true,
+    "matching_code_objects": 24,
+    "total_original_code_objects": 24,
+    "differences": []
+  },
+  {
+    "module": "utils",
+    "source": "utils.py",
+    "source_sha256": "c0343b6a394a15df71beb0a4abcda64bd6b5fa803e08d3bd5d94a68c3cd0d664",
+    "exact_module_match": true,
+    "matching_code_objects": 55,
+    "total_original_code_objects": 55,
+    "differences": []
+  },
+  {
+    "module": "webui",
+    "source": "webui/__init__.py",
+    "source_sha256": "7fca498015f241591ba0ca6913ae769e881681c99982d2c8c8ebed878c4ab56d",
+    "exact_module_match": true,
+    "matching_code_objects": 1,
+    "total_original_code_objects": 1,
+    "differences": []
+  },
+  {
+    "module": "webui.app",
+    "source": "webui/app.py",
+    "source_sha256": "24cb40ce9d28cf5b759607c0282c3e5f50d52c196f8cfd92c0edecc1448d78d7",
+    "exact_module_match": true,
+    "matching_code_objects": 49,
+    "total_original_code_objects": 49,
+    "differences": []
+  },
+  {
+    "module": "webui.runtime",
+    "source": "webui/runtime.py",
+    "source_sha256": "7512539182870849b2953f5eb26b382c4e60f7a34fac86d9849f77dea4879ab0",
+    "exact_module_match": true,
+    "matching_code_objects": 27,
+    "total_original_code_objects": 27,
+    "differences": []
+  },
+  {
+    "module": "webui.services",
+    "source": "webui/services.py",
+    "source_sha256": "9d6bd15cb3fbda028bbd810fba7154b7ca9d19bee8bd4a185d329725e0de315e",
+    "exact_module_match": true,
+    "matching_code_objects": 74,
+    "total_original_code_objects": 74,
+    "differences": []
+  },
+  {
+    "module": "window_controller",
+    "source": "window_controller.py",
+    "source_sha256": "066d713d98b8ca57d5712bca14f7e18c2df9b4984a16a9ec6db41cf0c9cc8554",
+    "exact_module_match": true,
+    "matching_code_objects": 32,
+    "total_original_code_objects": 32,
+    "differences": []
+  },
+  {
+    "module": "main",
+    "source": "main.py",
+    "source_sha256": "74209261efb891d0358e20feadeb1d68f16da9a67ce6e446201c3fe275687fa1",
+    "exact_module_match": true,
+    "matching_code_objects": 36,
+    "total_original_code_objects": 36,
+    "differences": []
+  }
+]

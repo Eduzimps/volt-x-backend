@@ -1,0 +1,12 @@
+# Local UI/API and CPU inference audit. No Windows desktop emulation.
+Flask>=3.1,<4
+toml>=0.10,<0.11
+pillow>=11.2.1
+packaging>=25
+requests>=2.32,<3
+opencv-python-headless>=4.11,<5
+numpy>=2.3,<3
+adbutils==2.12.0
+av==12.3.0
+discord.py>=2.7,<3
+onnxruntime>=1.24,<2

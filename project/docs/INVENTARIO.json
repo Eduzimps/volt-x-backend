@@ -1,0 +1,3622 @@
+[
+  {
+    "path": "api/api.py",
+    "sha256": "8170149f69c5049e37d4fa21de8e987dad3e94fbf9cef0caf4e18e47ed92e0ef",
+    "imports": [
+      "PIL",
+      "io",
+      "os",
+      "requests"
+    ],
+    "definitions": []
+  },
+  {
+    "path": "debug_view.py",
+    "sha256": "f01ade129565bbfc92d17bb7f160d5ba2aa37c34ffacb2255efc606b0574dd6a",
+    "imports": [
+      "atexit",
+      "ctypes",
+      "cv2",
+      "json",
+      "math",
+      "multiprocessing",
+      "numpy",
+      "os",
+      "struct",
+      "subprocess",
+      "sys",
+      "time",
+      "tkinter",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "_running_as_compiled_executable",
+        "kind": "function",
+        "line": 20,
+        "doc": ""
+      },
+      {
+        "name": "_get_screen_size",
+        "kind": "function",
+        "line": 24,
+        "doc": ""
+      },
+      {
+        "name": "DebugViewPublisher",
+        "kind": "class",
+        "line": 57,
+        "doc": ""
+      },
+      {
+        "name": "DebugViewPublisher.__init__",
+        "kind": "function",
+        "line": 58,
+        "doc": ""
+      },
+      {
+        "name": "DebugViewPublisher.from_config",
+        "kind": "function",
+        "line": 88,
+        "doc": ""
+      },
+      {
+        "name": "DebugViewPublisher.publish",
+        "kind": "function",
+        "line": 100,
+        "doc": ""
+      },
+      {
+        "name": "DebugViewPublisher.publish_debug_data",
+        "kind": "function",
+        "line": 119,
+        "doc": ""
+      },
+      {
+        "name": "DebugViewPublisher.start_viewer",
+        "kind": "function",
+        "line": 139,
+        "doc": ""
+      },
+      {
+        "name": "DebugViewPublisher.close",
+        "kind": "function",
+        "line": 193,
+        "doc": ""
+      },
+      {
+        "name": "read_debug_data",
+        "kind": "function",
+        "line": 231,
+        "doc": ""
+      },
+      {
+        "name": "draw_boxes",
+        "kind": "function",
+        "line": 246,
+        "doc": ""
+      },
+      {
+        "name": "draw_lines",
+        "kind": "function",
+        "line": 254,
+        "doc": ""
+      },
+      {
+        "name": "draw_player_hit_circle",
+        "kind": "function",
+        "line": 262,
+        "doc": ""
+      },
+      {
+        "name": "draw_range_circles",
+        "kind": "function",
+        "line": 278,
+        "doc": ""
+      },
+      {
+        "name": "draw_poison_gas_lines",
+        "kind": "function",
+        "line": 306,
+        "doc": ""
+      },
+      {
+        "name": "DebugClipRecorder",
+        "kind": "class",
+        "line": 332,
+        "doc": ""
+      },
+      {
+        "name": "DebugClipRecorder.__init__",
+        "kind": "function",
+        "line": 333,
+        "doc": ""
+      },
+      {
+        "name": "DebugClipRecorder.update",
+        "kind": "function",
+        "line": 347,
+        "doc": ""
+      },
+      {
+        "name": "DebugClipRecorder.write_frame",
+        "kind": "function",
+        "line": 380,
+        "doc": ""
+      },
+      {
+        "name": "DebugClipRecorder.prune_pending_frames",
+        "kind": "function",
+        "line": 393,
+        "doc": ""
+      },
+      {
+        "name": "DebugClipRecorder.flush_pending_frames",
+        "kind": "function",
+        "line": 401,
+        "doc": ""
+      },
+      {
+        "name": "DebugClipRecorder.start",
+        "kind": "function",
+        "line": 406,
+        "doc": ""
+      },
+      {
+        "name": "DebugClipRecorder.stop",
+        "kind": "function",
+        "line": 421,
+        "doc": ""
+      },
+      {
+        "name": "DebugClipRecorder.close",
+        "kind": "function",
+        "line": 438,
+        "doc": ""
+      },
+      {
+        "name": "draw_joystick_path_probe",
+        "kind": "function",
+        "line": 442,
+        "doc": ""
+      },
+      {
+        "name": "draw_debug_data",
+        "kind": "function",
+        "line": 484,
+        "doc": ""
+      },
+      {
+        "name": "run_viewer_worker",
+        "kind": "function",
+        "line": 530,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "desktop.py",
+    "sha256": "e35bf60cbe7d4f2d1f86f8752d21ce7e306dbcdebeea625d02baa2aa268ef467",
+    "imports": [
+      "__future__",
+      "ctypes",
+      "os",
+      "pathlib",
+      "sys",
+      "threading",
+      "typing",
+      "webview",
+      "werkzeug.serving"
+    ],
+    "definitions": [
+      {
+        "name": "console_log_path",
+        "kind": "function",
+        "line": 29,
+        "doc": ""
+      },
+      {
+        "name": "hide_console",
+        "kind": "function",
+        "line": 33,
+        "doc": "Hide a console owned only by PylaAI and redirect its streams to a log.\n\nA console shared with the terminal that launched PylaAI is deliberately left\nalone, because hiding it would also hide the user's terminal window."
+      },
+      {
+        "name": "_owns_console",
+        "kind": "function",
+        "line": 57,
+        "doc": ""
+      },
+      {
+        "name": "_redirect_standard_streams",
+        "kind": "function",
+        "line": 63,
+        "doc": ""
+      },
+      {
+        "name": "unblock_bundled_webview_binaries",
+        "kind": "function",
+        "line": 93,
+        "doc": "Remove Internet-zone markers from the .NET files shipped with PylaAI.\n\nWindows propagates the downloaded ZIP's ``Zone.Identifier`` stream to\nextracted files.  The executable itself may still run, but .NET Framework\nthen refuses to load Python.Runtime.dll and clr_loader reports the rather\nmisleading \"Failed to resolve ... Loader.Initialize\" error.\n\nOnly PylaAI's explicitly listed pywebview/pythonnet binaries are touched.\nSource checkouts normally have none of these files next to desktop.py, so\nthis is effectively a frozen-build startup repair."
+      },
+      {
+        "name": "import_webview",
+        "kind": "function",
+        "line": 135,
+        "doc": "Return the optional pywebview module, or the reason it could not load."
+      },
+      {
+        "name": "set_windows_app_id",
+        "kind": "function",
+        "line": 148,
+        "doc": "Give interpreted runs their own Windows taskbar identity.\n\nWithout an explicit AppUserModelID, Windows groups the pywebview form under\npython.exe and may keep showing Python's icon even when Form.Icon is set."
+      },
+      {
+        "name": "run_webview",
+        "kind": "function",
+        "line": 167,
+        "doc": "Serve Flask in the background and run pywebview on the main thread."
+      }
+    ]
+  },
+  {
+    "path": "detect.py",
+    "sha256": "8597e4ba98db58865cde3ca8cec14460f12cca8e6f646afdd3ff4d2a6c69ef66",
+    "imports": [
+      "ast",
+      "cv2",
+      "entity_model",
+      "json",
+      "numpy",
+      "onnxruntime",
+      "os",
+      "threading",
+      "utils",
+      "warnings"
+    ],
+    "definitions": [
+      {
+        "name": "_numpy_nms",
+        "kind": "function",
+        "line": 27,
+        "doc": ""
+      },
+      {
+        "name": "_normalize_yolo_output",
+        "kind": "function",
+        "line": 62,
+        "doc": "Accepts either:\n    outputs\n    outputs[0]\n\nSupports common YOLO ONNX shapes:\n    (1, 84, 8400)\n    (1, 8400, 84)\n    (84, 8400)\n    (8400, 84)\n    (1, 300, 6) for end-to-end models\n\nReturns:\n    prediction with shape (num_boxes, num_channels)"
+      },
+      {
+        "name": "_postprocess_raw",
+        "kind": "function",
+        "line": 99,
+        "doc": ""
+      },
+      {
+        "name": "Detect",
+        "kind": "class",
+        "line": 164,
+        "doc": ""
+      },
+      {
+        "name": "Detect.__init__",
+        "kind": "function",
+        "line": 167,
+        "doc": ""
+      },
+      {
+        "name": "Detect.__init__.get_optimal_threads",
+        "kind": "function",
+        "line": 170,
+        "doc": ""
+      },
+      {
+        "name": "Detect._session_options",
+        "kind": "function",
+        "line": 217,
+        "doc": ""
+      },
+      {
+        "name": "Detect._cpu_session",
+        "kind": "function",
+        "line": 234,
+        "doc": ""
+      },
+      {
+        "name": "Detect.load_model",
+        "kind": "function",
+        "line": 238,
+        "doc": ""
+      },
+      {
+        "name": "Detect.preprocess_image",
+        "kind": "function",
+        "line": 269,
+        "doc": ""
+      },
+      {
+        "name": "Detect.postprocess",
+        "kind": "function",
+        "line": 297,
+        "doc": ""
+      },
+      {
+        "name": "Detect._semantic_tile_detections",
+        "kind": "function",
+        "line": 336,
+        "doc": "Convert transient semantic predictions to coarse boxes; gameplay only receives ordinary lists."
+      },
+      {
+        "name": "Detect.detect_objects",
+        "kind": "function",
+        "line": 384,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "discord_bot.py",
+    "sha256": "09d51a1ee0c8c7526bd434a79ae80bb2131134679f78eede0339715e7c99df6a",
+    "imports": [
+      "PIL",
+      "asyncio",
+      "discord",
+      "io",
+      "time",
+      "utils",
+      "window_controller"
+    ],
+    "definitions": [
+      {
+        "name": "DiscordBot",
+        "kind": "class",
+        "line": 13,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.__init__",
+        "kind": "function",
+        "line": 14,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.set_window_controller",
+        "kind": "function",
+        "line": 30,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot._extract_discord_id",
+        "kind": "function",
+        "line": 34,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.get_authorized_user_id",
+        "kind": "function",
+        "line": 43,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.get_configured_guild_id",
+        "kind": "function",
+        "line": 47,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.get_configured_guild",
+        "kind": "function",
+        "line": 58,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.require_authorized_user",
+        "kind": "function",
+        "line": 65,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.sync_commands",
+        "kind": "function",
+        "line": 83,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_events",
+        "kind": "function",
+        "line": 93,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_events.on_ready",
+        "kind": "function",
+        "line": 95,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands",
+        "kind": "function",
+        "line": 111,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.screenshot",
+        "kind": "function",
+        "line": 116,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.stop",
+        "kind": "function",
+        "line": 148,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.pause",
+        "kind": "function",
+        "line": 207,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.start",
+        "kind": "function",
+        "line": 273,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.status",
+        "kind": "function",
+        "line": 287,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.restart_brawl_stars",
+        "kind": "function",
+        "line": 318,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.view_queue",
+        "kind": "function",
+        "line": 339,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.help_command",
+        "kind": "function",
+        "line": 380,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.run_bot",
+        "kind": "function",
+        "line": 405,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "entity_model.py",
+    "sha256": "34d86db33c466078694f50ddb6a32a9ebdcd97eb672fd500a4178514d491f421",
+    "imports": [
+      "ast",
+      "numpy"
+    ],
+    "definitions": [
+      {
+        "name": "read_layout",
+        "kind": "function",
+        "line": 7,
+        "doc": ""
+      },
+      {
+        "name": "decode_pose",
+        "kind": "function",
+        "line": 20,
+        "doc": "Return rows [xyxy, score, class, optional keypoints]; keypoints never become class scores.\n\nAccept both the classic [1, 4 + classes + K*D, anchors] head and the NMS-free\n[1, detections, 6 + K*D] head. Only early access requests the trailing point columns."
+      }
+    ]
+  },
+  {
+    "path": "lobby_automation.py",
+    "sha256": "e8b86133b641c8ff13579eac53d7748d9a792b398dcc2cdcda3ac135e1ff3fc5",
+    "imports": [
+      "cv2",
+      "os",
+      "time",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "LobbyAutomation",
+        "kind": "class",
+        "line": 12,
+        "doc": ""
+      },
+      {
+        "name": "LobbyAutomation.__init__",
+        "kind": "function",
+        "line": 14,
+        "doc": ""
+      },
+      {
+        "name": "LobbyAutomation.check_for_idle",
+        "kind": "function",
+        "line": 23,
+        "doc": ""
+      },
+      {
+        "name": "LobbyAutomation._should_interrupt",
+        "kind": "function",
+        "line": 44,
+        "doc": ""
+      },
+      {
+        "name": "LobbyAutomation._sleep_interruptible",
+        "kind": "function",
+        "line": 50,
+        "doc": ""
+      },
+      {
+        "name": "LobbyAutomation.select_brawler",
+        "kind": "function",
+        "line": 58,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "main.py",
+    "sha256": "74209261efb891d0358e20feadeb1d68f16da9a67ce6e446201c3fe275687fa1",
+    "imports": [
+      "adbutils",
+      "argparse",
+      "debug_view",
+      "desktop",
+      "inspect",
+      "lobby_automation",
+      "os",
+      "pathlib",
+      "play",
+      "socket",
+      "stage_manager",
+      "state_finder",
+      "sys",
+      "threading",
+      "time",
+      "time_management",
+      "tomllib",
+      "utils",
+      "webbrowser",
+      "webui",
+      "window_controller"
+    ],
+    "definitions": [
+      {
+        "name": "_patched_getfile",
+        "kind": "function",
+        "line": 10,
+        "doc": ""
+      },
+      {
+        "name": "parse_cli_args",
+        "kind": "function",
+        "line": 33,
+        "doc": ""
+      },
+      {
+        "name": "_startup_project_root",
+        "kind": "function",
+        "line": 74,
+        "doc": ""
+      },
+      {
+        "name": "load_saved_interface_mode",
+        "kind": "function",
+        "line": 80,
+        "doc": ""
+      },
+      {
+        "name": "resolve_interface_mode",
+        "kind": "function",
+        "line": 95,
+        "doc": ""
+      },
+      {
+        "name": "apply_play_order",
+        "kind": "function",
+        "line": 134,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main",
+        "kind": "function",
+        "line": 148,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main",
+        "kind": "class",
+        "line": 149,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.__init__",
+        "kind": "function",
+        "line": 150,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.update_trophy_observer",
+        "kind": "function",
+        "line": 201,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.load_models",
+        "kind": "function",
+        "line": 208,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.restart_brawl_stars",
+        "kind": "function",
+        "line": 215,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.should_stop",
+        "kind": "function",
+        "line": 232,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.should_pause",
+        "kind": "function",
+        "line": 235,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.sleep_interruptible",
+        "kind": "function",
+        "line": 238,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.stop_gracefully",
+        "kind": "function",
+        "line": 248,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.start_state_checker",
+        "kind": "function",
+        "line": 255,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.stop_state_checker",
+        "kind": "function",
+        "line": 266,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.set_latest_state",
+        "kind": "function",
+        "line": 271,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.get_latest_state",
+        "kind": "function",
+        "line": 275,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.handle_detected_state",
+        "kind": "function",
+        "line": 279,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.state_checker_loop",
+        "kind": "function",
+        "line": 292,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.wait_while_paused",
+        "kind": "function",
+        "line": 307,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.handle_pause_request",
+        "kind": "function",
+        "line": 329,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.manage_time_tasks",
+        "kind": "function",
+        "line": 334,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.check_and_handle_brawl_stars_crash",
+        "kind": "function",
+        "line": 355,
+        "doc": ""
+      },
+      {
+        "name": "pyla_main.Main.main",
+        "kind": "function",
+        "line": 373,
+        "doc": ""
+      },
+      {
+        "name": "find_open_port",
+        "kind": "function",
+        "line": 489,
+        "doc": ""
+      },
+      {
+        "name": "open_browser_later",
+        "kind": "function",
+        "line": 498,
+        "doc": ""
+      },
+      {
+        "name": "open_browser_later._open",
+        "kind": "function",
+        "line": 499,
+        "doc": ""
+      },
+      {
+        "name": "stop_on_window_close",
+        "kind": "function",
+        "line": 507,
+        "doc": "Ask a running bot instance to stop when its desktop window closes."
+      },
+      {
+        "name": "stop_on_window_close._on_close",
+        "kind": "function",
+        "line": 509,
+        "doc": ""
+      },
+      {
+        "name": "run_interface",
+        "kind": "function",
+        "line": 519,
+        "doc": "Present the loopback web UI using the selected startup interface."
+      }
+    ]
+  },
+  {
+    "path": "match_logger.py",
+    "sha256": "02cc581b87ac30973907eabd22145079d62168ed4de44695ec7b7cdf9620c0ef",
+    "imports": [
+      "atexit",
+      "datetime",
+      "gzip",
+      "json",
+      "queue",
+      "secrets",
+      "threading",
+      "time",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "_json_default",
+        "kind": "function",
+        "line": 24,
+        "doc": ""
+      },
+      {
+        "name": "_round_box",
+        "kind": "function",
+        "line": 29,
+        "doc": ""
+      },
+      {
+        "name": "MatchLogger",
+        "kind": "class",
+        "line": 36,
+        "doc": ""
+      },
+      {
+        "name": "MatchLogger.__init__",
+        "kind": "function",
+        "line": 37,
+        "doc": ""
+      },
+      {
+        "name": "MatchLogger.start",
+        "kind": "function",
+        "line": 58,
+        "doc": ""
+      },
+      {
+        "name": "MatchLogger.stop",
+        "kind": "function",
+        "line": 75,
+        "doc": ""
+      },
+      {
+        "name": "MatchLogger.shutdown",
+        "kind": "function",
+        "line": 83,
+        "doc": "Close the current file so it gets a valid gzip trailer, e.g. when Pyla is stopped mid-match."
+      },
+      {
+        "name": "MatchLogger.observe_state",
+        "kind": "function",
+        "line": 93,
+        "doc": "Close the recording once the game has clearly left the match (result screen, lobby...)."
+      },
+      {
+        "name": "MatchLogger.log",
+        "kind": "function",
+        "line": 107,
+        "doc": ""
+      },
+      {
+        "name": "MatchLogger.log_touch",
+        "kind": "function",
+        "line": 114,
+        "doc": ""
+      },
+      {
+        "name": "MatchLogger.log_frame",
+        "kind": "function",
+        "line": 120,
+        "doc": ""
+      },
+      {
+        "name": "MatchLogger.detections_with_conf",
+        "kind": "function",
+        "line": 129,
+        "doc": "Group Detect.last_raw [(cls, x1, y1, x2, y2, conf)] into {cls: [[x1, y1, x2, y2, conf], ...]}."
+      },
+      {
+        "name": "MatchLogger._writer",
+        "kind": "function",
+        "line": 138,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "play.py",
+    "sha256": "aad36930a087ef888d4945a89c484e22e2020b3fb9184a503cd5cc94f1e0795a",
+    "imports": [
+      "cv2",
+      "detect",
+      "match_logger",
+      "math",
+      "numpy",
+      "os",
+      "random",
+      "state_finder",
+      "time",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "Play",
+        "kind": "class",
+        "line": 23,
+        "doc": ""
+      },
+      {
+        "name": "Play.__init__",
+        "kind": "function",
+        "line": 27,
+        "doc": ""
+      },
+      {
+        "name": "Play.get_entity_pos",
+        "kind": "function",
+        "line": 111,
+        "doc": ""
+      },
+      {
+        "name": "Play.get_distance",
+        "kind": "function",
+        "line": 115,
+        "doc": ""
+      },
+      {
+        "name": "Play.is_there_enemy",
+        "kind": "function",
+        "line": 119,
+        "doc": ""
+      },
+      {
+        "name": "Play.attack",
+        "kind": "function",
+        "line": 124,
+        "doc": ""
+      },
+      {
+        "name": "Play.use_hypercharge",
+        "kind": "function",
+        "line": 127,
+        "doc": ""
+      },
+      {
+        "name": "Play.use_gadget",
+        "kind": "function",
+        "line": 135,
+        "doc": ""
+      },
+      {
+        "name": "Play.use_super",
+        "kind": "function",
+        "line": 143,
+        "doc": ""
+      },
+      {
+        "name": "Play.get_random_movement",
+        "kind": "function",
+        "line": 152,
+        "doc": ""
+      },
+      {
+        "name": "Play.movement_to_vector",
+        "kind": "function",
+        "line": 157,
+        "doc": ""
+      },
+      {
+        "name": "Play.rotate_movement",
+        "kind": "function",
+        "line": 171,
+        "doc": ""
+      },
+      {
+        "name": "Play.movement_direction_key",
+        "kind": "function",
+        "line": 181,
+        "doc": ""
+      },
+      {
+        "name": "Play.unstuck_movement_if_needed",
+        "kind": "function",
+        "line": 190,
+        "doc": ""
+      },
+      {
+        "name": "Play.load_brawler_ranges",
+        "kind": "function",
+        "line": 246,
+        "doc": ""
+      },
+      {
+        "name": "Play.can_attack_through_walls",
+        "kind": "function",
+        "line": 260,
+        "doc": ""
+      },
+      {
+        "name": "Play.must_brawler_hold_attack",
+        "kind": "function",
+        "line": 269,
+        "doc": ""
+      },
+      {
+        "name": "Play.walls_block_line_of_sight",
+        "kind": "function",
+        "line": 274,
+        "doc": ""
+      },
+      {
+        "name": "Play.get_player_hit_circle",
+        "kind": "function",
+        "line": 293,
+        "doc": ""
+      },
+      {
+        "name": "Play.get_actual_player_box",
+        "kind": "function",
+        "line": 301,
+        "doc": ""
+      },
+      {
+        "name": "Play.point_rect_distance_sq",
+        "kind": "function",
+        "line": 313,
+        "doc": ""
+      },
+      {
+        "name": "Play.walls_block_swept_circle",
+        "kind": "function",
+        "line": 321,
+        "doc": ""
+      },
+      {
+        "name": "Play.is_enemy_hittable",
+        "kind": "function",
+        "line": 358,
+        "doc": ""
+      },
+      {
+        "name": "Play.enemy_targets",
+        "kind": "function",
+        "line": 366,
+        "doc": "Same candidate list for the playstyle's attacks and movement, with no brawler priority."
+      },
+      {
+        "name": "Play.is_there_enemy_spawnable",
+        "kind": "function",
+        "line": 371,
+        "doc": ""
+      },
+      {
+        "name": "Play.find_closest_enemy_spawnable",
+        "kind": "function",
+        "line": 374,
+        "doc": ""
+      },
+      {
+        "name": "Play.is_enemy_spawnable",
+        "kind": "function",
+        "line": 379,
+        "doc": "Whether this box belongs to the current frame's hostile spawnable detections."
+      },
+      {
+        "name": "Play.select_enemy_target",
+        "kind": "function",
+        "line": 386,
+        "doc": "Remember the kind selected by find_closest_enemy; normal attacks stay unchanged."
+      },
+      {
+        "name": "Play.can_use_ability_on_enemy",
+        "kind": "function",
+        "line": 390,
+        "doc": "Abilities follow the selected target, even when other brawlers are visible elsewhere."
+      },
+      {
+        "name": "Play.find_closest_enemy",
+        "kind": "function",
+        "line": 398,
+        "doc": ""
+      },
+      {
+        "name": "Play.find_closest_teammate",
+        "kind": "function",
+        "line": 425,
+        "doc": ""
+      },
+      {
+        "name": "Play.is_there_poison_gas",
+        "kind": "function",
+        "line": 436,
+        "doc": ""
+      },
+      {
+        "name": "Play.get_main_data",
+        "kind": "function",
+        "line": 497,
+        "doc": ""
+      },
+      {
+        "name": "Play.is_path_blocked",
+        "kind": "function",
+        "line": 501,
+        "doc": ""
+      },
+      {
+        "name": "Play.validate_game_data",
+        "kind": "function",
+        "line": 523,
+        "doc": ""
+      },
+      {
+        "name": "Play.track_no_detections",
+        "kind": "function",
+        "line": 542,
+        "doc": ""
+      },
+      {
+        "name": "Play.do_movement",
+        "kind": "function",
+        "line": 552,
+        "doc": ""
+      },
+      {
+        "name": "Play.get_brawler_range",
+        "kind": "function",
+        "line": 559,
+        "doc": ""
+      },
+      {
+        "name": "Play.normalize_move",
+        "kind": "function",
+        "line": 565,
+        "doc": ""
+      },
+      {
+        "name": "Play.clamp_movement",
+        "kind": "function",
+        "line": 572,
+        "doc": ""
+      },
+      {
+        "name": "Play.loop",
+        "kind": "function",
+        "line": 582,
+        "doc": ""
+      },
+      {
+        "name": "Play.check_if_hypercharge_ready",
+        "kind": "function",
+        "line": 654,
+        "doc": ""
+      },
+      {
+        "name": "Play.check_if_gadget_ready",
+        "kind": "function",
+        "line": 671,
+        "doc": ""
+      },
+      {
+        "name": "Play.check_if_super_ready",
+        "kind": "function",
+        "line": 688,
+        "doc": ""
+      },
+      {
+        "name": "Play.offset_tile_data",
+        "kind": "function",
+        "line": 706,
+        "doc": ""
+      },
+      {
+        "name": "Play.get_tile_data",
+        "kind": "function",
+        "line": 718,
+        "doc": ""
+      },
+      {
+        "name": "Play.process_tile_data",
+        "kind": "function",
+        "line": 724,
+        "doc": ""
+      },
+      {
+        "name": "Play.get_movement",
+        "kind": "function",
+        "line": 746,
+        "doc": ""
+      },
+      {
+        "name": "Play.publish_debug_view",
+        "kind": "function",
+        "line": 751,
+        "doc": ""
+      },
+      {
+        "name": "Play.main",
+        "kind": "function",
+        "line": 798,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "playstyles/skeleton.py",
+    "sha256": "5b74fefa1da37a11a33a4082c766c6a652db3066c432e6f9b3f2a73bfbc0228f",
+    "imports": [
+      "math",
+      "random",
+      "time",
+      "typing"
+    ],
+    "definitions": [
+      {
+        "name": "time_now",
+        "kind": "function",
+        "line": 12,
+        "doc": "Returns the current time in seconds (equivalent to time.time())."
+      },
+      {
+        "name": "random_int",
+        "kind": "function",
+        "line": 16,
+        "doc": "Returns a random integer between a and b (equivalent to random.randint)."
+      },
+      {
+        "name": "must_brawler_hold_attack",
+        "kind": "function",
+        "line": 101,
+        "doc": "Check if the specific brawler needs to hold attack (e.g., Amber)."
+      },
+      {
+        "name": "get_entity_pos",
+        "kind": "function",
+        "line": 105,
+        "doc": "Returns the center (x, y) coordinates of the player bounding box."
+      },
+      {
+        "name": "get_actual_player_box",
+        "kind": "function",
+        "line": 109,
+        "doc": "Returns the 106px hit-circle bounding box [x1, y1, x2, y2] derived from the detected player box."
+      },
+      {
+        "name": "get_distance",
+        "kind": "function",
+        "line": 113,
+        "doc": "Calculates the distance between two coordinates."
+      },
+      {
+        "name": "get_brawler_range",
+        "kind": "function",
+        "line": 117,
+        "doc": "Returns the scaled ranges for the brawler: [safe_range, attack_range, super_range]."
+      },
+      {
+        "name": "is_there_enemy",
+        "kind": "function",
+        "line": 121,
+        "doc": "Returns True if the enemy list is not empty."
+      },
+      {
+        "name": "attack",
+        "kind": "function",
+        "line": 125,
+        "doc": "Presses the attack button."
+      },
+      {
+        "name": "use_hypercharge",
+        "kind": "function",
+        "line": 129,
+        "doc": "Presses the hypercharge button."
+      },
+      {
+        "name": "use_super",
+        "kind": "function",
+        "line": 133,
+        "doc": "Presses the super button."
+      },
+      {
+        "name": "use_gadget",
+        "kind": "function",
+        "line": 137,
+        "doc": "Presses the gadget button."
+      },
+      {
+        "name": "get_random_movement",
+        "kind": "function",
+        "line": 141,
+        "doc": "Generates a random movement."
+      },
+      {
+        "name": "find_closest_enemy",
+        "kind": "function",
+        "line": 145,
+        "doc": "Finds the closest enemy considering walls and skill type ('attack' or 'super').\nReturns a tuple of (enemy_pos, distance) or (None, None)."
+      },
+      {
+        "name": "find_closest_teammate",
+        "kind": "function",
+        "line": 157,
+        "doc": "Finds the closest teammate considering walls.\nReturns a tuple of (teammate_pos, distance) or (None, None)."
+      },
+      {
+        "name": "is_there_poison_gas",
+        "kind": "function",
+        "line": 168,
+        "doc": "Checks for enough poison gas in the specified area around the player and returns a dict with directions."
+      },
+      {
+        "name": "is_path_blocked",
+        "kind": "function",
+        "line": 172,
+        "doc": "Checks if the player's 53px-radius hit circle would collide with walls while moving."
+      },
+      {
+        "name": "is_enemy_hittable",
+        "kind": "function",
+        "line": 181,
+        "doc": "Checks if there's a clear line of sight to the enemy for the given skill type."
+      },
+      {
+        "name": "rotate_movement",
+        "kind": "function",
+        "line": 190,
+        "doc": "Rotates the movement keys by a given angle in radians."
+      },
+      {
+        "name": "is_there_enemy_spawnable",
+        "kind": "function",
+        "line": 202,
+        "doc": "Whether a targetable enemy summon is visible. Ignored/allied summons never count."
+      },
+      {
+        "name": "find_closest_enemy_spawnable",
+        "kind": "function",
+        "line": 207,
+        "doc": "Return (box-derived position, distance), using the normal-attack wall checks."
+      },
+      {
+        "name": "is_enemy_spawnable",
+        "kind": "function",
+        "line": 212,
+        "doc": "Whether a box is an enemy spawnable. find_closest_enemy remembers this for ability calls:\nnormal attacks are unchanged, but gadget/super/hypercharge are blocked when its target is a spawnable."
+      }
+    ]
+  },
+  {
+    "path": "scrcpy/__init__.py",
+    "sha256": "09447ef852468497a0ee9de01c06be11e1765f33aa37ad14ba421fc5e4ed16fc",
+    "imports": [
+      ".const",
+      ".core"
+    ],
+    "definitions": []
+  },
+  {
+    "path": "scrcpy/const.py",
+    "sha256": "ff9536ac8281ff2ccf33e0bc9f0c4b73df829da7e2b622a8ef9a029b05e3fed6",
+    "imports": [],
+    "definitions": []
+  },
+  {
+    "path": "scrcpy/control.py",
+    "sha256": "2eb6e109d9d91dda48dd6c4c3daaf576143ab4bd28cc2ddb9eb045e040d454f8",
+    "imports": [
+      "functools",
+      "scrcpy",
+      "socket",
+      "struct",
+      "time"
+    ],
+    "definitions": [
+      {
+        "name": "inject",
+        "kind": "function",
+        "line": 10,
+        "doc": "Inject control code, with this inject, we will be able to do unit test\n\nArgs:\n    control_type: event to send, TYPE_*"
+      },
+      {
+        "name": "inject.wrapper",
+        "kind": "function",
+        "line": 18,
+        "doc": ""
+      },
+      {
+        "name": "inject.wrapper.inner",
+        "kind": "function",
+        "line": 20,
+        "doc": ""
+      },
+      {
+        "name": "ControlSender",
+        "kind": "class",
+        "line": 32,
+        "doc": ""
+      },
+      {
+        "name": "ControlSender.__init__",
+        "kind": "function",
+        "line": 33,
+        "doc": ""
+      },
+      {
+        "name": "ControlSender.keycode",
+        "kind": "function",
+        "line": 37,
+        "doc": "Send keycode to device\n\nArgs:\n    keycode: const.KEYCODE_*\n    action: ACTION_DOWN | ACTION_UP\n    repeat: repeat count"
+      },
+      {
+        "name": "ControlSender.text",
+        "kind": "function",
+        "line": 51,
+        "doc": "Send text to device\n\nArgs:\n    text: text to send"
+      },
+      {
+        "name": "ControlSender.touch",
+        "kind": "function",
+        "line": 63,
+        "doc": "Touch screen\n\nArgs:\n    x: horizontal position\n    y: vertical position\n    action: ACTION_DOWN | ACTION_UP | ACTION_MOVE\n    touch_id: Default using virtual id -1, you can specify it to emulate multi finger touch"
+      },
+      {
+        "name": "ControlSender.scroll",
+        "kind": "function",
+        "line": 90,
+        "doc": "Scroll screen\n\nArgs:\n    x: horizontal position\n    y: vertical position\n    h: horizontal movement\n    v: vertical movement"
+      },
+      {
+        "name": "ControlSender.back_or_turn_screen_on",
+        "kind": "function",
+        "line": 113,
+        "doc": "If the screen is off, it is turned on only on ACTION_DOWN\n\nArgs:\n    action: ACTION_DOWN | ACTION_UP"
+      },
+      {
+        "name": "ControlSender.expand_notification_panel",
+        "kind": "function",
+        "line": 123,
+        "doc": "Expand notification panel"
+      },
+      {
+        "name": "ControlSender.expand_settings_panel",
+        "kind": "function",
+        "line": 130,
+        "doc": "Expand settings panel"
+      },
+      {
+        "name": "ControlSender.collapse_panels",
+        "kind": "function",
+        "line": 137,
+        "doc": "Collapse all panels"
+      },
+      {
+        "name": "ControlSender.get_clipboard",
+        "kind": "function",
+        "line": 143,
+        "doc": "Get clipboard"
+      },
+      {
+        "name": "ControlSender.set_clipboard",
+        "kind": "function",
+        "line": 170,
+        "doc": "Set clipboard\n\nArgs:\n    text: the string you want to set\n    paste: paste now"
+      },
+      {
+        "name": "ControlSender.set_screen_power_mode",
+        "kind": "function",
+        "line": 182,
+        "doc": "Set screen power mode\n\nArgs:\n    mode: POWER_MODE_OFF | POWER_MODE_NORMAL"
+      },
+      {
+        "name": "ControlSender.rotate_device",
+        "kind": "function",
+        "line": 192,
+        "doc": "Rotate device"
+      },
+      {
+        "name": "ControlSender.swipe",
+        "kind": "function",
+        "line": 198,
+        "doc": "Swipe on screen\n\nArgs:\n    start_x: start horizontal position\n    start_y: start vertical position\n    end_x: start horizontal position\n    end_y: end vertical position\n    move_step_length: length per step\n    move_steps_delay: sleep seconds after each step\n:return:"
+      }
+    ]
+  },
+  {
+    "path": "scrcpy/core.py",
+    "sha256": "059208a874b0d7712c150f28a2029ed6433d5645f0dd8ddc783d5dcdd57f6f8b",
+    "imports": [
+      ".const",
+      ".control",
+      "adbutils",
+      "av.codec",
+      "av.error",
+      "cv2",
+      "numpy",
+      "os",
+      "socket",
+      "struct",
+      "threading",
+      "time",
+      "typing"
+    ],
+    "definitions": [
+      {
+        "name": "Client",
+        "kind": "class",
+        "line": 24,
+        "doc": ""
+      },
+      {
+        "name": "Client.__init__",
+        "kind": "function",
+        "line": 25,
+        "doc": "Create a scrcpy client, this client won't be started until you call the start function\n\nArgs:\n    device: Android device, select first one if none, from serial if str\n    max_width: frame width that will be broadcast from android server\n    bitrate: bitrate\n    max_fps: maximum fps, 0 means not limited (supported after android 10)\n    flip: flip the video\n    block_frame: only return nonempty frames, may block cv2 render thread\n    stay_awake: keep Android device awake\n    lock_screen_orientation: lock screen orientation, LOCK_SCREEN_ORIENTATION_*\n    connection_timeout: timeout for connection, unit is ms\n    encoder_name: encoder name, enum: [OMX.google.h264.encoder, OMX.qcom.video.encoder.avc, c2.qti.avc.encoder, c2.android.avc.encoder], default is None (Auto)"
+      },
+      {
+        "name": "Client.__init_server_connection",
+        "kind": "function",
+        "line": 107,
+        "doc": "Connect to android server, there will be two sockets, video and control socket.\nThis method will set: video_socket, control_socket, resolution variables"
+      },
+      {
+        "name": "Client.__deploy_server",
+        "kind": "function",
+        "line": 141,
+        "doc": "Deploy server to android device"
+      },
+      {
+        "name": "Client.start",
+        "kind": "function",
+        "line": 178,
+        "doc": "Start listening video stream\n\nArgs:\n    threaded: Run stream loop in a different thread to avoid blocking\n    daemon_threaded: Run stream loop in a daemon thread to avoid blocking"
+      },
+      {
+        "name": "Client.stop",
+        "kind": "function",
+        "line": 201,
+        "doc": "Stop listening (both threaded and blocked)"
+      },
+      {
+        "name": "Client.__stream_loop",
+        "kind": "function",
+        "line": 224,
+        "doc": "Core loop for video parsing with frame skipping"
+      },
+      {
+        "name": "Client.add_listener",
+        "kind": "function",
+        "line": 257,
+        "doc": "Add a video listener\n\nArgs:\n    cls: Listener category, support: init, frame\n    listener: A function to receive frame np.ndarray"
+      },
+      {
+        "name": "Client.remove_listener",
+        "kind": "function",
+        "line": 267,
+        "doc": "Remove a video listener\n\nArgs:\n    cls: Listener category, support: init, frame\n    listener: A function to receive frame np.ndarray"
+      },
+      {
+        "name": "Client.__send_to_listeners",
+        "kind": "function",
+        "line": 277,
+        "doc": "Send event to listeners\n\nArgs:\n    cls: Listener type\n    *args: Other arguments\n    *kwargs: Other arguments"
+      }
+    ]
+  },
+  {
+    "path": "scripts/browser_audit.py",
+    "sha256": "771fee7d5b5089f400b08a81e59c2a4952818c8e75df72c0db0920d7a3ce243c",
+    "imports": [
+      "json",
+      "os",
+      "pathlib",
+      "playwright.sync_api",
+      "sys"
+    ],
+    "definitions": []
+  },
+  {
+    "path": "scripts/inventory.py",
+    "sha256": "e9481c9565f646432ea5f7565f7efa98f8771cac0da8fffdae5fe38476877fef",
+    "imports": [
+      "ast",
+      "hashlib",
+      "json",
+      "pathlib"
+    ],
+    "definitions": []
+  },
+  {
+    "path": "scripts/package_source.py",
+    "sha256": "1e634d58ecfbaab5cebebd079acf6e81fbbdfa64e599d57ed3ee7bcc4a81a4a8",
+    "imports": [
+      "pathlib",
+      "sys",
+      "zipfile"
+    ],
+    "definitions": []
+  },
+  {
+    "path": "scripts/serve_audit.py",
+    "sha256": "27812cf023d92415b59d386851a410053e5198f54cf60abcff95e54c7ff58b5b",
+    "imports": [
+      "main",
+      "os",
+      "pathlib",
+      "sys",
+      "webui"
+    ],
+    "definitions": []
+  },
+  {
+    "path": "scripts/smoke_windows_exe.py",
+    "sha256": "b9b84d50674af8e84a6289e79def4dcfdf25cce0f4dd7d61659694340fb19063",
+    "imports": [
+      "json",
+      "pathlib",
+      "re",
+      "subprocess",
+      "sys",
+      "time",
+      "urllib.error",
+      "urllib.request"
+    ],
+    "definitions": []
+  },
+  {
+    "path": "setup.py",
+    "sha256": "b523486c98fd422de10ca3e5a29e25ce7ea9060c6bfe0280c6ce70305e6a0700",
+    "imports": [
+      "glob",
+      "importlib",
+      "jaraco.functools",
+      "os",
+      "platform",
+      "setuptools",
+      "shutil",
+      "subprocess",
+      "sys",
+      "wheel"
+    ],
+    "definitions": [
+      {
+        "name": "bootstrap",
+        "kind": "function",
+        "line": 11,
+        "doc": ""
+      },
+      {
+        "name": "get_requirement_name",
+        "kind": "function",
+        "line": 30,
+        "doc": ""
+      },
+      {
+        "name": "check_base_requirements",
+        "kind": "function",
+        "line": 43,
+        "doc": ""
+      },
+      {
+        "name": "get_gpu_info",
+        "kind": "function",
+        "line": 65,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "stage_manager.py",
+    "sha256": "3178a19db13bbb8247074b51395fab14fdfff97f7a8b26d629593e41278ba697",
+    "imports": [
+      "cv2",
+      "state_finder",
+      "sys",
+      "threading",
+      "time",
+      "trophy_observer",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "load_image",
+        "kind": "function",
+        "line": 9,
+        "doc": ""
+      },
+      {
+        "name": "StageManager",
+        "kind": "class",
+        "line": 22,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.__init__",
+        "kind": "function",
+        "line": 23,
+        "doc": ""
+      },
+      {
+        "name": "StageManager._should_stop",
+        "kind": "function",
+        "line": 61,
+        "doc": ""
+      },
+      {
+        "name": "StageManager._should_pause",
+        "kind": "function",
+        "line": 64,
+        "doc": ""
+      },
+      {
+        "name": "StageManager._sleep_interruptible",
+        "kind": "function",
+        "line": 67,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.validate_trophies",
+        "kind": "function",
+        "line": 78,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.start_game",
+        "kind": "function",
+        "line": 90,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.handle_daily_wins",
+        "kind": "function",
+        "line": 162,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.click_star_drop",
+        "kind": "function",
+        "line": 174,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.click_star_drop._handle_drop",
+        "kind": "function",
+        "line": 178,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.end_game",
+        "kind": "function",
+        "line": 190,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.quit_shop",
+        "kind": "function",
+        "line": 260,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.close_pop_up",
+        "kind": "function",
+        "line": 264,
+        "doc": ""
+      },
+      {
+        "name": "StageManager.do_state",
+        "kind": "function",
+        "line": 274,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "state_finder.py",
+    "sha256": "c5fb4e2bd74cd6dc82c5bfc30582236e240152cd8cf90f6441b697f92eaf835a",
+    "imports": [
+      "cv2",
+      "os",
+      "sys",
+      "time",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "is_template_in_region",
+        "kind": "function",
+        "line": 27,
+        "doc": ""
+      },
+      {
+        "name": "load_template",
+        "kind": "function",
+        "line": 60,
+        "doc": ""
+      },
+      {
+        "name": "find_game_result",
+        "kind": "function",
+        "line": 82,
+        "doc": ""
+      },
+      {
+        "name": "get_in_game_state",
+        "kind": "function",
+        "line": 106,
+        "doc": ""
+      },
+      {
+        "name": "is_in_shop",
+        "kind": "function",
+        "line": 147,
+        "doc": ""
+      },
+      {
+        "name": "is_in_brawler_selection",
+        "kind": "function",
+        "line": 151,
+        "doc": ""
+      },
+      {
+        "name": "is_in_offer_popup",
+        "kind": "function",
+        "line": 155,
+        "doc": ""
+      },
+      {
+        "name": "is_in_lobby",
+        "kind": "function",
+        "line": 159,
+        "doc": ""
+      },
+      {
+        "name": "is_in_end_of_a_match",
+        "kind": "function",
+        "line": 163,
+        "doc": ""
+      },
+      {
+        "name": "is_in_trophy_reward",
+        "kind": "function",
+        "line": 167,
+        "doc": ""
+      },
+      {
+        "name": "is_in_brawl_pass",
+        "kind": "function",
+        "line": 171,
+        "doc": ""
+      },
+      {
+        "name": "is_in_star_road",
+        "kind": "function",
+        "line": 175,
+        "doc": ""
+      },
+      {
+        "name": "is_in_match_making",
+        "kind": "function",
+        "line": 179,
+        "doc": ""
+      },
+      {
+        "name": "is_in_prestige_milestone",
+        "kind": "function",
+        "line": 183,
+        "doc": ""
+      },
+      {
+        "name": "is_in_star_drop",
+        "kind": "function",
+        "line": 187,
+        "doc": ""
+      },
+      {
+        "name": "is_underdog",
+        "kind": "function",
+        "line": 197,
+        "doc": ""
+      },
+      {
+        "name": "is_in_daily_wins",
+        "kind": "function",
+        "line": 201,
+        "doc": ""
+      },
+      {
+        "name": "get_state",
+        "kind": "function",
+        "line": 205,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "tests/conftest.py",
+    "sha256": "242c494b84a8f9f5e7720caf1ab4760868fa5b326bb1a8ec2193e53554f16632",
+    "imports": [
+      "os",
+      "pathlib",
+      "pytest",
+      "shutil",
+      "sys",
+      "utils",
+      "webui"
+    ],
+    "definitions": [
+      {
+        "name": "application",
+        "kind": "function",
+        "line": 11,
+        "doc": ""
+      },
+      {
+        "name": "client",
+        "kind": "function",
+        "line": 30,
+        "doc": ""
+      },
+      {
+        "name": "headers",
+        "kind": "function",
+        "line": 34,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "tests/test_audit.py",
+    "sha256": "52d60aaa6116903cfdb625caf3f2bd8142b5303f06750fef75dda97ab216a2e8",
+    "imports": [
+      "asyncio",
+      "io",
+      "json",
+      "pytest",
+      "threading",
+      "time",
+      "types",
+      "unittest.mock",
+      "utils",
+      "webui.runtime",
+      "webui.services"
+    ],
+    "definitions": [
+      {
+        "name": "test_local_read_routes",
+        "kind": "function",
+        "line": 11,
+        "doc": ""
+      },
+      {
+        "name": "test_session_and_origin_protection",
+        "kind": "function",
+        "line": 16,
+        "doc": ""
+      },
+      {
+        "name": "test_free_public_state_unchanged",
+        "kind": "function",
+        "line": 22,
+        "doc": ""
+      },
+      {
+        "name": "test_queue_crud_and_persistence",
+        "kind": "function",
+        "line": 25,
+        "doc": ""
+      },
+      {
+        "name": "test_duplicate_order_rejected",
+        "kind": "function",
+        "line": 36,
+        "doc": ""
+      },
+      {
+        "name": "test_invalid_json_shape_is_client_error",
+        "kind": "function",
+        "line": 43,
+        "doc": ""
+      },
+      {
+        "name": "test_malformed_json_is_client_error",
+        "kind": "function",
+        "line": 46,
+        "doc": ""
+      },
+      {
+        "name": "test_storage_failure_does_not_report_success",
+        "kind": "function",
+        "line": 49,
+        "doc": ""
+      },
+      {
+        "name": "test_storage_failure_does_not_report_success.fail",
+        "kind": "function",
+        "line": 52,
+        "doc": ""
+      },
+      {
+        "name": "test_failed_serialization_preserves_file",
+        "kind": "function",
+        "line": 57,
+        "doc": ""
+      },
+      {
+        "name": "test_invalid_settings_are_rejected",
+        "kind": "function",
+        "line": 65,
+        "doc": ""
+      },
+      {
+        "name": "test_settings_roundtrip_reset",
+        "kind": "function",
+        "line": 69,
+        "doc": ""
+      },
+      {
+        "name": "test_secret_mask_preserve_and_clear",
+        "kind": "function",
+        "line": 75,
+        "doc": ""
+      },
+      {
+        "name": "test_playstyle_import_activate_delete",
+        "kind": "function",
+        "line": 84,
+        "doc": ""
+      },
+      {
+        "name": "test_invalid_history_dates",
+        "kind": "function",
+        "line": 95,
+        "doc": ""
+      },
+      {
+        "name": "test_empty_queue_start_and_stop",
+        "kind": "function",
+        "line": 98,
+        "doc": ""
+      },
+      {
+        "name": "test_discord_requires_explicit_authorized_user",
+        "kind": "function",
+        "line": 103,
+        "doc": ""
+      },
+      {
+        "name": "test_runtime_lifecycle_with_simulated_worker",
+        "kind": "function",
+        "line": 110,
+        "doc": ""
+      },
+      {
+        "name": "test_runtime_lifecycle_with_simulated_worker.worker",
+        "kind": "function",
+        "line": 113,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "tests/test_models.py",
+    "sha256": "a723a3991da4981eaebc17a9a179431ed200a7581f0aa2591a3f954554a3e57d",
+    "imports": [
+      "detect",
+      "numpy",
+      "onnxruntime",
+      "pathlib",
+      "pytest",
+      "time",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "test_bundled_model_cpu_inference",
+        "kind": "function",
+        "line": 8,
+        "doc": ""
+      },
+      {
+        "name": "test_actual_detect_pipeline",
+        "kind": "function",
+        "line": 20,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "time_management.py",
+    "sha256": "ece3d14d15cc09b05a5ebe483c87a56ee48062ca66005fcb37d1d119856ebb4b",
+    "imports": [
+      "time",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "TimeManagement",
+        "kind": "class",
+        "line": 5,
+        "doc": ""
+      },
+      {
+        "name": "TimeManagement.__init__",
+        "kind": "function",
+        "line": 6,
+        "doc": ""
+      },
+      {
+        "name": "TimeManagement.start",
+        "kind": "function",
+        "line": 10,
+        "doc": ""
+      },
+      {
+        "name": "TimeManagement.check_time",
+        "kind": "function",
+        "line": 14,
+        "doc": ""
+      },
+      {
+        "name": "TimeManagement.state_check",
+        "kind": "function",
+        "line": 21,
+        "doc": ""
+      },
+      {
+        "name": "TimeManagement.no_detections_check",
+        "kind": "function",
+        "line": 24,
+        "doc": ""
+      },
+      {
+        "name": "TimeManagement.idle_check",
+        "kind": "function",
+        "line": 27,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "trophy_observer.py",
+    "sha256": "210bc7fe9a3e312b7d965149b208490b76d59b0cbe6cdd331ef13998316c3744",
+    "imports": [
+      "csv",
+      "dataclasses",
+      "datetime",
+      "enum",
+      "os",
+      "requests",
+      "secrets",
+      "time",
+      "typing",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "GameMode",
+        "kind": "class",
+        "line": 13,
+        "doc": ""
+      },
+      {
+        "name": "MatchResult",
+        "kind": "class",
+        "line": 18,
+        "doc": ""
+      },
+      {
+        "name": "ParsedGameResult",
+        "kind": "class",
+        "line": 25,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver",
+        "kind": "class",
+        "line": 32,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver._replace_when_available",
+        "kind": "function",
+        "line": 44,
+        "doc": "Replace destination once Windows releases any external file lock."
+      },
+      {
+        "name": "TrophyObserver.__init__",
+        "kind": "function",
+        "line": 65,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.win_streak_gain",
+        "kind": "function",
+        "line": 97,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.calc_lost_decrement",
+        "kind": "function",
+        "line": 100,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.calc_win_increment",
+        "kind": "function",
+        "line": 106,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.calc_draw_increment",
+        "kind": "function",
+        "line": 112,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.calc_showdown_delta",
+        "kind": "function",
+        "line": 115,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.load_history",
+        "kind": "function",
+        "line": 121,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.save_history",
+        "kind": "function",
+        "line": 160,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver._atomic_save_history",
+        "kind": "function",
+        "line": 163,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver._normalize_history_row",
+        "kind": "function",
+        "line": 185,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.parse_game_result",
+        "kind": "function",
+        "line": 204,
+        "doc": "Parses raw game result string into a structured data class."
+      },
+      {
+        "name": "TrophyObserver.add_trophies",
+        "kind": "function",
+        "line": 245,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.add_win",
+        "kind": "function",
+        "line": 307,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.change_trophies",
+        "kind": "function",
+        "line": 313,
+        "doc": ""
+      },
+      {
+        "name": "TrophyObserver.send_results_to_api",
+        "kind": "function",
+        "line": 317,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "utils.py",
+    "sha256": "3b26cc0bfc599dd3f1d9176ad36915e107a7e4d94a65299a7320beb59694b920",
+    "imports": [
+      "PIL",
+      "ast",
+      "ctypes",
+      "cv2",
+      "early_access.early_access",
+      "hashlib",
+      "html",
+      "io",
+      "json",
+      "math",
+      "os",
+      "packaging",
+      "pathlib",
+      "random",
+      "requests",
+      "sys",
+      "tempfile",
+      "time",
+      "toml",
+      "traceback"
+    ],
+    "definitions": [
+      {
+        "name": "ui_delay",
+        "kind": "function",
+        "line": 24,
+        "doc": "Keep the existing UI wait as a minimum, with bounded extra time."
+      },
+      {
+        "name": "sleep_ui",
+        "kind": "function",
+        "line": 32,
+        "doc": ""
+      },
+      {
+        "name": "get_brawler_stats",
+        "kind": "function",
+        "line": 36,
+        "doc": ""
+      },
+      {
+        "name": "get_player_info",
+        "kind": "function",
+        "line": 40,
+        "doc": ""
+      },
+      {
+        "name": "_get_project_root",
+        "kind": "function",
+        "line": 44,
+        "doc": ""
+      },
+      {
+        "name": "resolve_project_path",
+        "kind": "function",
+        "line": 55,
+        "doc": ""
+      },
+      {
+        "name": "resolve_within",
+        "kind": "function",
+        "line": 59,
+        "doc": ""
+      },
+      {
+        "name": "resolve_playstyle_path",
+        "kind": "function",
+        "line": 67,
+        "doc": ""
+      },
+      {
+        "name": "load_toml_as_dict",
+        "kind": "function",
+        "line": 75,
+        "doc": ""
+      },
+      {
+        "name": "invalidate_toml_cache",
+        "kind": "function",
+        "line": 88,
+        "doc": ""
+      },
+      {
+        "name": "save_dict_as_toml",
+        "kind": "function",
+        "line": 93,
+        "doc": ""
+      },
+      {
+        "name": "_atomic_write_text",
+        "kind": "function",
+        "line": 99,
+        "doc": "Replace a local data file only after serialization and a complete write."
+      },
+      {
+        "name": "count_hsv_pixels",
+        "kind": "function",
+        "line": 128,
+        "doc": ""
+      },
+      {
+        "name": "count_mask_pixels",
+        "kind": "function",
+        "line": 146,
+        "doc": ""
+      },
+      {
+        "name": "save_brawler_data",
+        "kind": "function",
+        "line": 156,
+        "doc": "Save the given data to a json file. As a list of dictionaries."
+      },
+      {
+        "name": "load_brawler_data",
+        "kind": "function",
+        "line": 164,
+        "doc": ""
+      },
+      {
+        "name": "api_update_brawler_data",
+        "kind": "function",
+        "line": 177,
+        "doc": ""
+      },
+      {
+        "name": "clear_brawler_data",
+        "kind": "function",
+        "line": 182,
+        "doc": ""
+      },
+      {
+        "name": "clean_queue",
+        "kind": "function",
+        "line": 188,
+        "doc": ""
+      },
+      {
+        "name": "find_template_center",
+        "kind": "function",
+        "line": 242,
+        "doc": ""
+      },
+      {
+        "name": "load_brawlers_info",
+        "kind": "function",
+        "line": 265,
+        "doc": ""
+      },
+      {
+        "name": "update_brawlers_info",
+        "kind": "function",
+        "line": 273,
+        "doc": ""
+      },
+      {
+        "name": "get_brawler_list",
+        "kind": "function",
+        "line": 278,
+        "doc": ""
+      },
+      {
+        "name": "update_missing_brawlers_info",
+        "kind": "function",
+        "line": 294,
+        "doc": ""
+      },
+      {
+        "name": "get_brawler_info",
+        "kind": "function",
+        "line": 311,
+        "doc": ""
+      },
+      {
+        "name": "save_brawler_icon",
+        "kind": "function",
+        "line": 322,
+        "doc": ""
+      },
+      {
+        "name": "get_latest_version",
+        "kind": "function",
+        "line": 356,
+        "doc": ""
+      },
+      {
+        "name": "get_announcements",
+        "kind": "function",
+        "line": 366,
+        "doc": "Fetch active announcements without making startup depend on the API."
+      },
+      {
+        "name": "check_version",
+        "kind": "function",
+        "line": 380,
+        "doc": ""
+      },
+      {
+        "name": "format_notification_status",
+        "kind": "function",
+        "line": 393,
+        "doc": ""
+      },
+      {
+        "name": "notify_user",
+        "kind": "function",
+        "line": 417,
+        "doc": ""
+      },
+      {
+        "name": "get_discord_link",
+        "kind": "function",
+        "line": 526,
+        "doc": ""
+      },
+      {
+        "name": "get_online_wall_model_hash",
+        "kind": "function",
+        "line": 538,
+        "doc": ""
+      },
+      {
+        "name": "calculate_sha256",
+        "kind": "function",
+        "line": 548,
+        "doc": "Calculate the SHA-256 hash of a file."
+      },
+      {
+        "name": "current_wall_model_is_latest",
+        "kind": "function",
+        "line": 560,
+        "doc": "Check if the current wall model is the latest version."
+      },
+      {
+        "name": "get_latest_wall_model_file",
+        "kind": "function",
+        "line": 571,
+        "doc": ""
+      },
+      {
+        "name": "get_latest_wall_model_classes",
+        "kind": "function",
+        "line": 583,
+        "doc": ""
+      },
+      {
+        "name": "update_wall_model_classes",
+        "kind": "function",
+        "line": 593,
+        "doc": ""
+      },
+      {
+        "name": "cprint",
+        "kind": "function",
+        "line": 607,
+        "doc": ""
+      },
+      {
+        "name": "normalize_brawler_filename",
+        "kind": "function",
+        "line": 616,
+        "doc": ""
+      },
+      {
+        "name": "get_brawler_icon_path",
+        "kind": "function",
+        "line": 620,
+        "doc": ""
+      },
+      {
+        "name": "get_dpi_scale",
+        "kind": "function",
+        "line": 639,
+        "doc": ""
+      },
+      {
+        "name": "is_safe_ast",
+        "kind": "function",
+        "line": 674,
+        "doc": ""
+      },
+      {
+        "name": "interpret_pyla_code",
+        "kind": "function",
+        "line": 699,
+        "doc": ""
+      },
+      {
+        "name": "load_pyla_script",
+        "kind": "function",
+        "line": 724,
+        "doc": ""
+      },
+      {
+        "name": "get_playstyles_list",
+        "kind": "function",
+        "line": 741,
+        "doc": ""
+      },
+      {
+        "name": "load_default_pyla_script",
+        "kind": "function",
+        "line": 755,
+        "doc": ""
+      },
+      {
+        "name": "hash_playstyle",
+        "kind": "function",
+        "line": 761,
+        "doc": ""
+      },
+      {
+        "name": "config_bool",
+        "kind": "function",
+        "line": 765,
+        "doc": ""
+      },
+      {
+        "name": "clamp",
+        "kind": "function",
+        "line": 776,
+        "doc": ""
+      },
+      {
+        "name": "normalize_move",
+        "kind": "function",
+        "line": 786,
+        "doc": ""
+      },
+      {
+        "name": "mask_secret",
+        "kind": "function",
+        "line": 794,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "webui/__init__.py",
+    "sha256": "7fca498015f241591ba0ca6913ae769e881681c99982d2c8c8ebed878c4ab56d",
+    "imports": [
+      ".app"
+    ],
+    "definitions": []
+  },
+  {
+    "path": "webui/app.py",
+    "sha256": "7142a85e06cbd1a0371c6c0abc551a22bfe83daee8ffb9584b6c5ae59c112eb7",
+    "imports": [
+      ".runtime",
+      ".services",
+      "__future__",
+      "datetime",
+      "discord_bot",
+      "flask",
+      "hmac",
+      "logging",
+      "secrets",
+      "threading",
+      "urllib.parse",
+      "utils",
+      "werkzeug.exceptions"
+    ],
+    "definitions": [
+      {
+        "name": "_SuppressRuntimeStatusPolling",
+        "kind": "class",
+        "line": 19,
+        "doc": ""
+      },
+      {
+        "name": "_SuppressRuntimeStatusPolling.filter",
+        "kind": "function",
+        "line": 20,
+        "doc": ""
+      },
+      {
+        "name": "_SuppressQueuePolling",
+        "kind": "class",
+        "line": 27,
+        "doc": ""
+      },
+      {
+        "name": "_SuppressQueuePolling.filter",
+        "kind": "function",
+        "line": 28,
+        "doc": ""
+      },
+      {
+        "name": "_SuppressAssetsGetting",
+        "kind": "class",
+        "line": 35,
+        "doc": ""
+      },
+      {
+        "name": "_SuppressAssetsGetting.filter",
+        "kind": "function",
+        "line": 36,
+        "doc": ""
+      },
+      {
+        "name": "_SupressHistoryPolling",
+        "kind": "class",
+        "line": 42,
+        "doc": ""
+      },
+      {
+        "name": "_SupressHistoryPolling.filter",
+        "kind": "function",
+        "line": 43,
+        "doc": ""
+      },
+      {
+        "name": "_SuppressWebhookPutting",
+        "kind": "class",
+        "line": 50,
+        "doc": ""
+      },
+      {
+        "name": "_SuppressWebhookPutting.filter",
+        "kind": "function",
+        "line": 51,
+        "doc": ""
+      },
+      {
+        "name": "_configure_request_logging",
+        "kind": "function",
+        "line": 57,
+        "doc": ""
+      },
+      {
+        "name": "_start_discord_bot_thread",
+        "kind": "function",
+        "line": 72,
+        "doc": ""
+      },
+      {
+        "name": "create_app",
+        "kind": "function",
+        "line": 88,
+        "doc": ""
+      },
+      {
+        "name": "create_app._parsed_request_host",
+        "kind": "function",
+        "line": 109,
+        "doc": ""
+      },
+      {
+        "name": "create_app._is_allowed_origin",
+        "kind": "function",
+        "line": 115,
+        "doc": ""
+      },
+      {
+        "name": "create_app.protect_local_control_api",
+        "kind": "function",
+        "line": 131,
+        "doc": ""
+      },
+      {
+        "name": "create_app.add_local_security_headers",
+        "kind": "function",
+        "line": 166,
+        "doc": ""
+      },
+      {
+        "name": "create_app.index",
+        "kind": "function",
+        "line": 174,
+        "doc": ""
+      },
+      {
+        "name": "create_app.bootstrap",
+        "kind": "function",
+        "line": 181,
+        "doc": ""
+      },
+      {
+        "name": "create_app.handle_known_errors",
+        "kind": "function",
+        "line": 187,
+        "doc": ""
+      },
+      {
+        "name": "create_app.handle_unexpected_error",
+        "kind": "function",
+        "line": 192,
+        "doc": ""
+      },
+      {
+        "name": "create_app.get_queue",
+        "kind": "function",
+        "line": 199,
+        "doc": ""
+      },
+      {
+        "name": "create_app.add_queue",
+        "kind": "function",
+        "line": 203,
+        "doc": ""
+      },
+      {
+        "name": "create_app.import_queue",
+        "kind": "function",
+        "line": 209,
+        "doc": ""
+      },
+      {
+        "name": "create_app.update_queue_item",
+        "kind": "function",
+        "line": 215,
+        "doc": ""
+      },
+      {
+        "name": "create_app.reorder_queue",
+        "kind": "function",
+        "line": 222,
+        "doc": ""
+      },
+      {
+        "name": "create_app.clear_queue",
+        "kind": "function",
+        "line": 228,
+        "doc": ""
+      },
+      {
+        "name": "create_app.delete_queue_item",
+        "kind": "function",
+        "line": 233,
+        "doc": ""
+      },
+      {
+        "name": "create_app.get_playstyles",
+        "kind": "function",
+        "line": 238,
+        "doc": ""
+      },
+      {
+        "name": "create_app.import_playstyle",
+        "kind": "function",
+        "line": 242,
+        "doc": ""
+      },
+      {
+        "name": "create_app.delete_playstyle",
+        "kind": "function",
+        "line": 247,
+        "doc": ""
+      },
+      {
+        "name": "create_app.activate_playstyle",
+        "kind": "function",
+        "line": 252,
+        "doc": ""
+      },
+      {
+        "name": "create_app.import_settings",
+        "kind": "function",
+        "line": 258,
+        "doc": ""
+      },
+      {
+        "name": "create_app.get_adb_devices",
+        "kind": "function",
+        "line": 263,
+        "doc": ""
+      },
+      {
+        "name": "create_app.scan_adb_devices",
+        "kind": "function",
+        "line": 267,
+        "doc": ""
+      },
+      {
+        "name": "create_app.get_settings",
+        "kind": "function",
+        "line": 272,
+        "doc": ""
+      },
+      {
+        "name": "create_app.update_settings",
+        "kind": "function",
+        "line": 276,
+        "doc": ""
+      },
+      {
+        "name": "create_app.reset_settings",
+        "kind": "function",
+        "line": 281,
+        "doc": ""
+      },
+      {
+        "name": "create_app.runtime_start",
+        "kind": "function",
+        "line": 285,
+        "doc": ""
+      },
+      {
+        "name": "create_app.runtime_status",
+        "kind": "function",
+        "line": 298,
+        "doc": ""
+      },
+      {
+        "name": "create_app.runtime_pause",
+        "kind": "function",
+        "line": 302,
+        "doc": ""
+      },
+      {
+        "name": "create_app.runtime_stop",
+        "kind": "function",
+        "line": 308,
+        "doc": ""
+      },
+      {
+        "name": "create_app.runtime_logs",
+        "kind": "function",
+        "line": 314,
+        "doc": ""
+      },
+      {
+        "name": "create_app.clear_runtime_logs",
+        "kind": "function",
+        "line": 318,
+        "doc": ""
+      },
+      {
+        "name": "create_app.history",
+        "kind": "function",
+        "line": 323,
+        "doc": ""
+      },
+      {
+        "name": "create_app.brawler_icon",
+        "kind": "function",
+        "line": 347,
+        "doc": ""
+      },
+      {
+        "name": "create_app.support_asset",
+        "kind": "function",
+        "line": 354,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "webui/runtime.py",
+    "sha256": "7512539182870849b2953f5eb26b382c4e60f7a34fac86d9849f77dea4879ab0",
+    "imports": [
+      "__future__",
+      "collections",
+      "re",
+      "sys",
+      "threading",
+      "time",
+      "traceback",
+      "typing"
+    ],
+    "definitions": [
+      {
+        "name": "ThreadFilterStream",
+        "kind": "class",
+        "line": 16,
+        "doc": ""
+      },
+      {
+        "name": "ThreadFilterStream.__init__",
+        "kind": "function",
+        "line": 19,
+        "doc": ""
+      },
+      {
+        "name": "ThreadFilterStream.write",
+        "kind": "function",
+        "line": 25,
+        "doc": ""
+      },
+      {
+        "name": "ThreadFilterStream.flush",
+        "kind": "function",
+        "line": 48,
+        "doc": ""
+      },
+      {
+        "name": "ThreadFilterStream.__getattr__",
+        "kind": "function",
+        "line": 51,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeControl",
+        "kind": "class",
+        "line": 64,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeControl.__init__",
+        "kind": "function",
+        "line": 65,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeControl.request_pause",
+        "kind": "function",
+        "line": 70,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeControl.resume",
+        "kind": "function",
+        "line": 73,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeControl.request_stop",
+        "kind": "function",
+        "line": 76,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeControl.should_stop",
+        "kind": "function",
+        "line": 80,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeControl.should_pause",
+        "kind": "function",
+        "line": 83,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeControl.mark_running",
+        "kind": "function",
+        "line": 86,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeControl.mark_paused",
+        "kind": "function",
+        "line": 89,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager",
+        "kind": "class",
+        "line": 93,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager.__init__",
+        "kind": "function",
+        "line": 94,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager._set_state",
+        "kind": "function",
+        "line": 105,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager.configure_start_gate",
+        "kind": "function",
+        "line": 109,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager.get_status",
+        "kind": "function",
+        "line": 117,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager.start",
+        "kind": "function",
+        "line": 132,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager.start_current_queue",
+        "kind": "function",
+        "line": 157,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager._run_worker",
+        "kind": "function",
+        "line": 181,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager.pause",
+        "kind": "function",
+        "line": 208,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager.stop",
+        "kind": "function",
+        "line": 224,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager.get_logs",
+        "kind": "function",
+        "line": 254,
+        "doc": ""
+      },
+      {
+        "name": "RuntimeManager.clear_logs",
+        "kind": "function",
+        "line": 258,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "webui/services.py",
+    "sha256": "0a3293f7f8e6919ba69f03440398b8f44dd4d0e49bfeac221ecf910b069d973d",
+    "imports": [
+      "__future__",
+      "concurrent.futures",
+      "csv",
+      "datetime",
+      "json",
+      "logging",
+      "math",
+      "packaging",
+      "pathlib",
+      "shutil",
+      "socket",
+      "threading",
+      "toml",
+      "traceback",
+      "typing",
+      "utils",
+      "werkzeug.utils",
+      "window_controller"
+    ],
+    "definitions": [
+      {
+        "name": "get_brawler_stats",
+        "kind": "function",
+        "line": 35,
+        "doc": ""
+      },
+      {
+        "name": "get_player_info",
+        "kind": "function",
+        "line": 39,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService",
+        "kind": "class",
+        "line": 49,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.__init__",
+        "kind": "function",
+        "line": 121,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._bool_from_string",
+        "kind": "function",
+        "line": 131,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._deserialize",
+        "kind": "function",
+        "line": 134,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._serialize",
+        "kind": "function",
+        "line": 159,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._select_fields",
+        "kind": "function",
+        "line": 164,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._apply_updates",
+        "kind": "function",
+        "line": 171,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._normalize_debug_settings",
+        "kind": "function",
+        "line": 196,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._load_config",
+        "kind": "function",
+        "line": 202,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._save_config",
+        "kind": "function",
+        "line": 205,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._load_startup_queue_if_enabled",
+        "kind": "function",
+        "line": 208,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_auth_state",
+        "kind": "function",
+        "line": 227,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_current_version",
+        "kind": "function",
+        "line": 234,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_latest_version_safe",
+        "kind": "function",
+        "line": 237,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_warnings",
+        "kind": "function",
+        "line": 248,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_announcements_safe",
+        "kind": "function",
+        "line": 260,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._resolve_brawler_catalog",
+        "kind": "function",
+        "line": 274,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_brawler_catalog",
+        "kind": "function",
+        "line": 280,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.normalize_queue_entry",
+        "kind": "function",
+        "line": 290,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._sorted_play_order_enabled",
+        "kind": "function",
+        "line": 312,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_queue_data",
+        "kind": "function",
+        "line": 316,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._assert_queue_editable",
+        "kind": "function",
+        "line": 331,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.save_queue_data",
+        "kind": "function",
+        "line": 336,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._sync_running_queue_from_saved_file",
+        "kind": "function",
+        "line": 342,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.import_queue_file",
+        "kind": "function",
+        "line": 360,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.add_or_update_queue_item",
+        "kind": "function",
+        "line": 385,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.delete_queue_item",
+        "kind": "function",
+        "line": 398,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.clear_queue",
+        "kind": "function",
+        "line": 404,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.reorder_queue",
+        "kind": "function",
+        "line": 410,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.save_queue_to_file",
+        "kind": "function",
+        "line": 435,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.push_all_to_default_target",
+        "kind": "function",
+        "line": 440,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_playstyles_payload",
+        "kind": "function",
+        "line": 494,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.activate_playstyle",
+        "kind": "function",
+        "line": 516,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.delete_playstyle",
+        "kind": "function",
+        "line": 530,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.import_playstyle",
+        "kind": "function",
+        "line": 547,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_settings_payload",
+        "kind": "function",
+        "line": 586,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.update_settings",
+        "kind": "function",
+        "line": 610,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.reset_settings",
+        "kind": "function",
+        "line": 649,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_player_info_payload",
+        "kind": "function",
+        "line": 693,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._has_player_values",
+        "kind": "function",
+        "line": 737,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_match_history_payload",
+        "kind": "function",
+        "line": 742,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._parse_match_datetime",
+        "kind": "function",
+        "line": 901,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._parse_int",
+        "kind": "function",
+        "line": 914,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._build_match_history_response",
+        "kind": "function",
+        "line": 921,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.get_bootstrap_payload",
+        "kind": "function",
+        "line": 954,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.import_settings_from_folder",
+        "kind": "function",
+        "line": 993,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService.scan_adb_devices",
+        "kind": "function",
+        "line": 1064,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._scan_adb_devices_unlocked",
+        "kind": "function",
+        "line": 1072,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._scan_adb_devices_unlocked.open_port",
+        "kind": "function",
+        "line": 1080,
+        "doc": ""
+      },
+      {
+        "name": "WebDataService._scan_adb_devices_unlocked.connect",
+        "kind": "function",
+        "line": 1090,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "window_controller.py",
+    "sha256": "066d713d98b8ca57d5712bca14f7e18c2df9b4984a16a9ec6db41cf0c9cc8554",
+    "imports": [
+      "adbutils",
+      "atexit",
+      "concurrent.futures",
+      "debug_view",
+      "math",
+      "random",
+      "scrcpy",
+      "threading",
+      "time",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "restart_adb_server",
+        "kind": "function",
+        "line": 19,
+        "doc": ""
+      },
+      {
+        "name": "online_devices",
+        "kind": "function",
+        "line": 32,
+        "doc": ""
+      },
+      {
+        "name": "adb_device_port_sort_key",
+        "kind": "function",
+        "line": 44,
+        "doc": "Sort TCP/emulator ADB devices by their effective ADB port."
+      },
+      {
+        "name": "discover_device",
+        "kind": "function",
+        "line": 61,
+        "doc": ""
+      },
+      {
+        "name": "discover_device._safe_connect",
+        "kind": "function",
+        "line": 64,
+        "doc": ""
+      },
+      {
+        "name": "discover_device._try",
+        "kind": "function",
+        "line": 92,
+        "doc": ""
+      },
+      {
+        "name": "WindowController",
+        "kind": "class",
+        "line": 118,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.__init__",
+        "kind": "function",
+        "line": 121,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.get_latest_frame",
+        "kind": "function",
+        "line": 169,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.force_rediscover",
+        "kind": "function",
+        "line": 175,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.reconnect_scrcpy",
+        "kind": "function",
+        "line": 190,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.restart_brawl_stars",
+        "kind": "function",
+        "line": 243,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.is_brawl_stars_running",
+        "kind": "function",
+        "line": 250,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.screenshot",
+        "kind": "function",
+        "line": 271,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.reset_to_default_resolution",
+        "kind": "function",
+        "line": 302,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.touch_down",
+        "kind": "function",
+        "line": 313,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.touch_move",
+        "kind": "function",
+        "line": 329,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.touch_up",
+        "kind": "function",
+        "line": 345,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.move",
+        "kind": "function",
+        "line": 361,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.release_movement",
+        "kind": "function",
+        "line": 385,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.click",
+        "kind": "function",
+        "line": 391,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.press",
+        "kind": "function",
+        "line": 405,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.type_text",
+        "kind": "function",
+        "line": 413,
+        "doc": "Type ASCII text into the currently focused Android input field."
+      },
+      {
+        "name": "WindowController.swipe",
+        "kind": "function",
+        "line": 430,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.close",
+        "kind": "function",
+        "line": 451,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.stop_scrcpy_with_timeout",
+        "kind": "function",
+        "line": 460,
+        "doc": ""
+      },
+      {
+        "name": "WindowController.stop_scrcpy_with_timeout.stop_client",
+        "kind": "function",
+        "line": 461,
+        "doc": ""
+      }
+    ]
+  }
+]

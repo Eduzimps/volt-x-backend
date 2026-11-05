@@ -1,0 +1,116 @@
+# Estrutura de pastas
+
+```text
+LICENSE
+README-AUDITORIA.md
+README.md
+api/
+  api.py
+  assets/
+    brawler_icons/
+    brawler_icons2/
+cfg/
+  bot_config.toml
+  brawlers_info.json
+  buttons_config.toml
+  debug_settings.toml
+  general_config.toml
+  lobby_config.toml
+  login.toml
+  match_history.csv
+  time_tresholds.toml
+  webhook_config.toml
+debug_view.py
+desktop.py
+detect.py
+discord_bot.py
+docs/
+  ALTERACOES.md
+  BACKEND-E-INTEGRACOES.md
+  ESTRUTURA.md
+  FONTES-E-ALTERACOES.json
+  FUNCIONALIDADES.md
+  INVENTARIO.json
+  MODULOS.md
+  ROTAS-LOCAIS.json
+  TESTES.md
+entity_model.py
+images/
+  defeat.png
+  discord_logo.png
+  draw.png
+  end_results/
+  gamemodes/
+  gamemodes_logos/
+  github.svg
+  logo.ico
+  logo.png
+  logo_no_background.png
+  patreon.png
+  star_drop_types/
+  states/
+  trophies_icon.png
+  victory.png
+latest_brawler_data.json
+lobby_automation.py
+main.py
+match_logger.py
+models/
+  closeTileDetector.onnx
+  mainInGameModel.json
+  mainInGameModel.onnx
+  tileDetector.json
+  tileDetector.onnx
+play.py
+playstyles/
+  default_right.pyla
+  default_up.pyla
+  follower.pyla
+  showdown_survivor.pyla
+  skeleton.py
+  team_showdown.pyla
+  universal_smart_v5_Slarckvul_Eddition.pyla
+pyla.spec
+requirements-build-windows.txt
+requirements-linux-audit.txt
+requirements-test.txt
+requirements.txt
+scrcpy/
+  __init__.py
+  const.py
+  control.py
+  core.py
+  scrcpy-server.jar
+scripts/
+  browser_audit.py
+  build-windows.ps1
+  inventory.py
+  package_source.py
+  run-source.ps1
+  serve_audit.py
+  smoke_windows_exe.py
+setup.py
+stage_manager.py
+start.bat
+state_finder.py
+static/
+  css/
+  js/
+templates/
+  index.html
+tests/
+  conftest.py
+  test_audit.py
+  test_models.py
+time_management.py
+trophy_observer.py
+utils.py
+webui/
+  __init__.py
+  app.py
+  runtime.py
+  services.py
+window_controller.py
+```
+
+Os arquivos individuais de ícones em api/assets foram omitidos desta listagem resumida; estão incluídos na entrega.

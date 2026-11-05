@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="14" skipped="0" tests="41" time="1.501" timestamp="2026-11-05T13:08:13.526537+00:00" hostname="62299fcd778b"><testcase classname="tests.test_audit" name="test_local_read_routes[/]" time="0.701" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/bootstrap]" time="0.016" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/queue]" time="0.012" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/playstyles]" time="0.014" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/history]" time="0.015" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/runtime/status]" time="0.011" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/runtime/logs]" time="0.011" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/settings/general]" time="0.012" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/settings/bot]" time="0.012" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/settings/debug]" time="0.013" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/settings/timers]" time="0.011" /><testcase classname="tests.test_audit" name="test_local_read_routes[/api/settings/webhook]" time="0.011" /><testcase classname="tests.test_audit" name="test_session_and_origin_protection" time="0.014" /><testcase classname="tests.test_audit" name="test_free_public_state_unchanged" time="0.017" /><testcase classname="tests.test_audit" name="test_queue_crud_and_persistence" time="0.023" /><testcase classname="tests.test_audit" name="test_duplicate_order_rejected" time="0.013"><failure message="assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'dJYcJrS7e9gHlta5D0GciXoR219SrmNuOaR45iz6zI0'}
+
+    def test_duplicate_order_rejected(client, headers):
+        client.post('/api/queue',json={'brawler':'shelly'},headers=headers)
+        response=client.post('/api/queue/reorder',json={'order':['shelly','shelly']},headers=headers)
+&gt;       assert response.status_code==400
+E       assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+
+tests/test_audit.py:39: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_json_shape_is_client_error[payload0]" time="0.015"><failure message="AssertionError: assert 500 == 400&#10; +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt; = post('/api/queue', json=['wrong'], headers={'X-Pyla-UI-Token': '82QY697qJ0bXRwn-1asK7TgoK4nhPDFO9frT4JGoEkc'})&#10; +      where post = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.post">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': '82QY697qJ0bXRwn-1asK7TgoK4nhPDFO9frT4JGoEkc'}
+payload = ['wrong']
+
+    @pytest.mark.parametrize('payload',[['wrong'], 'wrong', 5])
+    def test_invalid_json_shape_is_client_error(client,headers,payload):
+&gt;       assert client.post('/api/queue',json=payload,headers=headers).status_code==400
+E       AssertionError: assert 500 == 400
+E        +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt; = post('/api/queue', json=['wrong'], headers={'X-Pyla-UI-Token': '82QY697qJ0bXRwn-1asK7TgoK4nhPDFO9frT4JGoEkc'})
+E        +      where post = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.post
+
+tests/test_audit.py:44: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_json_shape_is_client_error[wrong]" time="0.014"><failure message="AssertionError: assert 500 == 400&#10; +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt; = post('/api/queue', json='wrong', headers={'X-Pyla-UI-Token': 'fJf-LJ9asJ2sueAYG3lOo1xoB9ZWK0bNbiIwlX_M5-0'})&#10; +      where post = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.post">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'fJf-LJ9asJ2sueAYG3lOo1xoB9ZWK0bNbiIwlX_M5-0'}
+payload = 'wrong'
+
+    @pytest.mark.parametrize('payload',[['wrong'], 'wrong', 5])
+    def test_invalid_json_shape_is_client_error(client,headers,payload):
+&gt;       assert client.post('/api/queue',json=payload,headers=headers).status_code==400
+E       AssertionError: assert 500 == 400
+E        +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt; = post('/api/queue', json='wrong', headers={'X-Pyla-UI-Token': 'fJf-LJ9asJ2sueAYG3lOo1xoB9ZWK0bNbiIwlX_M5-0'})
+E        +      where post = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.post
+
+tests/test_audit.py:44: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_json_shape_is_client_error[5]" time="0.012"><failure message="AssertionError: assert 500 == 400&#10; +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt; = post('/api/queue', json=5, headers={'X-Pyla-UI-Token': 'cIsMpzX-0H4Xh9_hfDIRac_05Q5ubOUdhLU1iPSMhNU'})&#10; +      where post = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.post">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'cIsMpzX-0H4Xh9_hfDIRac_05Q5ubOUdhLU1iPSMhNU'}
+payload = 5
+
+    @pytest.mark.parametrize('payload',[['wrong'], 'wrong', 5])
+    def test_invalid_json_shape_is_client_error(client,headers,payload):
+&gt;       assert client.post('/api/queue',json=payload,headers=headers).status_code==400
+E       AssertionError: assert 500 == 400
+E        +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt; = post('/api/queue', json=5, headers={'X-Pyla-UI-Token': 'cIsMpzX-0H4Xh9_hfDIRac_05Q5ubOUdhLU1iPSMhNU'})
+E        +      where post = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.post
+
+tests/test_audit.py:44: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_malformed_json_is_client_error" time="0.013" /><testcase classname="tests.test_audit" name="test_storage_failure_does_not_report_success" time="0.012"><failure message="Failed: DID NOT RAISE OSError">application = &lt;Flask 'webui.app'&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6eec08a790&gt;
+
+    def test_storage_failure_does_not_report_success(application,monkeypatch):
+        import webui.services as services
+        data=application.config['data_service']
+        def fail(*a,**k):raise OSError('simulated disk failure')
+        monkeypatch.setattr(services,'save_brawler_data',fail)
+&gt;       with pytest.raises(OSError):data.save_queue_data([{'brawler':'shelly'}])
+E       Failed: DID NOT RAISE OSError
+
+tests/test_audit.py:54: Failed</failure></testcase><testcase classname="tests.test_audit" name="test_failed_serialization_preserves_file" time="0.014"><failure message="assert b'[\n    {\n ...  &quot;invalid&quot;: ' == b'[\n    {\n ...ly&quot;\n    }\n]'&#10;  &#10;  At index 17 diff: b'i' != b'b'&#10;  Use -v to get more diff">application = &lt;Flask 'webui.app'&gt;
+
+    def test_failed_serialization_preserves_file(application):
+        import utils
+        utils.save_brawler_data([{'brawler':'shelly'}])
+        before=utils.resolve_project_path('latest_brawler_data.json').read_bytes()
+        with pytest.raises(TypeError):utils.save_brawler_data([{'invalid':object()}])
+&gt;       assert utils.resolve_project_path('latest_brawler_data.json').read_bytes()==before
+E       assert b'[\n    {\n ...  "invalid": ' == b'[\n    {\n ...ly"\n    }\n]'
+E         
+E         At index 17 diff: b'i' != b'b'
+E         Use -v to get more diff
+
+tests/test_audit.py:62: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_settings_are_rejected[general-updates0]" time="0.013"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'general'), json={'max_fps': 0}, headers={'X-Pyla-UI-Token': 'TI1394R6up-IcBEpxzdkJBxZjSwyda0etMeBnU4VtPk'})&#10; +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'TI1394R6up-IcBEpxzdkJBxZjSwyda0etMeBnU4VtPk'}
+section = 'general', updates = {'max_fps': 0}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+&gt;       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'general'), json={'max_fps': 0}, headers={'X-Pyla-UI-Token': 'TI1394R6up-IcBEpxzdkJBxZjSwyda0etMeBnU4VtPk'})
+E        +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put
+
+tests/test_audit.py:66: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_settings_are_rejected[general-updates1]" time="0.013"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'general'), json={'used_threads': -2}, headers={'X-Pyla-UI-Token': 'GEWKCeiDYe60HOpiowXHyAZO7Z5ZVxMq51ougOsgmMY'})&#10; +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'GEWKCeiDYe60HOpiowXHyAZO7Z5ZVxMq51ougOsgmMY'}
+section = 'general', updates = {'used_threads': -2}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+&gt;       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'general'), json={'used_threads': -2}, headers={'X-Pyla-UI-Token': 'GEWKCeiDYe60HOpiowXHyAZO7Z5ZVxMq51ougOsgmMY'})
+E        +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put
+
+tests/test_audit.py:66: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_settings_are_rejected[general-updates2]" time="0.013"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'general'), json={'emulator_port': 70000}, headers={'X-Pyla-UI-Token': 'NkLDzpqRyQkHBSc0e3g-rFbyIIWVoG8N1bsoENHkKHg'})&#10; +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'NkLDzpqRyQkHBSc0e3g-rFbyIIWVoG8N1bsoENHkKHg'}
+section = 'general', updates = {'emulator_port': 70000}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+&gt;       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'general'), json={'emulator_port': 70000}, headers={'X-Pyla-UI-Token': 'NkLDzpqRyQkHBSc0e3g-rFbyIIWVoG8N1bsoENHkKHg'})
+E        +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put
+
+tests/test_audit.py:66: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_settings_are_rejected[bot-updates3]" time="0.012"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'bot'), json={'wall_detection_confidence': 2}, headers={'X-Pyla-UI-Token': 'fSPR34qWf-PaZnGdTQt_5HD-YQPhmQi6A5cA4tiSZos'})&#10; +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'fSPR34qWf-PaZnGdTQt_5HD-YQPhmQi6A5cA4tiSZos'}
+section = 'bot', updates = {'wall_detection_confidence': 2}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+&gt;       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'bot'), json={'wall_detection_confidence': 2}, headers={'X-Pyla-UI-Token': 'fSPR34qWf-PaZnGdTQt_5HD-YQPhmQi6A5cA4tiSZos'})
+E        +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put
+
+tests/test_audit.py:66: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_settings_are_rejected[timers-updates4]" time="0.016"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'timers'), json={'state_check': -1}, headers={'X-Pyla-UI-Token': '9pqAP_WrPf58xxwFL17ibqoJFhtivG8-T6-yaTuMYAY'})&#10; +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': '9pqAP_WrPf58xxwFL17ibqoJFhtivG8-T6-yaTuMYAY'}
+section = 'timers', updates = {'state_check': -1}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+&gt;       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'timers'), json={'state_check': -1}, headers={'X-Pyla-UI-Token': '9pqAP_WrPf58xxwFL17ibqoJFhtivG8-T6-yaTuMYAY'})
+E        +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put
+
+tests/test_audit.py:66: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_settings_are_rejected[debug-updates5]" time="0.012"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'debug'), json={'debug_view_fps': 0}, headers={'X-Pyla-UI-Token': 'V5cg2h4OGmTdJGDcsiYZz3CxES-D7PoMZtXgs5BJmVk'})&#10; +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'V5cg2h4OGmTdJGDcsiYZz3CxES-D7PoMZtXgs5BJmVk'}
+section = 'debug', updates = {'debug_view_fps': 0}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+&gt;       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'debug'), json={'debug_view_fps': 0}, headers={'X-Pyla-UI-Token': 'V5cg2h4OGmTdJGDcsiYZz3CxES-D7PoMZtXgs5BJmVk'})
+E        +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put
+
+tests/test_audit.py:66: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_settings_are_rejected[bot-updates6]" time="0.050"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'bot'), json={'minimum_movement_delay': nan}, headers={'X-Pyla-UI-Token': 'j-whiX9l1MZ9WBXXUX_omqW5K5EG0npgnKlNIYZO5vU'})&#10; +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'j-whiX9l1MZ9WBXXUX_omqW5K5EG0npgnKlNIYZO5vU'}
+section = 'bot', updates = {'minimum_movement_delay': nan}
+
+    @pytest.mark.parametrize('section,updates',[('general',{'max_fps':0}),('general',{'used_threads':-2}),('general',{'emulator_port':70000}),('bot',{'wall_detection_confidence':2}),('timers',{'state_check':-1}),('debug',{'debug_view_fps':0}),('bot',{'minimum_movement_delay':float('nan')})])
+    def test_invalid_settings_are_rejected(client,headers,section,updates):
+&gt;       assert client.put('/api/settings/'+section,json=updates,headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = put(('/api/settings/' + 'bot'), json={'minimum_movement_delay': nan}, headers={'X-Pyla-UI-Token': 'j-whiX9l1MZ9WBXXUX_omqW5K5EG0npgnKlNIYZO5vU'})
+E        +      where put = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.put
+
+tests/test_audit.py:66: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_settings_roundtrip_reset[general]" time="0.012" /><testcase classname="tests.test_audit" name="test_settings_roundtrip_reset[bot]" time="0.012" /><testcase classname="tests.test_audit" name="test_settings_roundtrip_reset[timers]" time="0.014" /><testcase classname="tests.test_audit" name="test_settings_roundtrip_reset[debug]" time="0.013" /><testcase classname="tests.test_audit" name="test_settings_roundtrip_reset[webhook]" time="0.012" /><testcase classname="tests.test_audit" name="test_secret_mask_preserve_and_clear" time="0.012" /><testcase classname="tests.test_audit" name="test_playstyle_import_activate_delete" time="0.022" /><testcase classname="tests.test_audit" name="test_invalid_history_dates[?start_date=wrong]" time="0.010" /><testcase classname="tests.test_audit" name="test_invalid_history_dates[?start_date=2026-11-05&amp;end_date=2026-11-04]" time="0.011" /><testcase classname="tests.test_audit" name="test_empty_queue_start_and_stop" time="0.012" /><testcase classname="tests.test_audit" name="test_discord_requires_explicit_authorized_user" time="0.014"><failure message="AssertionError: assert True is False&#10; +  where True = &lt;function run at 0x7f6f30307c40&gt;(&lt;coroutine object DiscordBot.require_authorized_user at 0x7f6eebeee340&gt;)&#10; +    where &lt;function run at 0x7f6f30307c40&gt; = asyncio.run&#10; +    and   &lt;coroutine object DiscordBot.require_authorized_user at 0x7f6eebeee340&gt; = require_authorized_user(namespace(user=namespace(id=123), response=namespace(send_message=&lt;AsyncMock id='140114381336208'&gt;)))&#10;[+1 more line; full report in element text]">application = &lt;Flask 'webui.app'&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f6eebe0c650&gt;
+
+    def test_discord_requires_explicit_authorized_user(application,monkeypatch):
+        bot=application.config['discord_bot']
+        monkeypatch.setattr(bot,'get_authorized_user_id',lambda:None)
+        interaction=SimpleNamespace(user=SimpleNamespace(id=123),response=SimpleNamespace(send_message=AsyncMock()))
+&gt;       assert asyncio.run(bot.require_authorized_user(interaction)) is False
+E       AssertionError: assert True is False
+E        +  where True = &lt;function run at 0x7f6f30307c40&gt;(&lt;coroutine object DiscordBot.require_authorized_user at 0x7f6eebeee340&gt;)
+E        +    where &lt;function run at 0x7f6f30307c40&gt; = asyncio.run
+E        +    and   &lt;coroutine object DiscordBot.require_authorized_user at 0x7f6eebeee340&gt; = require_authorized_user(namespace(user=namespace(id=123), response=namespace(send_message=&lt;AsyncMock id='140114381336208'&gt;)))
+E        +      where require_authorized_user = &lt;discord_bot.DiscordBot object at 0x7f6eec026f10&gt;.require_authorized_user
+
+tests/test_audit.py:107: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_runtime_lifecycle_with_simulated_worker" time="0.011" /></testsuite></testsuites>

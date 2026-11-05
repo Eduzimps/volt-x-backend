@@ -1,0 +1,70 @@
+name: Auditar e compilar Pyla Windows
+
+on:
+  push:
+    branches:
+      - downloads/pyla-v0.8.19-reconstruido
+    paths:
+      - project/**
+      - .github/workflows/audit-pyla.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: project
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Instalar dependencias e executar testes no Windows
+        run: |
+          python -m venv .venv-win
+          .venv-win/Scripts/python.exe -m pip install -r requirements-build-windows.txt -r requirements-test.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed' }
+          New-Item -ItemType Directory -Force test-results | Out-Null
+          .venv-win/Scripts/python.exe -m pytest tests -q --timeout=45 --junitxml=test-results/windows-tests.xml | Tee-Object test-results/windows-tests.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Windows tests failed' }
+      - name: Compilar executavel nativo Windows
+        run: ./scripts/build-windows.ps1 -SkipInstall
+      - name: Executar teste real do executavel
+        run: |
+          .venv-win/Scripts/python.exe scripts/smoke_windows_exe.py dist/PylaAI-auditado | Tee-Object test-results/windows-exe-result.json
+          if ($LASTEXITCODE -ne 0) { throw 'Windows executable smoke test failed' }
+      - name: Registrar evidencia Windows e empacotar fontes completas
+        env:
+          PYLA_CI_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          Copy-Item test-results/windows-tests.xml audit-evidence/windows-tests.xml
+          Copy-Item test-results/windows-tests.txt audit-evidence/windows-tests.txt
+          Copy-Item test-results/windows-exe-result.json audit-evidence/windows-exe-result.json
+          Copy-Item dist/windows-exe-smoke.log audit-evidence/windows-exe-smoke.log
+          $Report = @"
+          # Testes nativos Windows no GitHub Actions
+
+          Executados nesta execucao: $env:PYLA_CI_RUN_URL
+
+          - Dependencias Windows instaladas e suite pytest concluida sem falhas; contagens no JUnit audit-evidence/windows-tests.xml.
+          - Compilacao nativa PyInstaller concluida no Windows x64 com Python 3.11.
+          - O executavel compilado foi iniciado de verdade em modo headless: HTML e bootstrap locais responderam; estado publico de licenciamento preservado; FPS zero rejeitado com HTTP 400.
+          - Nao foram testados janela grafica pywebview, GPU, Android/ADB/scrcpy, partidas ou integracoes externas autenticadas.
+          "@
+          $Report | Set-Content -Encoding utf8 docs/TESTES-WINDOWS-CI.md
+          .venv-win/Scripts/python.exe scripts/package_source.py dist/pyla-v0.8.19-auditado-fontes.zip
+          if ($LASTEXITCODE -ne 0) { throw 'Source packaging failed' }
+          Get-FileHash dist/pyla-v0.8.19-auditado-windows.zip,dist/pyla-v0.8.19-auditado-fontes.zip -Algorithm SHA256 | Format-Table -AutoSize | Out-String | Set-Content dist/SHA256-AUDITORIA.txt
+      - name: Publicar entregas na Release existente
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload Pylav0.8.19 dist/pyla-v0.8.19-auditado-windows.zip dist/pyla-v0.8.19-auditado-fontes.zip dist/SHA256-AUDITORIA.txt test-results/windows-tests.xml test-results/windows-exe-result.json --repo "$env:GITHUB_REPOSITORY"
+          if ($LASTEXITCODE -ne 0) { throw 'Release upload failed' }

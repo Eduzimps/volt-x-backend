@@ -1,0 +1,170 @@
+[
+  {
+    "method": "GET",
+    "path": "/",
+    "handler": "index",
+    "line": 174
+  },
+  {
+    "method": "GET",
+    "path": "/api/bootstrap",
+    "handler": "bootstrap",
+    "line": 181
+  },
+  {
+    "method": "GET",
+    "path": "/api/queue",
+    "handler": "get_queue",
+    "line": 199
+  },
+  {
+    "method": "POST",
+    "path": "/api/queue",
+    "handler": "add_queue",
+    "line": 203
+  },
+  {
+    "method": "POST",
+    "path": "/api/queue/import",
+    "handler": "import_queue",
+    "line": 209
+  },
+  {
+    "method": "PUT",
+    "path": "/api/queue/<path:brawler_name>",
+    "handler": "update_queue_item",
+    "line": 215
+  },
+  {
+    "method": "POST",
+    "path": "/api/queue/reorder",
+    "handler": "reorder_queue",
+    "line": 222
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/queue",
+    "handler": "clear_queue",
+    "line": 228
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/queue/<path:brawler_name>",
+    "handler": "delete_queue_item",
+    "line": 233
+  },
+  {
+    "method": "GET",
+    "path": "/api/playstyles",
+    "handler": "get_playstyles",
+    "line": 238
+  },
+  {
+    "method": "POST",
+    "path": "/api/playstyles/import",
+    "handler": "import_playstyle",
+    "line": 242
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/playstyles/<path:filename>",
+    "handler": "delete_playstyle",
+    "line": 247
+  },
+  {
+    "method": "PUT",
+    "path": "/api/playstyles/active",
+    "handler": "activate_playstyle",
+    "line": 252
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/import",
+    "handler": "import_settings",
+    "line": 258
+  },
+  {
+    "method": "GET",
+    "path": "/api/adb/devices",
+    "handler": "get_adb_devices",
+    "line": 263
+  },
+  {
+    "method": "POST",
+    "path": "/api/adb/devices/scan",
+    "handler": "scan_adb_devices",
+    "line": 267
+  },
+  {
+    "method": "GET",
+    "path": "/api/settings/<section>",
+    "handler": "get_settings",
+    "line": 272
+  },
+  {
+    "method": "PUT",
+    "path": "/api/settings/<section>",
+    "handler": "update_settings",
+    "line": 276
+  },
+  {
+    "method": "POST",
+    "path": "/api/settings/<section>/reset",
+    "handler": "reset_settings",
+    "line": 281
+  },
+  {
+    "method": "POST",
+    "path": "/api/runtime/start",
+    "handler": "runtime_start",
+    "line": 285
+  },
+  {
+    "method": "GET",
+    "path": "/api/runtime/status",
+    "handler": "runtime_status",
+    "line": 298
+  },
+  {
+    "method": "POST",
+    "path": "/api/runtime/pause",
+    "handler": "runtime_pause",
+    "line": 302
+  },
+  {
+    "method": "POST",
+    "path": "/api/runtime/stop",
+    "handler": "runtime_stop",
+    "line": 308
+  },
+  {
+    "method": "GET",
+    "path": "/api/runtime/logs",
+    "handler": "runtime_logs",
+    "line": 314
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/runtime/logs",
+    "handler": "clear_runtime_logs",
+    "line": 318
+  },
+  {
+    "method": "GET",
+    "path": "/api/history",
+    "handler": "history",
+    "line": 323
+  },
+  {
+    "method": "GET",
+    "path": "/api/assets/brawlers/<path:brawler_name>",
+    "handler": "brawler_icon",
+    "line": 347
+  },
+  {
+    "method": "GET",
+    "path": "/api/assets/support/<path:filename>",
+    "handler": "support_asset",
+    "line": 354
+  }
+]

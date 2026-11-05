@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "navigation:dashboard",
+    "navigation:queue",
+    "navigation:playstyles",
+    "navigation:history",
+    "navigation:logs",
+    "navigation:settings",
+    "settings:autosave-and-reload",
+    "queue:add-via-button",
+    "playstyles:library",
+    "premium:existing-modal-kept",
+    "language:Spanish",
+    "mobile:menu-and-navigation"
+  ],
+  "page_errors": [],
+  "failed_local_assets": [],
+  "optional_fonts_blocked": true,
+  "game_worker_started": false
+}
