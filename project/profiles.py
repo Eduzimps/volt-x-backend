@@ -311,16 +311,21 @@ class ProfileManager:
         path = self._path(entry["id"])
         running = self._running(entry)
         url = None
+        runtime_pid = None
         if running:
             try:
                 runtime = json.loads((path / RUNTIME).read_text(encoding="utf-8"))
-                if runtime.get("token") == entry.get("launch_token") and runtime.get("pid") == entry.get("pid"):
+                # Windows virtualenv launchers may spawn a second Python PID.
+                # Bind readiness to the random launch token and HTTP identity,
+                # not equality with the wrapper process identifier.
+                if runtime.get("token") == entry.get("launch_token") and isinstance(runtime.get("pid"), int) and runtime["pid"] > 0:
                     url = _local_url(runtime.get("url"))
+                    runtime_pid = runtime["pid"]
             except (OSError, ValueError, TypeError):
                 pass
         return {"id": entry["id"], "name": entry["name"], "slug": entry.get("slug", "profile"),
                 "created_at": entry["created_at"], "path": str(path), "running": running,
-                "pid": entry.get("pid") if running else None, "url": url,
+                "pid": entry.get("pid") if running else None, "runtime_pid": runtime_pid, "url": url,
                 "ready": bool(url and probe and _url_ready(url, entry.get("launch_token")))}
 
     def list_profiles(self):
@@ -433,7 +438,14 @@ class ProfileManager:
                     if process.poll() is None:
                         raise
                     return self.get(profile_id)
-                process.terminate()
+                if os.name == "nt" and view.get("runtime_pid") not in (None, process.pid):
+                    # Stop a Windows Python redirector and its owned interpreter
+                    # together, only after the authenticated bot stop completed.
+                    subprocess.run([str(Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32" / "taskkill.exe"),
+                                    "/PID", str(process.pid), "/T", "/F"],
+                                   check=True, timeout=10, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                else:
+                    process.terminate()
                 try:
                     process.wait(timeout=5)
                 except subprocess.TimeoutExpired:

@@ -1542,7 +1542,7 @@
   },
   {
     "path": "profiles.py",
-    "sha256": "a3dff0ddf2a2dbf73cba797f173666fc598fd79c5b21fdbbaac97f6c0bc835cb",
+    "sha256": "fdbc643594dab2c7f436400c7039714b7027223a8b28ac52af4471dce575ddf7",
     "imports": [
       "__future__",
       "contextlib",
@@ -1715,61 +1715,61 @@
       {
         "name": "ProfileManager.list_profiles",
         "kind": "function",
-        "line": 326,
+        "line": 331,
         "doc": ""
       },
       {
         "name": "ProfileManager.get",
         "kind": "function",
-        "line": 332,
+        "line": 337,
         "doc": ""
       },
       {
         "name": "ProfileManager.create",
         "kind": "function",
-        "line": 336,
+        "line": 341,
         "doc": ""
       },
       {
         "name": "ProfileManager.launch",
         "kind": "function",
-        "line": 380,
+        "line": 385,
         "doc": ""
       },
       {
         "name": "ProfileManager.stop",
         "kind": "function",
-        "line": 417,
+        "line": 422,
         "doc": "Stop only a child launched by this manager, never an arbitrary PID."
       },
       {
         "name": "ProfileInstance",
         "kind": "class",
-        "line": 445,
+        "line": 457,
         "doc": "Keep the instance lock alive until the child process exits."
       },
       {
         "name": "ProfileInstance.__init__",
         "kind": "function",
-        "line": 448,
+        "line": 460,
         "doc": ""
       },
       {
         "name": "ProfileInstance.publish_url",
         "kind": "function",
-        "line": 460,
+        "line": 472,
         "doc": ""
       },
       {
         "name": "ProfileInstance.close",
         "kind": "function",
-        "line": 466,
+        "line": 478,
         "doc": ""
       },
       {
         "name": "bootstrap_profile",
         "kind": "function",
-        "line": 470,
+        "line": 482,
         "doc": "Select cwd and lock a profile before utils or the application is imported."
       }
     ]
@@ -2896,7 +2896,7 @@
   },
   {
     "path": "tests/test_profiles.py",
-    "sha256": "b6244de6dd47bdd3ce1006be0079ee84d8b87ae32350aed3b79b36c6d1fc7390",
+    "sha256": "507982f065bc7eed06c5cf95f74a1fc6c39975de65d391ce4bf320da848d0763",
     "imports": [
       "concurrent.futures",
       "json",
@@ -3082,6 +3082,12 @@
         "name": "test_source_launcher_preserves_virtualenv_interpreter",
         "kind": "function",
         "line": 285,
+        "doc": ""
+      },
+      {
+        "name": "test_readiness_uses_launch_identity_when_interpreter_pid_differs",
+        "kind": "function",
+        "line": 297,
         "doc": ""
       }
     ]

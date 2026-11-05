@@ -292,3 +292,19 @@ def test_source_launcher_preserves_virtualenv_interpreter(installation, tmp_path
         pytest.skip("Creating symlinks is unavailable")
     manager = ProfileManager(installation, frozen=False, executable=link)
     assert manager.executable == link.absolute()
+
+
+def test_readiness_uses_launch_identity_when_interpreter_pid_differs(installation, monkeypatch):
+    manager = ProfileManager(installation, popen_factory=FakeProcess)
+    profile = manager.create("Redirected interpreter")
+    manager.launch(profile["id"])
+    registry = json.loads(manager.registry.read_text())
+    token = registry["profiles"][0]["launch_token"]
+    runtime = Path(profile["path"]) / profiles.RUNTIME
+    runtime.write_text(json.dumps({"pid":12345,"token":token,"url":"http://127.0.0.1:5187"}))
+    monkeypatch.setattr(profiles, "_url_ready", lambda url, supplied: supplied == token)
+    result = manager.get(profile["id"])
+    assert result["ready"] and result["runtime_pid"] == 12345
+    assert result["pid"] != result["runtime_pid"]
+    runtime.write_text(json.dumps({"pid":12345,"token":"wrong-launch","url":"http://127.0.0.1:5187"}))
+    assert not manager.get(profile["id"])["ready"]

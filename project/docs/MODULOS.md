@@ -313,16 +313,16 @@ Imports: __future__, contextlib, ctypes, datetime, fcntl, html.parser, json, msv
 - `ProfileManager._entry` (function, linha 286)
 - `ProfileManager._running` (function, linha 294)
 - `ProfileManager._view` (function, linha 310)
-- `ProfileManager.list_profiles` (function, linha 326)
-- `ProfileManager.get` (function, linha 332)
-- `ProfileManager.create` (function, linha 336)
-- `ProfileManager.launch` (function, linha 380)
-- `ProfileManager.stop` (function, linha 417)
-- `ProfileInstance` (class, linha 445)
-- `ProfileInstance.__init__` (function, linha 448)
-- `ProfileInstance.publish_url` (function, linha 460)
-- `ProfileInstance.close` (function, linha 466)
-- `bootstrap_profile` (function, linha 470)
+- `ProfileManager.list_profiles` (function, linha 331)
+- `ProfileManager.get` (function, linha 337)
+- `ProfileManager.create` (function, linha 341)
+- `ProfileManager.launch` (function, linha 385)
+- `ProfileManager.stop` (function, linha 422)
+- `ProfileInstance` (class, linha 457)
+- `ProfileInstance.__init__` (function, linha 460)
+- `ProfileInstance.publish_url` (function, linha 472)
+- `ProfileInstance.close` (function, linha 478)
+- `bootstrap_profile` (function, linha 482)
 
 ## scrcpy/__init__.py
 
@@ -593,6 +593,7 @@ Imports: concurrent.futures, json, os, pathlib, profiles, pytest, subprocess, sy
 - `test_stop_leaves_an_active_or_unidentified_child_running.popen` (function, linha 270)
 - `test_stop_leaves_an_active_or_unidentified_child_running.still_playing` (function, linha 277)
 - `test_source_launcher_preserves_virtualenv_interpreter` (function, linha 285)
+- `test_readiness_uses_launch_identity_when_interpreter_pid_differs` (function, linha 297)
 
 ## time_management.py
 
