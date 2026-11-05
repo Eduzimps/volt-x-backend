@@ -1,0 +1,33 @@
+name: Publicar ZIP completo do Pyla
+
+on:
+  push:
+    branches:
+      - downloads/pyla-v0.8.19-reconstruido
+    paths:
+      - .github/workflows/package-pyla.yml
+      - .github/scripts/package.py
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Obter executavel e empacotador
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Baixar distribuicao original
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir original
+          gh release download Pylav0.8.19 --repo "$GITHUB_REPOSITORY" --pattern pyla-v0.8.19.zip --dir original
+      - name: Montar e verificar ZIP completo
+        run: python .github/scripts/package.py original/pyla-v0.8.19.zip pyla_main.exe pyla-v0.8.19-reconstruido-completo.zip
+      - name: Anexar ZIP completo a Release existente
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload Pylav0.8.19 pyla-v0.8.19-reconstruido-completo.zip --repo "$GITHUB_REPOSITORY"
