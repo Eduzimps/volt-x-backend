@@ -1,0 +1,7 @@
+{
+  "models/mainInGameModel.onnx": "10932b7d25a54754f376435cea08ce047271a940a6860afd607a072833e73829",
+  "models/closeTileDetector.onnx": "3d0607ca2c5e1b5b86ff361600ccc8f30ec0b2b86a2074c2ac1d2746fb653b4d",
+  "models/tileDetector.json": "98b09f75989f437da1f659cace0c07bf5d1f5e7a25e1862287c126cb3543a863",
+  "models/tileDetector.onnx": "4029b34318b056e577848683f546cddf5b7ab73c3f4a025caa56c722ca837f8a",
+  "models/mainInGameModel.json": "e8cebbeaf0aab08bb5c2ceff59e3116157bf94c7acc7d45fbcb22bda8a186873"
+}

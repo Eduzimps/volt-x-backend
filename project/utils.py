@@ -721,12 +721,25 @@ def interpret_pyla_code(pyla_code, context):
     return safe_globals.get('movement', None), safe_globals
 
 
+def validate_playstyle_metadata(metadata):
+    if not isinstance(metadata, dict):
+        raise ValueError("Playstyle metadata must be a JSON object.")
+    for key in ("name", "description", "author", "date"):
+        if key in metadata and not isinstance(metadata[key], str):
+            raise ValueError(f"Playstyle {key} must be text.")
+    for key in ("brawlers", "gamemodes"):
+        if key in metadata and (not isinstance(metadata[key], list)
+                                or not all(isinstance(value, str) for value in metadata[key])):
+            raise ValueError(f"Playstyle {key} must be a list of names.")
+    return metadata
+
+
 def load_pyla_script(filename):
     try:
         script_path = resolve_playstyle_path(filename)
         with open(script_path, 'r', encoding='utf-8') as file:
             metadata_header = file.readline().strip()
-            metadata = json.loads(metadata_header) if metadata_header else {}
+            metadata = validate_playstyle_metadata(json.loads(metadata_header) if metadata_header else {})
             pyla_script = file.read()
         return metadata, pyla_script
     except FileNotFoundError:

@@ -23,7 +23,7 @@ foreach ($Name in @('start.bat','LICENSE','README-AUDITORIA.md')) {
     Copy-Item $Name (Join-Path $Target $Name)
 }
 & $Python -m pip freeze | Set-Content (Join-Path $Target 'DEPENDENCIAS-WINDOWS.txt')
-$Zip = Join-Path $PWD 'dist/pyla-v0.8.19-auditado-windows.zip'
+$Zip = Join-Path $PWD 'dist/pyla-v0.8.19-auditado-r2-windows.zip'
 if (Test-Path $Zip) { Remove-Item $Zip }
 Compress-Archive -Path "$Target/*" -DestinationPath $Zip -CompressionLevel Optimal
 Write-Host "Built: $Zip"

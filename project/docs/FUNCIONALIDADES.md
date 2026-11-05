@@ -4,7 +4,7 @@
 |---|---|---|
 | Painel | Estado, início, pausa, retomada, parada, fila e prévia de estilo | Tela real carregada em Chromium. Estado vazio testado na API. Ciclo de execução testado com trabalhador simulado; jogo não executado. |
 | Fila | Adicionar/editar/remover, limpar, reordenar, importar JSON, metas por troféus/vitórias, autopick e ordenação | CRUD/persistência/reordenação na API; inclusão por botão real no navegador. Importação e ordenação dinâmica não receberam validação ponta a ponta completa. |
-| Estilos | Biblioteca, busca, importação, ativação e exclusão | Biblioteca no navegador; importar/ativar/excluir e proteção contra caminho inválido testados na API. Execução de estilos no jogo não testada. |
+| Estilos | Biblioteca, busca, importação, ativação e exclusão | Biblioteca no navegador; importar/ativar/excluir, proteção contra caminho inválido e rejeição de seis formatos inválidos/vazios testados na API. Execução de estilos no jogo não testada. |
 | Histórico | CSV, resumo, sessões, gráficos, filtros por data/brawler e detalhes | Tela carregada e datas inválidas rejeitadas. Nenhuma partida real gerada; gráficos com histórico real e todas as combinações de filtros permanecem pendentes. |
 | Logs | Visualização, atualização e limpeza de buffer | API e tela carregadas; não é benchmark de sessões longas. |
 | Configurações | Geral, combate, temporização, depuração e webhooks; autosave, reset, importação de instalação antiga | Cinco seções e resets via API; autosave com recarga no navegador; validação numérica e sigilo das credenciais testados. Migração de cada versão antiga não testada. |

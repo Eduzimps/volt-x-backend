@@ -1592,7 +1592,7 @@
   },
   {
     "path": "scripts/package_source.py",
-    "sha256": "1e634d58ecfbaab5cebebd079acf6e81fbbdfa64e599d57ed3ee7bcc4a81a4a8",
+    "sha256": "80854ff687952af52d852b1acfe9ce122ab0146d9edb2c43cb262018d621eb22",
     "imports": [
       "pathlib",
       "sys",
@@ -1930,7 +1930,7 @@
   },
   {
     "path": "tests/test_audit.py",
-    "sha256": "52d60aaa6116903cfdb625caf3f2bd8142b5303f06750fef75dda97ab216a2e8",
+    "sha256": "9d4432be72ef1b7bb8e41134aa86e7c03900a6ad1d15554ac09605d77d3605a1",
     "imports": [
       "asyncio",
       "io",
@@ -2030,33 +2030,45 @@
         "doc": ""
       },
       {
-        "name": "test_invalid_history_dates",
+        "name": "test_invalid_playstyle_cannot_break_bootstrap",
         "kind": "function",
         "line": 95,
         "doc": ""
       },
       {
+        "name": "test_empty_playstyle_rejected",
+        "kind": "function",
+        "line": 101,
+        "doc": ""
+      },
+      {
+        "name": "test_invalid_history_dates",
+        "kind": "function",
+        "line": 106,
+        "doc": ""
+      },
+      {
         "name": "test_empty_queue_start_and_stop",
         "kind": "function",
-        "line": 98,
+        "line": 109,
         "doc": ""
       },
       {
         "name": "test_discord_requires_explicit_authorized_user",
         "kind": "function",
-        "line": 103,
+        "line": 114,
         "doc": ""
       },
       {
         "name": "test_runtime_lifecycle_with_simulated_worker",
         "kind": "function",
-        "line": 110,
+        "line": 121,
         "doc": ""
       },
       {
         "name": "test_runtime_lifecycle_with_simulated_worker.worker",
         "kind": "function",
-        "line": 113,
+        "line": 124,
         "doc": ""
       }
     ]
@@ -2280,7 +2292,7 @@
   },
   {
     "path": "utils.py",
-    "sha256": "3b26cc0bfc599dd3f1d9176ad36915e107a7e4d94a65299a7320beb59694b920",
+    "sha256": "2c274cc7d0148117ac2e0e9989ee86e1dceee68dda00aa8fdd3752927a2b29b4",
     "imports": [
       "PIL",
       "ast",
@@ -2569,51 +2581,57 @@
         "doc": ""
       },
       {
-        "name": "load_pyla_script",
+        "name": "validate_playstyle_metadata",
         "kind": "function",
         "line": 724,
         "doc": ""
       },
       {
+        "name": "load_pyla_script",
+        "kind": "function",
+        "line": 737,
+        "doc": ""
+      },
+      {
         "name": "get_playstyles_list",
         "kind": "function",
-        "line": 741,
+        "line": 754,
         "doc": ""
       },
       {
         "name": "load_default_pyla_script",
         "kind": "function",
-        "line": 755,
+        "line": 768,
         "doc": ""
       },
       {
         "name": "hash_playstyle",
         "kind": "function",
-        "line": 761,
+        "line": 774,
         "doc": ""
       },
       {
         "name": "config_bool",
         "kind": "function",
-        "line": 765,
+        "line": 778,
         "doc": ""
       },
       {
         "name": "clamp",
         "kind": "function",
-        "line": 776,
+        "line": 789,
         "doc": ""
       },
       {
         "name": "normalize_move",
         "kind": "function",
-        "line": 786,
+        "line": 799,
         "doc": ""
       },
       {
         "name": "mask_secret",
         "kind": "function",
-        "line": 794,
+        "line": 807,
         "doc": ""
       }
     ]
@@ -3103,7 +3121,7 @@
   },
   {
     "path": "webui/services.py",
-    "sha256": "0a3293f7f8e6919ba69f03440398b8f44dd4d0e49bfeac221ecf910b069d973d",
+    "sha256": "9b0474d4792b0b7819f88c8e85a0c2bd28f9037e04ffc022bb6a8e8c6b42daec",
     "imports": [
       "__future__",
       "concurrent.futures",
@@ -3128,313 +3146,313 @@
       {
         "name": "get_brawler_stats",
         "kind": "function",
-        "line": 35,
+        "line": 36,
         "doc": ""
       },
       {
         "name": "get_player_info",
         "kind": "function",
-        "line": 39,
+        "line": 40,
         "doc": ""
       },
       {
         "name": "WebDataService",
         "kind": "class",
-        "line": 49,
+        "line": 50,
         "doc": ""
       },
       {
         "name": "WebDataService.__init__",
         "kind": "function",
-        "line": 121,
+        "line": 122,
         "doc": ""
       },
       {
         "name": "WebDataService._bool_from_string",
         "kind": "function",
-        "line": 131,
+        "line": 132,
         "doc": ""
       },
       {
         "name": "WebDataService._deserialize",
         "kind": "function",
-        "line": 134,
+        "line": 135,
         "doc": ""
       },
       {
         "name": "WebDataService._serialize",
         "kind": "function",
-        "line": 159,
+        "line": 160,
         "doc": ""
       },
       {
         "name": "WebDataService._select_fields",
         "kind": "function",
-        "line": 164,
+        "line": 165,
         "doc": ""
       },
       {
         "name": "WebDataService._apply_updates",
         "kind": "function",
-        "line": 171,
+        "line": 172,
         "doc": ""
       },
       {
         "name": "WebDataService._normalize_debug_settings",
         "kind": "function",
-        "line": 196,
+        "line": 197,
         "doc": ""
       },
       {
         "name": "WebDataService._load_config",
         "kind": "function",
-        "line": 202,
+        "line": 203,
         "doc": ""
       },
       {
         "name": "WebDataService._save_config",
         "kind": "function",
-        "line": 205,
+        "line": 206,
         "doc": ""
       },
       {
         "name": "WebDataService._load_startup_queue_if_enabled",
         "kind": "function",
-        "line": 208,
+        "line": 209,
         "doc": ""
       },
       {
         "name": "WebDataService.get_auth_state",
         "kind": "function",
-        "line": 227,
+        "line": 228,
         "doc": ""
       },
       {
         "name": "WebDataService.get_current_version",
         "kind": "function",
-        "line": 234,
+        "line": 235,
         "doc": ""
       },
       {
         "name": "WebDataService.get_latest_version_safe",
         "kind": "function",
-        "line": 237,
+        "line": 238,
         "doc": ""
       },
       {
         "name": "WebDataService.get_warnings",
         "kind": "function",
-        "line": 248,
+        "line": 249,
         "doc": ""
       },
       {
         "name": "WebDataService.get_announcements_safe",
         "kind": "function",
-        "line": 260,
+        "line": 261,
         "doc": ""
       },
       {
         "name": "WebDataService._resolve_brawler_catalog",
         "kind": "function",
-        "line": 274,
+        "line": 275,
         "doc": ""
       },
       {
         "name": "WebDataService.get_brawler_catalog",
         "kind": "function",
-        "line": 280,
+        "line": 281,
         "doc": ""
       },
       {
         "name": "WebDataService.normalize_queue_entry",
         "kind": "function",
-        "line": 290,
+        "line": 291,
         "doc": ""
       },
       {
         "name": "WebDataService._sorted_play_order_enabled",
         "kind": "function",
-        "line": 312,
+        "line": 313,
         "doc": ""
       },
       {
         "name": "WebDataService.get_queue_data",
         "kind": "function",
-        "line": 316,
+        "line": 317,
         "doc": ""
       },
       {
         "name": "WebDataService._assert_queue_editable",
         "kind": "function",
-        "line": 331,
+        "line": 332,
         "doc": ""
       },
       {
         "name": "WebDataService.save_queue_data",
         "kind": "function",
-        "line": 336,
+        "line": 337,
         "doc": ""
       },
       {
         "name": "WebDataService._sync_running_queue_from_saved_file",
         "kind": "function",
-        "line": 342,
+        "line": 343,
         "doc": ""
       },
       {
         "name": "WebDataService.import_queue_file",
         "kind": "function",
-        "line": 360,
+        "line": 361,
         "doc": ""
       },
       {
         "name": "WebDataService.add_or_update_queue_item",
         "kind": "function",
-        "line": 385,
+        "line": 386,
         "doc": ""
       },
       {
         "name": "WebDataService.delete_queue_item",
         "kind": "function",
-        "line": 398,
+        "line": 399,
         "doc": ""
       },
       {
         "name": "WebDataService.clear_queue",
         "kind": "function",
-        "line": 404,
+        "line": 405,
         "doc": ""
       },
       {
         "name": "WebDataService.reorder_queue",
         "kind": "function",
-        "line": 410,
+        "line": 411,
         "doc": ""
       },
       {
         "name": "WebDataService.save_queue_to_file",
         "kind": "function",
-        "line": 435,
+        "line": 436,
         "doc": ""
       },
       {
         "name": "WebDataService.push_all_to_default_target",
         "kind": "function",
-        "line": 440,
+        "line": 441,
         "doc": ""
       },
       {
         "name": "WebDataService.get_playstyles_payload",
         "kind": "function",
-        "line": 494,
+        "line": 495,
         "doc": ""
       },
       {
         "name": "WebDataService.activate_playstyle",
         "kind": "function",
-        "line": 516,
+        "line": 517,
         "doc": ""
       },
       {
         "name": "WebDataService.delete_playstyle",
         "kind": "function",
-        "line": 530,
+        "line": 531,
         "doc": ""
       },
       {
         "name": "WebDataService.import_playstyle",
         "kind": "function",
-        "line": 547,
+        "line": 548,
         "doc": ""
       },
       {
         "name": "WebDataService.get_settings_payload",
         "kind": "function",
-        "line": 586,
+        "line": 589,
         "doc": ""
       },
       {
         "name": "WebDataService.update_settings",
         "kind": "function",
-        "line": 610,
+        "line": 613,
         "doc": ""
       },
       {
         "name": "WebDataService.reset_settings",
         "kind": "function",
-        "line": 649,
+        "line": 652,
         "doc": ""
       },
       {
         "name": "WebDataService.get_player_info_payload",
         "kind": "function",
-        "line": 693,
+        "line": 696,
         "doc": ""
       },
       {
         "name": "WebDataService._has_player_values",
         "kind": "function",
-        "line": 737,
+        "line": 740,
         "doc": ""
       },
       {
         "name": "WebDataService.get_match_history_payload",
         "kind": "function",
-        "line": 742,
+        "line": 745,
         "doc": ""
       },
       {
         "name": "WebDataService._parse_match_datetime",
         "kind": "function",
-        "line": 901,
+        "line": 904,
         "doc": ""
       },
       {
         "name": "WebDataService._parse_int",
         "kind": "function",
-        "line": 914,
+        "line": 917,
         "doc": ""
       },
       {
         "name": "WebDataService._build_match_history_response",
         "kind": "function",
-        "line": 921,
+        "line": 924,
         "doc": ""
       },
       {
         "name": "WebDataService.get_bootstrap_payload",
         "kind": "function",
-        "line": 954,
+        "line": 957,
         "doc": ""
       },
       {
         "name": "WebDataService.import_settings_from_folder",
         "kind": "function",
-        "line": 993,
+        "line": 996,
         "doc": ""
       },
       {
         "name": "WebDataService.scan_adb_devices",
         "kind": "function",
-        "line": 1064,
+        "line": 1067,
         "doc": ""
       },
       {
         "name": "WebDataService._scan_adb_devices_unlocked",
         "kind": "function",
-        "line": 1072,
+        "line": 1075,
         "doc": ""
       },
       {
         "name": "WebDataService._scan_adb_devices_unlocked.open_port",
         "kind": "function",
-        "line": 1080,
+        "line": 1083,
         "doc": ""
       },
       {
         "name": "WebDataService._scan_adb_devices_unlocked.connect",
         "kind": "function",
-        "line": 1090,
+        "line": 1093,
         "doc": ""
       }
     ]

@@ -1,0 +1,167 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+___________ test_invalid_playstyle_cannot_break_bootstrap[metadata0] ___________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+metadata = []
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+>       assert response.status_code==400
+E       assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+
+tests/test_audit.py:98: AssertionError
+------------------------------ Captured log setup ------------------------------
+WARNING  discord.client:client.py:341 PyNaCl is not installed, voice will NOT be supported
+WARNING  discord.client:client.py:345 davey is not installed, voice will NOT be supported
+___________ test_invalid_playstyle_cannot_break_bootstrap[metadata1] ___________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+metadata = ['invalid']
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+>       assert response.status_code==400
+E       assert 500 == 400
+E        +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+
+tests/test_audit.py:98: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    webui.app:app.py:195 Unhandled request error at /api/playstyles/import
+Traceback (most recent call last):
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/app.py", line 244, in import_playstyle
+    result = data_service.import_playstyle(uploaded_file)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 584, in import_playstyle
+    return {"ok": True, "filename": target_path.name, "playstyles": self.get_playstyles_payload()}
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 503, in get_playstyles_payload
+    "name": metadata.get("name") or filename.replace(".pyla", ""),
+            ^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+____________ test_invalid_playstyle_cannot_break_bootstrap[invalid] ____________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+metadata = 'invalid'
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+>       assert response.status_code==400
+E       assert 500 == 400
+E        +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+
+tests/test_audit.py:98: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    webui.app:app.py:195 Unhandled request error at /api/playstyles/import
+Traceback (most recent call last):
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/app.py", line 244, in import_playstyle
+    result = data_service.import_playstyle(uploaded_file)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 584, in import_playstyle
+    return {"ok": True, "filename": target_path.name, "playstyles": self.get_playstyles_payload()}
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 503, in get_playstyles_payload
+    "name": metadata.get("name") or filename.replace(".pyla", ""),
+            ^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+___________ test_invalid_playstyle_cannot_break_bootstrap[metadata3] ___________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+metadata = {'name': 3}
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+>       assert response.status_code==400
+E       assert 500 == 400
+E        +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+
+tests/test_audit.py:98: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    webui.app:app.py:195 Unhandled request error at /api/playstyles/import
+Traceback (most recent call last):
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/venv/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/app.py", line 244, in import_playstyle
+    result = data_service.import_playstyle(uploaded_file)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 584, in import_playstyle
+    return {"ok": True, "filename": target_path.name, "playstyles": self.get_playstyles_payload()}
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/pyla-audit/project/webui/services.py", line 512, in get_playstyles_payload
+    playstyles.sort(key=lambda playstyle: playstyle["name"].lower())
+  File "/workspace/pyla-audit/project/webui/services.py", line 512, in <lambda>
+    playstyles.sort(key=lambda playstyle: playstyle["name"].lower())
+                                          ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'lower'
+___________ test_invalid_playstyle_cannot_break_bootstrap[metadata4] ___________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+metadata = {'brawlers': None}
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+>       assert response.status_code==400
+E       assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+
+tests/test_audit.py:98: AssertionError
+________________________ test_empty_playstyle_rejected _________________________
+
+client = <FlaskClient <Flask 'webui.app'>>
+headers = {'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'}
+
+    def test_empty_playstyle_rejected(client,headers):
+        content=b'{"name":"Empty"}\n'
+>       assert client.post('/api/playstyles/import',data={'file':(BytesIO(content),'empty.pyla')},headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = post('/api/playstyles/import', data={'file': (<_io.BytesIO object at 0x7f8b87e558f0>, 'empty.pyla')}, headers={'X-Pyla-UI-Token': '[EPHEMERAL-REDACTED]'})
+E        +      where post = <FlaskClient <Flask 'webui.app'>>.post
+
+tests/test_audit.py:103: AssertionError
+=============================== warnings summary ===============================
+tests/test_audit.py::test_invalid_playstyle_cannot_break_bootstrap[metadata0]
+  /workspace/pyla-audit/venv/lib/python3.11/site-packages/discord/player.py:30: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+    import audioop
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_audit.py::test_invalid_playstyle_cannot_break_bootstrap[metadata0]
+FAILED tests/test_audit.py::test_invalid_playstyle_cannot_break_bootstrap[metadata1]
+FAILED tests/test_audit.py::test_invalid_playstyle_cannot_break_bootstrap[invalid]
+FAILED tests/test_audit.py::test_invalid_playstyle_cannot_break_bootstrap[metadata3]
+FAILED tests/test_audit.py::test_invalid_playstyle_cannot_break_bootstrap[metadata4]
+FAILED tests/test_audit.py::test_empty_playstyle_rejected - AssertionError: a...
+6 failed, 41 deselected, 1 warning in 0.99s

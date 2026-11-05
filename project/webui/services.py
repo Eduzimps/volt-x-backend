@@ -30,6 +30,7 @@ from utils import (
     resolve_project_path,
     save_dict_as_toml, PYLA_VERSION, DOWNLOAD_URL, api_update_brawler_data, clear_brawler_data, save_brawler_data,
     mask_secret,
+    validate_playstyle_metadata,
 )
 
 def get_brawler_stats(_player_info, _brawler_name):
@@ -561,7 +562,9 @@ class WebDataService:
                 metadata_line = handle.readline().strip()
                 if not metadata_line:
                     raise ValueError("Missing playstyle metadata header.")
-                json.loads(metadata_line)
+                validate_playstyle_metadata(json.loads(metadata_line))
+                if not handle.read().strip():
+                    raise ValueError("Playstyle code must not be empty.")
 
             uploaded_content = temp_path.read_text(encoding="utf-8")
 

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="6" time="0.962" timestamp="2026-11-05T13:23:55.611192+00:00" hostname="62299fcd778b"><testcase classname="tests.test_audit" name="test_invalid_playstyle_cannot_break_bootstrap[metadata0]" time="0.710"><failure message="assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'GjT8AR_7lvU4sTghXkIhfUZeuBJ2nRxEbq1y3YGZZc0'}
+metadata = []
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+&gt;       assert response.status_code==400
+E       assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+
+tests/test_audit.py:98: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_playstyle_cannot_break_bootstrap[metadata1]" time="0.022"><failure message="assert 500 == 400&#10; +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'XuI5jeanmrAAoun00TMFH1itZbOyXEaHRZi7dur4ySQ'}
+metadata = ['invalid']
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+&gt;       assert response.status_code==400
+E       assert 500 == 400
+E        +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code
+
+tests/test_audit.py:98: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_playstyle_cannot_break_bootstrap[invalid]" time="0.020"><failure message="assert 500 == 400&#10; +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'YzUGkEI5A-VR7w0UeYDUISLc6xcJUk3mhfhBWweygzc'}
+metadata = 'invalid'
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+&gt;       assert response.status_code==400
+E       assert 500 == 400
+E        +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code
+
+tests/test_audit.py:98: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_playstyle_cannot_break_bootstrap[metadata3]" time="0.024"><failure message="assert 500 == 400&#10; +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'HRR8spZOP6viCh5L3_uUuMNt0lZw9NxZom9v6GasxzE'}
+metadata = {'name': 3}
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+&gt;       assert response.status_code==400
+E       assert 500 == 400
+E        +  where 500 = &lt;WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]&gt;.status_code
+
+tests/test_audit.py:98: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_invalid_playstyle_cannot_break_bootstrap[metadata4]" time="0.019"><failure message="assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': '5GIia5-TbKgVZoa5hhQ_rAdaYmcqcEh0WkSryeU1A_s'}
+metadata = {'brawlers': None}
+
+    @pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+    def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+        content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+        response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+&gt;       assert response.status_code==400
+E       assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+
+tests/test_audit.py:98: AssertionError</failure></testcase><testcase classname="tests.test_audit" name="test_empty_playstyle_rejected" time="0.018"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = post('/api/playstyles/import', data={'file': (&lt;_io.BytesIO object at 0x7f8b87e558f0&gt;, 'empty.pyla')}, headers={'X-Pyla-UI-Token': 'p-Qk2KyruJW4BvyrOssin6Yv4M5UC432sB07DlXox_Q'})&#10; +      where post = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.post">client = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;
+headers = {'X-Pyla-UI-Token': 'p-Qk2KyruJW4BvyrOssin6Yv4M5UC432sB07DlXox_Q'}
+
+    def test_empty_playstyle_rejected(client,headers):
+        content=b'{"name":"Empty"}\n'
+&gt;       assert client.post('/api/playstyles/import',data={'file':(BytesIO(content),'empty.pyla')},headers=headers).status_code==400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = post('/api/playstyles/import', data={'file': (&lt;_io.BytesIO object at 0x7f8b87e558f0&gt;, 'empty.pyla')}, headers={'X-Pyla-UI-Token': 'p-Qk2KyruJW4BvyrOssin6Yv4M5UC432sB07DlXox_Q'})
+E        +      where post = &lt;FlaskClient &lt;Flask 'webui.app'&gt;&gt;.post
+
+tests/test_audit.py:103: AssertionError</failure></testcase></testsuite></testsuites>

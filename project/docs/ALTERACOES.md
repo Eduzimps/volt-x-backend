@@ -7,8 +7,9 @@ As fontes públicas verificadas foram preservadas em `/workspace/pyla-analysis/r
 3. `webui/app.py`: requisições JSON de escrita precisam conter um objeto; listas, escalares e JSON malformado retornam 400, preservando a proteção de host, origem e token.
 4. `discord_bot.py`: controle remoto nega comandos se `discord_id` não estiver configurado. A ausência de autorização deixa de liberar qualquer usuário. A integração continua opcional e não se conecta durante os testes locais.
 5. `start.bat`: fixa o diretório de trabalho na pasta do aplicativo e encaminha argumentos, evitando depender da pasta de onde o usuário o abriu.
-6. Scripts de build nativo Windows, execução, inventário, smoke test do executável e auditoria do navegador; suíte de regressão e documentação foram adicionados.
+6. `utils.py`/`webui/services.py`: importação de estilos valida que o cabeçalho é um objeto com campos textuais/listas de nomes e que existe código. Cabeçalhos JSON de tipos inadequados deixam de contaminar a biblioteca e quebrar o bootstrap. Se um estilo inválido já existir em disco, o carregamento degrada para metadados vazios, sem quebrar a API.
+7. Scripts de build nativo Windows, execução, inventário, smoke test do executável e auditoria do navegador; suíte de regressão e documentação foram adicionados.
 
 Os arquivos da interface (`templates/index.html`, CSS e os três arquivos JavaScript), os modelos e os estilos existentes não foram alterados. Não foram removidos bloqueios premium ou controles de acesso. A dependência de autorizações legítimas de Discord, Telegram, ADB e jogo permanece.
 
-Os 14 casos de regressão que falhavam na primeira execução passaram depois dessas correções. Isso representa os casos testados, não a garantia de ausência de defeitos em toda a aplicação.
+Os 14 casos de regressão que falhavam na primeira execução passaram depois dessas correções. A inspeção adicional da importação reproduziu outros seis casos que falhavam; os seis também passaram após a correção. A suíte final tem 51 casos. Isso representa os casos testados, não a garantia de ausência de defeitos em toda a aplicação.

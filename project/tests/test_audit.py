@@ -91,6 +91,17 @@ def test_playstyle_import_activate_delete(client,headers):
     assert client.delete('/api/playstyles/audit.pyla',headers=headers).status_code==200
     assert client.put('/api/playstyles/active',json={'filename':'../utils.py'},headers=headers).status_code==400
 
+@pytest.mark.parametrize('metadata',[[],['invalid'],'invalid',{'name':3},{'brawlers':None}])
+def test_invalid_playstyle_cannot_break_bootstrap(client,headers,metadata):
+    content=(json.dumps(metadata)+'\n\ndef play(self):\n    return None\n').encode()
+    response=client.post('/api/playstyles/import',data={'file':(BytesIO(content),'invalid.pyla')},headers=headers)
+    assert response.status_code==400
+    assert client.get('/api/bootstrap',headers=headers).status_code==200
+
+def test_empty_playstyle_rejected(client,headers):
+    content=b'{"name":"Empty"}\n'
+    assert client.post('/api/playstyles/import',data={'file':(BytesIO(content),'empty.pyla')},headers=headers).status_code==400
+
 @pytest.mark.parametrize('query',['?start_date=wrong','?start_date=2026-11-05&end_date=2026-11-04'])
 def test_invalid_history_dates(client,headers,query):
     assert client.get('/api/history'+query,headers=headers).status_code==400

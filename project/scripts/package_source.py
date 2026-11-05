@@ -11,7 +11,8 @@ with zipfile.ZipFile(destination,'w',zipfile.ZIP_DEFLATED) as archive:
     for path in sorted(root.rglob('*')):
         relative=path.relative_to(root)
         if not path.is_file() or any(p in excluded for p in relative.parts):continue
-        if path.resolve()==destination or path.suffix in {'.pyc','.log','.env'} or path.name=='latest_brawler_data.json':continue
+        if path.resolve()==destination or path.suffix in {'.pyc','.env'} or path.name=='latest_brawler_data.json':continue
+        if path.suffix=='.log' and 'audit-evidence' not in relative.parts:continue
         archive.write(path,str(relative))
 with zipfile.ZipFile(destination) as archive:
     assert archive.testzip() is None
