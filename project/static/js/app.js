@@ -42,19 +42,10 @@ const PYLA_TIPS = [
     { id: "low-fps", title: "Running below 5 FPS?", text: "Try raising any timers below 0.4 seconds to 0.4 in Settings → Timers. Less frequent checks can help on slower PCs.", view: "settings", setting: "wall_detection" },
     { id: "debug-view", title: "See what Pyla sees", text: "Enable Debug View in Settings to watch the frames Pyla is processing. It helps when you're figuring out why the bot is stuck or missing something.", view: "settings", setting: "debug_view" },
     { id: "webhook", title: "Get updates without watching", text: "Add a Webhook URL in Settings → Webhook, then choose notifications for stuck runs, completed targets, or every few matches or minutes.", view: "settings", setting: "webhook_url" },
-    { id: "unsupported-modes", title: "Pick a supported mode", text: "Solo Showdown and Duels aren't supported in the free edition. Check your playstyle's gamemodes before starting a run.", view: "playstyles" },
+    { id: "unsupported-modes", title: "Pick a supported mode", text: "Solo Showdown and Duels aren't supported in this build. Check your playstyle's gamemodes before starting a run.", view: "playstyles" },
     { id: "game-language", title: "Keep Brawl Stars in English", text: "Set Brawl Stars' language to English so Pyla can read the game correctly. You can still use any language for Pyla's interface." },
     { id: "mumu", title: "Try MuMu for better performance", text: "MuMu usually gives the best performance with Pyla. If your current emulator feels slow, it's worth trying." },
     { id: "ldplayer-gas", title: "Walking into the gas on LDPlayer?", text: "Try switching to MuMu if Pyla keeps moving into Showdown gas on LDPlayer." },
-    { id: "boost-premium", audience: "free", title: "Get Premium with a server boost", text: "Boosting the official Discord while the server is below Level 3 gives you Premium access while your boost remains active. Check Discord for current details.", link: "discord" },
-    { id: "early-access-pathfinding", audience: "free", title: "Find a way around obstacles", text: "Early Access v1.1.0 plans routes around walls and water, avoids poison gas, and looks for a reachable position when its destination is blocked.", link: "early-access" },
-    { id: "early-access-bush-camper", audience: "free", title: "Try Showdown Bush Camper", text: "Early Access v1.1.0 includes Showdown Bush Camper. It moves between bushes towards the centre, keeps moving while hiding, and retreats or defends itself when enemies approach. Check its supported gamemodes.", link: "early-access" },
-    { id: "early-access-emulator-test", audience: "free", title: "Find out what's causing lag", text: "Early Access v1.1.0 adds Test emulator delay on the dashboard. Measure emulator delay, capture FPS and bot processing time to see where a slowdown comes from.", link: "early-access" },
-    { id: "weekly-free-access", audience: "free", title: "Try Early Access free each week", text: "Try Early Access free for one day each week, with every Premium feature on the newest build. The day can change; check the official Discord for this week's announcement.", link: "discord" },
-    { id: "premium-discord", audience: "free", title: "Edit your queue from Discord", text: "Stable v1.0 Premium and Early Access include /add_to_queue, /remove_from_queue and /clear_queue, so you can edit your queue remotely while Pyla is stopped.", link: "pricing" },
-    { id: "premium-instances", audience: "free", title: "Run more than one account", text: "Run multiple emulator instances at once with Stable v1.0 Premium or Early Access, each with its own Pyla profile and queue.", link: "pricing" },
-    { id: "premium-aiming", audience: "free", title: "Try predictive aiming", text: "Stable v1.0 Standard and Premium, or Early Access, include Aimbot playstyles that lead moving targets.", link: "pricing" },
-    { id: "premium-api", audience: "free", title: "Sync your Brawl Stars stats", text: "With Stable v1.0 Premium or Early Access, add your Player Tag to sync trophies and win streaks through the Brawl Stars API. Use Push All to queue brawlers below your target.", link: "pricing" },
 ];
 const BRAWLER_RARITIES = {
     "Common": { order: 1, color: "#b8bec9" },
@@ -552,13 +543,12 @@ function renderDashboard() {
                 </section>
             </div>
 
-            <section class="panel profile-switcher-card premium-profile-preview">
+            <section class="panel profile-switcher-card">
                 <div class="profile-switcher-heading">
                     <div class="profile-heading-copy">
                         <p class="eyebrow">Profiles</p>
-                        <div class="profile-title-row"><h3 class="panel-title">One setup today, more with Premium</h3><span class="premium-badge-inline">Premium</span></div>
+                        <div class="profile-title-row"><h3 class="panel-title">Local profile</h3></div>
                     </div>
-                    <a class="btn btn-sm profile-add-btn premium-cta" href="https://pyla-ai.angelfirela.dev/premium" target="_blank" rel="noreferrer">Explore Premium</a>
                 </div>
                 <div class="profile-list premium-profile-list">
                     <div class="profile-entry is-active">
@@ -568,12 +558,6 @@ function renderDashboard() {
                         </div>
                         <span class="profile-active-label">Active</span>
                     </div>
-                    <button class="profile-entry premium-profile-locked premium-locked-action" type="button">
-                        <div class="profile-entry-main"><span class="profile-entry-name">Second emulator profile</span><span class="profile-entry-details">Separate queue, settings, history and runtime</span></div><span class="premium-profile-lock">Premium</span>
-                    </button>
-                    <button class="profile-entry premium-profile-locked premium-locked-action" type="button">
-                        <div class="profile-entry-main"><span class="profile-entry-name">Additional profile</span><span class="profile-entry-details">Run independent account configurations</span></div><span class="premium-profile-lock">Premium</span>
-                    </button>
                 </div>
             </section>
         </div>`;
@@ -670,9 +654,9 @@ function formatSettingValue(field, value) {
 function getPlayerPillState() {
     if (!state.bootstrap?.auth?.premium) {
         return {
-            className: "premium-locked",
-            title: "Premium Required",
-            detail: "Get premium to sync live stats from Brawl Stars API.",
+            className: "",
+            title: "Manual mode",
+            detail: "Enter queue values locally. Live player sync is not included in this build.",
         };
     }
 
@@ -732,7 +716,7 @@ function renderQueue() {
     const dynamicSortsLocked = !state.bootstrap?.auth?.premium;
     const targetHelp = `<span class="tooltip-anchor push-all-help" data-tooltip="Change this amount by editing Default Trophy Target in Settings." aria-label="How to change the Push All target">?</span>`;
     const pushAllButton = !state.bootstrap?.auth?.premium
-        ? `<div class="push-all-control"><button id="pushAllQueueLockedBtn" class="btn btn-locked premium-locked-action" type="button">${iconMarkup("queue")} Push All to ${defaultTarget} <span class="premium-lock-icon">🔒</span></button>${targetHelp}</div>`
+        ? ""
         : hasValidPlayerInfo
             ? `<div class="push-all-control"><button id="pushAllQueueBtn" class="btn" type="button">${iconMarkup("queue")} Push All to ${defaultTarget}</button>${targetHelp}</div>`
             : "";
@@ -761,10 +745,10 @@ function renderQueue() {
                             <input id="brawlerSearch" type="search" placeholder="Search by brawler name" value="${escapeHtml(state.brawlerSearch)}">
                         </label>
                         ${pushAllButton}
-                        <label class="input-group ${!state.bootstrap?.auth?.premium ? "disabled-premium" : ""}">
+                        ${state.bootstrap?.auth?.premium ? `                        <label class="input-group ${!state.bootstrap?.auth?.premium ? "disabled-premium" : ""}">
                             <span>Player Tag ${!state.bootstrap?.auth?.premium ? `<span class="premium-badge">Premium</span>` : ""}</span>
                             <input id="playerTagInput" type="text" placeholder="${!state.bootstrap?.auth?.premium ? "Locked - Premium Only" : "#PLAYER"}" value="${!state.bootstrap?.auth?.premium ? "" : escapeHtml(formatPlayerTagInput(state.bootstrap.settings.general.player_tag || ""))}" ${!state.bootstrap?.auth?.premium ? "disabled" : ""}>
-                        </label>
+                        </label>` : ""}
                     </div>
                     <div class="queue-toolbar-bottom">
                         <div class="toolbar-actions brawler-sort-actions">
@@ -774,9 +758,9 @@ function renderQueue() {
                                     <select id="brawlerSortSelect">
                                         <option value="alphabetical" ${state.brawlerSort === "alphabetical" ? "selected" : ""}>By name</option>
                                         <option value="rarity" ${state.brawlerSort === "rarity" ? "selected" : ""}>By rarity</option>
-                                        <option value="trophies" ${state.brawlerSort === "trophies" ? "selected" : ""}>${dynamicSortsLocked ? "🔒 " : ""}By trophies</option>
-                                        <option value="win_streak" ${state.brawlerSort === "win_streak" ? "selected" : ""}>${dynamicSortsLocked ? "🔒 " : ""}By win streak</option>
-                                        <option value="power_level" ${state.brawlerSort === "power_level" ? "selected" : ""}>${dynamicSortsLocked ? "🔒 " : ""}By power level</option>
+                                        ${dynamicSortsLocked ? "" : `<option value="trophies" ${state.brawlerSort === "trophies" ? "selected" : ""}>${dynamicSortsLocked ? "🔒 " : ""}By trophies</option>`}
+                                        ${dynamicSortsLocked ? "" : `<option value="win_streak" ${state.brawlerSort === "win_streak" ? "selected" : ""}>${dynamicSortsLocked ? "🔒 " : ""}By win streak</option>`}
+                                        ${dynamicSortsLocked ? "" : `<option value="power_level" ${state.brawlerSort === "power_level" ? "selected" : ""}>${dynamicSortsLocked ? "🔒 " : ""}By power level</option>`}
                                     </select>
                                     <button id="brawlerSortDirectionBtn" class="sort-direction-btn" type="button" title="${state.brawlerSortDirection === "asc" ? "Ascending — click for descending" : "Descending — click for ascending"}" aria-label="${state.brawlerSortDirection === "asc" ? "Sort descending" : "Sort ascending"}">
                                         ${state.brawlerSortDirection === "asc" ? "↑" : "↓"}
@@ -1889,6 +1873,9 @@ function renderSettingField(section, field, value) {
 }
 
 function shouldRenderSettingField(section, field) {
+    if (!state.bootstrap?.auth?.premium && ["player_tag", "advanced_debug_visuals", "recover_when_wrong_brawler_used"].includes(field.key)) {
+        return false;
+    }
     if (!field.visibleIf) {
         return true;
     }
@@ -3302,28 +3289,7 @@ function cssEscape(value) {
 
 
 function showPremiumModal() {
-    let modal = document.getElementById("premiumFeatureModal");
-    if (!modal) {
-        modal = document.createElement("div");
-        modal.id = "premiumFeatureModal";
-        modal.className = "modal-overlay";
-        modal.innerHTML = `
-            <div class="modal">
-                <div class="modal-header">
-                    <p class="eyebrow premium-copy">Premium Feature</p>
-                    <h3>Unlock more automation</h3>
-                    <p>Profiles, live player data, Push All and selected advanced controls are available in Pyla Premium. The public edition remains free and open-source.</p>
-                </div>
-                <div class="premium-modal-actions">
-                    <a class="btn btn-primary w-full premium-cta" href="https://pyla-ai.angelfirela.dev/premium" target="_blank" rel="noreferrer">Explore Premium</a>
-                    <button id="closePremiumModalBtn" class="btn w-full" type="button">Maybe later</button>
-                </div>
-            </div>`;
-        document.body.appendChild(modal);
-        document.getElementById("closePremiumModalBtn")?.addEventListener("click", () => modal.classList.add("hidden"));
-        modal.addEventListener("click", (event) => { if (event.target === modal) modal.classList.add("hidden"); });
-    }
-    modal.classList.remove("hidden");
+    showToast("This feature is not included in this local build.", "info");
 }
 
 async function refreshLogs() {

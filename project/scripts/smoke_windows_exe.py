@@ -37,6 +37,10 @@ with log.open('w',encoding='utf-8') as output:
             if url:break
             time.sleep(.3)
         if not url:raise RuntimeError('Executable did not serve the UI within 90 seconds')
+        assert 'sidebarPremiumLink' not in html
+        with opener.open(url+'/static/js/app.js',timeout=10) as response:frontend=response.read().decode()
+        assert 'One setup today, more with Premium' not in frontend
+        assert 'Unlock more automation' not in frontend
         token=re.search(r'name="pyla-ui-token" content="([^"]+)"',html).group(1)
         request=urllib.request.Request(url+'/api/bootstrap',headers={'X-Pyla-UI-Token':token})
         with opener.open(request,timeout=10) as response:payload=json.load(response)
@@ -45,7 +49,7 @@ with log.open('w',encoding='utf-8') as output:
         request=urllib.request.Request(url+'/api/settings/general',data=b'{"max_fps":0}',headers={'X-Pyla-UI-Token':token,'Content-Type':'application/json'},method='PUT')
         try:opener.open(request,timeout=10);raise AssertionError('Invalid FPS was accepted')
         except urllib.error.HTTPError as error:assert error.code==400
-        print(json.dumps({'exe_started':True,'ui_html':True,'bootstrap':True,'invalid_fps_rejected':True,'game_automation_tested':False}))
+        print(json.dumps({'exe_started':True,'ui_html':True,'bootstrap':True,'invalid_fps_rejected':True,'promotion_links_removed':True,'game_automation_tested':False}))
     finally:
         process.terminate()
         try:process.wait(timeout=10)

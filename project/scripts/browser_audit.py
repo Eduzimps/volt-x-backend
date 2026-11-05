@@ -25,6 +25,7 @@ with sync_playwright() as p:
     for view in ('dashboard','queue','playstyles','history','logs','settings'):
         page.locator(f'.nav-item[data-view="{view}"]').click()
         expect(page.locator(f'#view-{view}')).to_be_visible()
+        assert 'premium' not in page.locator('body').inner_text().lower()
         checks.append('navigation:'+view)
         page.screenshot(path=str(out/(view+'.png')),full_page=True)
     selector='input[data-setting-section="general"][data-setting-key="run_for_minutes"]'
@@ -51,13 +52,20 @@ with sync_playwright() as p:
     # Use the actual protected API to remove only the entry created by this check.
     response=page.evaluate("""async(name) => fetch('/api/queue/'+encodeURIComponent(name),{method:'DELETE',headers:{'X-Pyla-UI-Token':document.querySelector('meta[name="pyla-ui-token"]').content}}).then(r=>r.status)""",selected)
     assert response==200
+    page.evaluate('refreshRunningQueue()')
     page.locator('.nav-item[data-view="playstyles"]').click()
     assert page.locator('#playstyleLibrary').inner_text().strip()
     checks.append('playstyles:library')
     page.locator('.nav-item[data-view="dashboard"]').click()
-    page.locator('.premium-locked-action:visible').first.click()
-    expect(page.locator('#premiumFeatureModal')).to_be_visible()
-    checks.append('premium:existing-modal-kept')
+    assert page.locator('#premiumFeatureModal').count()==0
+    assert page.locator('a[href*="/premium"]').count()==0
+    assert page.evaluate('state.bootstrap.auth.premium') is False
+    assert page.evaluate('state.bootstrap.queue.length')==0
+    checks.append('local-edition:no-upsell-entitlement-unchanged')
+    for _ in range(page.evaluate('state.tips.length')):
+        assert 'premium' not in page.locator('#tipContent').inner_text().lower()
+        page.locator('#nextTipBtn').click()
+    checks.append('tips:no-subscription-promotion')
     page.reload(wait_until='domcontentloaded')
     page.wait_for_function('Boolean(state.bootstrap)')
     with page.expect_navigation(wait_until='domcontentloaded'):

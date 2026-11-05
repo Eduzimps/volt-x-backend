@@ -10,6 +10,10 @@ As fontes públicas verificadas foram preservadas em `/workspace/pyla-analysis/r
 6. `utils.py`/`webui/services.py`: importação de estilos valida que o cabeçalho é um objeto com campos textuais/listas de nomes e que existe código. Cabeçalhos JSON de tipos inadequados deixam de contaminar a biblioteca e quebrar o bootstrap. Se um estilo inválido já existir em disco, o carregamento degrada para metadados vazios, sem quebrar a API.
 7. Scripts de build nativo Windows, execução, inventário, smoke test do executável e auditoria do navegador; suíte de regressão e documentação foram adicionados.
 
-Os arquivos da interface (`templates/index.html`, CSS e os três arquivos JavaScript), os modelos e os estilos existentes não foram alterados. Não foram removidos bloqueios premium ou controles de acesso. A dependência de autorizações legítimas de Discord, Telegram, ADB e jogo permanece.
+Até a revisão R2, os arquivos da interface não foram alterados. Na R3, HTML e app.js retiram anúncios, botões de upgrade, cartões demonstrativos de outros perfis e campos indisponíveis da edição local. O aviso de recurso ausente passa a ser informativo, sem pedir assinatura. CSS, traduções, modelos e estilos existentes são preservados. Não foram removidos bloqueios premium ou controles de acesso. A dependência de autorizações legítimas de Discord, Telegram, ADB e jogo permanece.
 
 Os 14 casos de regressão que falhavam na primeira execução passaram depois dessas correções. A inspeção adicional da importação reproduziu outros seis casos que falhavam; os seis também passaram após a correção. A suíte final tem 51 casos. Isso representa os casos testados, não a garantia de ausência de defeitos em toda a aplicação.
+
+## Revisão R3 — interface local sem anúncios
+
+Removidos: link lateral Explore Premium, cartões de perfis bloqueados, dicas comerciais, botão Push All bloqueado, campo de player tag sem backend e opções de ordenação por dados remotos indisponíveis. As funções existentes da fila, configurações e execução continuam. O estado de assinatura permanece `premium=False`; não foram ativados recursos privados nem alteradas autorizações. A mensagem sobre modos não suportados descreve a limitação desta build, sem anunciar um plano pago.

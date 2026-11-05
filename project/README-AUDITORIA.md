@@ -24,7 +24,7 @@ Use `--desktop` para a janela pywebview ou `--web` para o navegador. A janela de
 ./scripts/build-windows.ps1
 ```
 
-O script usa `pyla.spec`, instala as dependências declaradas, compila com PyInstaller e monta `dist/pyla-v0.8.19-auditado-r2-windows.zip`. Ele substitui apenas suas próprias saídas de build. O runtime padrão de inferência declarado pelo projeto é DirectML com CPU disponível; CUDA não é instalado automaticamente por esse script. `setup.py` original permanece para referência, mas não é necessário para essa compilação.
+O script usa `pyla.spec`, instala as dependências declaradas, compila com PyInstaller e monta `dist/pyla-v0.8.19-auditado-r3-windows.zip`. Ele substitui apenas suas próprias saídas de build. O runtime padrão de inferência declarado pelo projeto é DirectML com CPU disponível; CUDA não é instalado automaticamente por esse script. `setup.py` original permanece para referência, mas não é necessário para essa compilação.
 
 ## Auditar em Linux
 

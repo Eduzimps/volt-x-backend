@@ -1569,7 +1569,7 @@
   },
   {
     "path": "scripts/browser_audit.py",
-    "sha256": "771fee7d5b5089f400b08a81e59c2a4952818c8e75df72c0db0920d7a3ce243c",
+    "sha256": "068691b0021d8c4716b2c4863fcb25f64ad25c4240a24dfaada34e1eac3f401d",
     "imports": [
       "json",
       "os",
@@ -1614,7 +1614,7 @@
   },
   {
     "path": "scripts/smoke_windows_exe.py",
-    "sha256": "b9b84d50674af8e84a6289e79def4dcfdf25cce0f4dd7d61659694340fb19063",
+    "sha256": "be4f33e8154fe4be4d5685b704992631c7b93fe4d0868df58304424bcc503180",
     "imports": [
       "json",
       "pathlib",

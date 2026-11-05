@@ -59,14 +59,14 @@ jobs:
           - Nao foram testados janela grafica pywebview, GPU, Android/ADB/scrcpy, partidas ou integracoes externas autenticadas.
           "@
           $Report | Set-Content -Encoding utf8 docs/TESTES-WINDOWS-CI.md
-          .venv-win/Scripts/python.exe scripts/package_source.py dist/pyla-v0.8.19-auditado-r2-fontes.zip
+          .venv-win/Scripts/python.exe scripts/package_source.py dist/pyla-v0.8.19-auditado-r3-fontes.zip
           if ($LASTEXITCODE -ne 0) { throw 'Source packaging failed' }
-          Get-FileHash dist/pyla-v0.8.19-auditado-r2-windows.zip,dist/pyla-v0.8.19-auditado-r2-fontes.zip -Algorithm SHA256 | Format-Table -AutoSize | Out-String | Set-Content dist/SHA256-AUDITORIA-R2.txt
+          Get-FileHash dist/pyla-v0.8.19-auditado-r3-windows.zip,dist/pyla-v0.8.19-auditado-r3-fontes.zip -Algorithm SHA256 | Format-Table -AutoSize | Out-String | Set-Content dist/SHA256-AUDITORIA-R3.txt
       - name: Publicar entregas na Release existente
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          Copy-Item test-results/windows-tests.xml test-results/windows-r2-tests.xml
-          Copy-Item test-results/windows-exe-result.json test-results/windows-r2-exe-result.json
-          gh release upload Pylav0.8.19 dist/pyla-v0.8.19-auditado-r2-windows.zip dist/pyla-v0.8.19-auditado-r2-fontes.zip dist/SHA256-AUDITORIA-R2.txt test-results/windows-r2-tests.xml test-results/windows-r2-exe-result.json --repo "$env:GITHUB_REPOSITORY"
+          Copy-Item test-results/windows-tests.xml test-results/windows-r3-tests.xml
+          Copy-Item test-results/windows-exe-result.json test-results/windows-r3-exe-result.json
+          gh release upload Pylav0.8.19 dist/pyla-v0.8.19-auditado-r3-windows.zip dist/pyla-v0.8.19-auditado-r3-fontes.zip dist/SHA256-AUDITORIA-R3.txt test-results/windows-r3-tests.xml test-results/windows-r3-exe-result.json --repo "$env:GITHUB_REPOSITORY"
           if ($LASTEXITCODE -ne 0) { throw 'Release upload failed' }

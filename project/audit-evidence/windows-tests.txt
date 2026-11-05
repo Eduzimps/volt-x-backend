@@ -1,0 +1,8 @@
+...................................................                      [100%]
+============================== warnings summary ===============================
+tests/test_audit.py::test_local_read_routes[/]
+  D:\a\volt-x-backend\volt-x-backend\project\.venv-win\Lib\site-packages\discord\player.py:30: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+    import audioop
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+51 passed, 1 warning in 27.20s

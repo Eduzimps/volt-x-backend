@@ -9,7 +9,8 @@
     "settings:autosave-and-reload",
     "queue:add-via-button",
     "playstyles:library",
-    "premium:existing-modal-kept",
+    "local-edition:no-upsell-entitlement-unchanged",
+    "tips:no-subscription-promotion",
     "language:Spanish",
     "mobile:menu-and-navigation"
   ],

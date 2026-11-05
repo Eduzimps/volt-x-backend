@@ -8,7 +8,7 @@
 | Histórico | CSV, resumo, sessões, gráficos, filtros por data/brawler e detalhes | Tela carregada e datas inválidas rejeitadas. Nenhuma partida real gerada; gráficos com histórico real e todas as combinações de filtros permanecem pendentes. |
 | Logs | Visualização, atualização e limpeza de buffer | API e tela carregadas; não é benchmark de sessões longas. |
 | Configurações | Geral, combate, temporização, depuração e webhooks; autosave, reset, importação de instalação antiga | Cinco seções e resets via API; autosave com recarga no navegador; validação numérica e sigilo das credenciais testados. Migração de cada versão antiga não testada. |
-| Navegação e visual | Seis telas, ícones, tema, tooltips, barras de rolagem, dicas, carrossel, menu responsivo | Seis telas e menu móvel exercitados; sem erro JavaScript e sem falha de assets locais na execução registrada. CSS/HTML/JS preservados. Nem cada animação, tooltip ou gesto recebeu asserção individual. |
+| Navegação e visual | Seis telas, ícones, tema, tooltips, barras de rolagem, dicas, carrossel, menu responsivo | Seis telas e menu móvel exercitados; sem erro JavaScript e sem falha de assets locais na execução registrada. Tema e CSS preservados; HTML/JS ajustados na R3 para retirar promoções. Nem cada animação, tooltip ou gesto recebeu asserção individual. |
 | Idiomas | Inglês, espanhol, francês, coreano e russo | Mudança para espanhol e recarga testadas. Qualidade de todas as traduções não revisada; português não implementado. |
 | Desktop | Janela pywebview, ícone, tamanho, console e fallback para navegador | Código preservado e build configurado. A abertura gráfica da janela no Windows não integra os testes Linux; consultar relatório Windows para smoke test headless. |
 | ADB/scrcpy | Descoberta de emuladores, scan profundo, captura, toque e reinício do jogo | Código presente. Nenhum dispositivo foi conectado durante esta auditoria. |
@@ -17,6 +17,6 @@
 | Depuração | Preview por memória compartilhada, overlays, clipes e logs de partidas | Implementação presente; captura/visualização/clipes exigem execução real e não foram testados. |
 | Discord | Bot opcional, autorização por ID, comandos de controle e screenshot | Negação sem ID autorizado testada com interação simulada. Comandos reais, conexão e permissões do bot não testados. |
 | Telegram/webhook | Notificações de status/evento e imagem | Credenciais mascaradas/preservadas/limpas na API; entrega real não testada, sem credenciais. |
-| Premium | Elementos promocionais, links externos, recursos visuais bloqueados | Modal existente verificado; estado premium continua falso. Multiprofile, estatísticas remotas e outros recursos comerciais ausentes não foram implementados nem desbloqueados. |
+| Premium | Elementos promocionais, links externos, recursos visuais bloqueados | Na R3, anúncios, modal de upgrade e cartões bloqueados foram removidos da interface; estado premium continua falso. Multiprofile, estatísticas remotas e outros recursos comerciais ausentes não foram implementados nem desbloqueados. |
 
 Os nomes de todas as rotas locais estão em `ROTAS-LOCAIS.json`. O inventário de funções/classes está em `MODULOS.md`/`INVENTARIO.json`. A presença de código não é apresentada como comprovação de funcionamento.

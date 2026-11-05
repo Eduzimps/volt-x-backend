@@ -5,4 +5,4 @@ tests/test_audit.py::test_local_read_routes[/]
     import audioop
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-51 passed, 1 warning in 2.76s
+51 passed, 1 warning in 3.57s

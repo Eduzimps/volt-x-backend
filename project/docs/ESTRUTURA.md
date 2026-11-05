@@ -34,6 +34,7 @@ docs/
   MODELOS-SHA256.json
   MODULOS.md
   ROTAS-LOCAIS.json
+  TESTES-WINDOWS-CI.md
   TESTES.md
 entity_model.py
 images/
