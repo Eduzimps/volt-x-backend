@@ -28,8 +28,9 @@ jobs:
           architecture: x64
       - name: Instalar dependencias e executar testes no Windows
         run: |
+          New-Item -ItemType Directory -Force test-results | Out-Null
           python -m venv .venv-win
-          .venv-win/Scripts/python.exe -m pip install -r requirements-build-windows.txt -r requirements-test.txt
+          .venv-win/Scripts/python.exe -m pip install -r requirements-build-windows.txt -r requirements-test.txt | Tee-Object test-results/install.txt
           if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed' }
           New-Item -ItemType Directory -Force test-results | Out-Null
           .venv-win/Scripts/python.exe -m pytest tests -q --timeout=45 --junitxml=test-results/windows-tests.xml | Tee-Object test-results/windows-tests.txt
@@ -70,3 +71,18 @@ jobs:
           Copy-Item test-results/windows-exe-result.json test-results/windows-r4-exe-result.json
           gh release upload Pylav0.8.19 dist/pyla-v0.8.19-auditado-r4-windows.zip dist/pyla-v0.8.19-auditado-r4-fontes.zip dist/SHA256-AUDITORIA-R4.txt test-results/windows-r4-tests.xml test-results/windows-r4-exe-result.json --repo "$env:GITHUB_REPOSITORY"
           if ($LASTEXITCODE -ne 0) { throw 'Release upload failed' }
+
+      - name: Publicar diagnostico se houver falha
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          New-Item -ItemType Directory -Force diagnostics | Out-Null
+          if (Test-Path test-results) { Copy-Item -Recurse test-results diagnostics/ }
+          if (Test-Path dist/windows-exe-smoke.log) { Copy-Item dist/windows-exe-smoke.log diagnostics/ }
+          if (Test-Path dist/PylaAI-auditado/profiles) {
+            Get-ChildItem dist/PylaAI-auditado/profiles -Filter pyla-profile.log -Recurse | ForEach-Object { Copy-Item $_.FullName (Join-Path diagnostics ($_.Directory.Name + '.log')) }
+          }
+          $Archive = "pyla-r4-diagnostics-$env:GITHUB_RUN_ID.zip"
+          Compress-Archive -Path diagnostics/* -DestinationPath $Archive
+          gh release upload Pylav0.8.19 $Archive --repo "$env:GITHUB_REPOSITORY"
