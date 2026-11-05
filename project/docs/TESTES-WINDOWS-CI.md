@@ -1,8 +1,3 @@
-# Testes nativos Windows no GitHub Actions
+# Windows R4
 
-Executados nesta execucao: https://github.com/Eduzimps/volt-x-backend/actions/runs/42035770309
-
-- Dependencias Windows instaladas e suite pytest concluida sem falhas; contagens no JUnit audit-evidence/windows-tests.xml.
-- Compilacao nativa PyInstaller concluida no Windows x64 com Python 3.11.
-- O executavel compilado foi iniciado de verdade em modo headless: HTML e bootstrap locais responderam; estado publico de licenciamento preservado; FPS zero rejeitado com HTTP 400.
-- Nao foram testados janela grafica pywebview, GPU, Android/ADB/scrcpy, partidas ou integracoes externas autenticadas.
+O workflow desta revisão substitui este arquivo com os resultados do build e teste nativo. Evidências de R3 existentes são históricas; não comprovam a execução R4.

@@ -13,3 +13,6 @@ clips/
 recordings/
 *.log
 *.env
+profiles/
+player-data.json
+.pyla-profile*

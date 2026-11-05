@@ -40,6 +40,9 @@ def parse_cli_args(argv=None):
         action="store_true",
         help="Hide PylaAI's own console and write output to a log file.",
     )
+    parser.add_argument("--profile-root", help=argparse.SUPPRESS)
+    parser.add_argument("--profile-child", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--profile-token", help=argparse.SUPPRESS)
     interface_group = parser.add_mutually_exclusive_group()
     interface_group.add_argument(
         "--desktop",
@@ -99,6 +102,13 @@ def resolve_interface_mode(cli_args, config_path=None):
 # Parse these before the heavy application imports so console hiding happens as
 # early as possible. Imported modules receive harmless default values.
 CLI_ARGS = parse_cli_args(sys.argv[1:] if __name__ == "__main__" else [])
+PROFILE_INSTANCE = None
+if __name__ == "__main__":
+    from profiles import bootstrap_profile
+
+    PROFILE_INSTANCE = bootstrap_profile(
+        CLI_ARGS.profile_root, child=CLI_ARGS.profile_child, token=CLI_ARGS.profile_token,
+    )
 INTERFACE_MODE = resolve_interface_mode(CLI_ARGS)
 CONSOLE_HIDDEN = False
 CONSOLE_LOG_FILE = None
@@ -547,7 +557,14 @@ if __name__ == "__main__":
 
     port = find_open_port()
     app = create_app(pyla_main, start_discord_bot=True)
+    if PROFILE_INSTANCE is not None:
+        @app.after_request
+        def identify_profile_instance(response):
+            response.headers["X-Pyla-Profile-Token"] = PROFILE_INSTANCE.token
+            return response
     local_url = f"http://127.0.0.1:{port}"
+    if PROFILE_INSTANCE is not None:
+        PROFILE_INSTANCE.publish_url(local_url)
     print(f"Starting Pyla web UI at {local_url}")
     if CONSOLE_HIDDEN:
         print(f"Console output is written to {CONSOLE_LOG_FILE}")

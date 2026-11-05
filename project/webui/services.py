@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 from packaging import version
 from werkzeug.utils import secure_filename
+from player_data import PlayerDataService
 
 from utils import (
     api_base_url,
@@ -126,6 +127,7 @@ class WebDataService:
         self._announcements_cache: list[dict[str, Any]] | None = None
         self._queue_items: list[dict[str, Any]] = []
         self._runtime_queue_mtime: float | None = None
+        self.player_data = PlayerDataService(resolve_project_path(""), brawler_catalog=self._resolve_brawler_catalog)
         self._load_startup_queue_if_enabled()
 
     @staticmethod
@@ -443,19 +445,17 @@ class WebDataService:
         general_config = self.get_settings_payload("general")
         target = int(general_config.get("default_trophy_target") or 1000)
         player_tag = str(general_config.get("player_tag", "")).strip().replace("#", "").replace("%23", "")
-        if not player_tag:
-            raise ValueError("Enter a valid player tag before pushing all brawlers.")
-
-        player_info = get_player_info(player_tag)
-        if not self._has_player_values(player_info):
-            raise ValueError(INVALID_PLAYER_TAG_MESSAGE)
+        player_info = self.get_player_info_payload(player_tag or None)
+        if not player_info.get("ok"):
+            raise ValueError(player_info.get("message") or "Import player data or sync with an authorized API key first.")
 
         queue_items = self.get_queue_data()
         existing_by_key = {entry["brawler"].lower(): entry for entry in queue_items}
         below_target: dict[str, dict[str, Any]] = {}
 
         for brawler in self._resolve_brawler_catalog():
-            trophies, win_streak = get_brawler_stats(player_info, brawler)
+            stats = player_info.get("stats", {}).get(brawler, {})
+            trophies, win_streak = stats.get("trophies"), stats.get("win_streak")
             if trophies is None:
                 continue
 
@@ -693,48 +693,15 @@ class WebDataService:
 
         return self.get_settings_payload(section)
 
-    def get_player_info_payload(self, player_tag: str) -> dict[str, Any]:
-        player_tag = (player_tag or "").strip()
-        clean_tag = player_tag.replace("#", "").replace("%23", "")
-        if not clean_tag:
-            return {"ok": True, "player_tag": "", "player_name": "", "stats": {}}
+    def get_player_info_payload(self, player_tag=None, refresh=False):
+        return self.player_data.get(player_tag or None, refresh=refresh)
 
-        player_info = get_player_info(clean_tag)
-        if not self._has_player_values(player_info):
-            return {
-                "ok": False,
-                "message": INVALID_PLAYER_TAG_MESSAGE,
-                "player_tag": clean_tag,
-                "stats": {},
-                "code": "INVALID_PLAYER_TAG",
-            }
-
-        stats = {}
-        brawler_catalog = self._resolve_brawler_catalog()
-        for brawler in brawler_catalog:
-            trophies, win_streak = get_brawler_stats(player_info, brawler)
-            if trophies is None and win_streak is None:
-                continue
-            stats[brawler] = {
-                "trophies": int(trophies or 0),
-                "win_streak": int(win_streak or 0),
-            }
-
-        if brawler_catalog and not stats:
-            return {
-                "ok": False,
-                "message": INVALID_PLAYER_TAG_MESSAGE,
-                "player_tag": clean_tag,
-                "stats": {},
-                "code": "INVALID_PLAYER_TAG",
-            }
-
-        return {
-            "ok": True,
-            "player_tag": clean_tag,
-            "player_name": player_info.get("name", ""),
-            "stats": stats,
-        }
+    def import_player_data(self, payload):
+        self._assert_queue_editable()
+        result = self.player_data.import_snapshot(payload)
+        if result.get("ok"):
+            self.update_settings("general", {"player_tag": result["player_tag"]})
+        return result
 
     @staticmethod
     def _has_player_values(player_info: Any) -> bool:
@@ -967,6 +934,9 @@ class WebDataService:
             },
             "announcements": self.get_announcements_safe(),
             "auth": auth_payload,
+            "capabilities": {"profiles": True, "player_data": True, "push_all": True,
+                             "advanced_debug": True, "discord_queue": True},
+            "player_data": self.get_player_info_payload(),
             "runtime": self.runtime_manager.get_status(),
             "links": {
                 "discord": {
@@ -1028,10 +998,6 @@ class WebDataService:
             for key, value in values.items():
                 if key not in schema:
                     skipped.append(f"{section}.{key}: unsupported setting")
-                    continue
-                # These existing public flags belong to paid-only features.
-                if key in {"advanced_debug_visuals", "record_debug_preview_clips"}:
-                    skipped.append(f"{section}.{key}: not imported")
                     continue
                 try:
                     value_type = schema[key][0]

@@ -17,6 +17,9 @@
 | Depuração | Preview por memória compartilhada, overlays, clipes e logs de partidas | Implementação presente; captura/visualização/clipes exigem execução real e não foram testados. |
 | Discord | Bot opcional, autorização por ID, comandos de controle e screenshot | Negação sem ID autorizado testada com interação simulada. Comandos reais, conexão e permissões do bot não testados. |
 | Telegram/webhook | Notificações de status/evento e imagem | Credenciais mascaradas/preservadas/limpas na API; entrega real não testada, sem credenciais. |
-| Premium | Elementos promocionais, links externos, recursos visuais bloqueados | Na R3, anúncios, modal de upgrade e cartões bloqueados foram removidos da interface; estado premium continua falso. Multiprofile, estatísticas remotas e outros recursos comerciais ausentes não foram implementados nem desbloqueados. |
+| Perfis locais R4 | Criar, abrir e encerrar instâncias com dados separados | Implementação própria; processos reais verificam isolamento. Emuladores simultâneos pendentes. |
+| Estatísticas R4 | Importar JSON, consulta explícita à API oficial, ordenação e Push All | Importação/Push All testados na API; cliente remoto testado com mocks, sem chave real. |
+| Discord R4 | Adicionar/remover/limpar fila e ativar estilo | 45 testes de callbacks e autorização, sem conexão Discord real. |
+| Edição Premium | Backend privado e algoritmos ausentes | Não recuperados. Os recursos locais acima são implementações independentes; assinatura continua falsa. |
 
 Os nomes de todas as rotas locais estão em `ROTAS-LOCAIS.json`. O inventário de funções/classes está em `MODULOS.md`/`INVENTARIO.json`. A presença de código não é apresentada como comprovação de funcionamento.

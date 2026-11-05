@@ -17,3 +17,13 @@ Os 14 casos de regressão que falhavam na primeira execução passaram depois de
 ## Revisão R3 — interface local sem anúncios
 
 Removidos: link lateral Explore Premium, cartões de perfis bloqueados, dicas comerciais, botão Push All bloqueado, campo de player tag sem backend e opções de ordenação por dados remotos indisponíveis. As funções existentes da fila, configurações e execução continuam. O estado de assinatura permanece `premium=False`; não foram ativados recursos privados nem alteradas autorizações. A mensagem sobre modos não suportados descreve a limitação desta build, sem anunciar um plano pago.
+
+
+## R4 — funções próprias e integração
+
+- `profiles.py` cria diretórios isolados, inicia o aplicativo em processos separados, verifica identidade e disponibilidade HTTP e encerra somente após parada confirmada.
+- `main.py` seleciona o perfil antes de importar módulos que leem configuração. O lançador preserva o caminho do Python virtualenv; falha detectada pelo teste de integração real foi corrigida.
+- `player_data.py` valida snapshots, persiste atomicamente e consulta a API oficial somente mediante ação explícita e chave local legítima.
+- `webui` e `static/js/app.js` conectam perfis, importação, ordenação, Push All e depuração à interface existente.
+- `discord_bot.py` implementa comandos de fila e ativação de estilos com autorização por proprietário.
+- Empacotamento exclui perfis, snapshots pessoais e marcadores de execução. Scripts de teste exercitam processos reais e dados sintéticos isolados.

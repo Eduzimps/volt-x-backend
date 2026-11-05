@@ -33,6 +33,7 @@ docs/
   INVENTARIO.json
   MODELOS-SHA256.json
   MODULOS.md
+  RECURSOS-LOCAIS-R4.md
   ROTAS-LOCAIS.json
   TESTES-WINDOWS-CI.md
   TESTES.md
@@ -64,6 +65,7 @@ models/
   tileDetector.json
   tileDetector.onnx
 play.py
+player_data.py
 playstyles/
   default_right.pyla
   default_up.pyla
@@ -72,6 +74,7 @@ playstyles/
   skeleton.py
   team_showdown.pyla
   universal_smart_v5_Slarckvul_Eddition.pyla
+profiles.py
 pyla.spec
 requirements-build-windows.txt
 requirements-linux-audit.txt
@@ -103,7 +106,11 @@ templates/
 tests/
   conftest.py
   test_audit.py
+  test_discord_controls.py
+  test_local_features.py
   test_models.py
+  test_player_data.py
+  test_profiles.py
 time_management.py
 trophy_observer.py
 utils.py

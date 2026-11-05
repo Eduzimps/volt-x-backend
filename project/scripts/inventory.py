@@ -9,7 +9,7 @@ docs=root/'docs'
 docs.mkdir(exist_ok=True)
 modules=[]
 for p in sorted(root.rglob('*.py')):
-    if any(part.startswith('.') or part in {'__pycache__','build','dist','audit-evidence'} for part in p.relative_to(root).parts):continue
+    if any(part.startswith('.') or part in {'__pycache__','build','dist','audit-evidence','profiles','test-results'} for part in p.relative_to(root).parts):continue
     tree=ast.parse(p.read_bytes(),filename=str(p))
     imports=[]
     for node in ast.walk(tree):
@@ -42,7 +42,7 @@ for node in ast.walk(tree):
 tree_lines=['# Estrutura de pastas','','```text']
 for p in sorted(root.rglob('*')):
     rel=p.relative_to(root)
-    if any(part.startswith('.') or part in {'__pycache__','build','dist','audit-evidence'} for part in rel.parts):continue
+    if any(part.startswith('.') or part in {'__pycache__','build','dist','audit-evidence','profiles','test-results'} for part in rel.parts):continue
     if p.is_dir() or len(rel.parts)<=2:
         tree_lines.append('  '*(len(rel.parts)-1)+p.name+('/' if p.is_dir() else ''))
 tree_lines.extend(['```','','Os arquivos individuais de ícones em api/assets foram omitidos desta listagem resumida; estão incluídos na entrega.'])

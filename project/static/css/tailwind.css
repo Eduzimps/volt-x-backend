@@ -2454,3 +2454,8 @@ body.instance-switching .main-content {
         grid-template-columns: 1fr;
     }
 }
+
+/* Independently implemented local profile controls. */
+.local-profiles-card { display: block; }
+.local-profiles-card .profile-entry { margin-top: 12px; }
+.local-profiles-card form { margin-top: 16px; }

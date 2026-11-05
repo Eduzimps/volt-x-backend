@@ -22,3 +22,12 @@ Permanecem sem validação: janela pywebview gráfica, emulador/aparelho, ADB/sc
 51 testes automatizados passaram novamente em Linux. O teste do navegador agora verifica a ausência de anúncios de Premium nas seis telas e em todas as dicas, além de confirmar que a assinatura continua falsa e a fila vazia continua vazia. O teste de modal antigo da R2 foi substituído por essas verificações. O relatório do build Windows desta revisão deve ser consultado separadamente.
 
 A verificação da R3 concluiu 13 casos de navegador, sem erros JavaScript e sem assets locais ausentes. Nenhum teste de navegação ativa o estado premium; ele é explicitamente verificado como falso.
+
+
+## Revisão R4
+
+- 175 testes passaram em Linux, sem falhas; um aviso de depreciação audioop. Incluem perfis/processos isolados, dados de jogador, autorização e comandos Discord, importação/Push All, configurações e modelos ONNX. Evidências: `audit-evidence/r4-tests.xml` e `.txt`.
+- Chromium: 16 verificações concluídas, zero erros JavaScript e zero assets locais ausentes. A extensão R4 importa JSON pelo seletor de arquivo, usa ordenação e Push All, cria perfil pelo formulário, abre a aplicação real em outra aba, confirma fila isolada e encerra pelo botão Stop instance. Evidências e screenshots em `audit-evidence/browser-r4/`.
+- Falha de lançamento usando o Python fora do virtualenv foi reproduzida na integração real e corrigida preservando o caminho do interpretador.
+- Teste Windows nativo executa adicionalmente o .exe principal e um .exe de perfil, importação, Push All e isolamento de configurações. O resultado Windows desta revisão fica em `TESTES-WINDOWS-CI.md` e nos assets `windows-r4-*` da Release.
+- Não foram realizadas partidas, controle de Android/emulador, inferência GPU, abertura gráfica pywebview ou consultas externas com credenciais. Dados sintéticos são identificados como tal.

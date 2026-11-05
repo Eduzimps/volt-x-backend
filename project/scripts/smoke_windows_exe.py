@@ -14,6 +14,7 @@ opener=urllib.request.build_opener(urllib.request.ProxyHandler({}))
 # Only loopback requests go through this opener; no remote network is bypassed.
 with log.open('w',encoding='utf-8') as output:
     process=subprocess.Popen([str(package/'internal/pyla_main.exe'),'--headless'],cwd=package,stdout=output,stderr=subprocess.STDOUT)
+    child_id=None
     try:
         url=None
         deadline=time.monotonic()+90
@@ -49,8 +50,37 @@ with log.open('w',encoding='utf-8') as output:
         request=urllib.request.Request(url+'/api/settings/general',data=b'{"max_fps":0}',headers={'X-Pyla-UI-Token':token,'Content-Type':'application/json'},method='PUT')
         try:opener.open(request,timeout=10);raise AssertionError('Invalid FPS was accepted')
         except urllib.error.HTTPError as error:assert error.code==400
-        print(json.dumps({'exe_started':True,'ui_html':True,'bootstrap':True,'invalid_fps_rejected':True,'promotion_links_removed':True,'game_automation_tested':False}))
+        def api(path, data=None, method=None, base=url, secret=token):
+            headers={'X-Pyla-UI-Token':secret,'Content-Type':'application/json'}
+            request=urllib.request.Request(base+path,data=json.dumps(data).encode() if data is not None else None,headers=headers,method=method)
+            with opener.open(request,timeout=40) as response:return json.load(response)
+        snapshot={'player_tag':'PYLQGR','player_name':'Synthetic audit fixture','stats':{
+            'SHELLY':{'trophies':120,'power_level':5},'COLT':{'trophies':1500,'power_level':7}}}
+        imported=api('/api/player/import',snapshot,'POST')
+        assert imported['ok'] and imported['source']=='imported'
+        pushed=api('/api/queue/push-all',{},'POST')
+        assert pushed['added_count']==1 and pushed['items'][0]['brawler']=='shelly'
+        assert pushed['items'][0]['trophies']==120
+        debug=api('/api/settings/debug',{'debug_view':True,'advanced_debug_visuals':True},'PUT')
+        assert debug['advanced_debug_visuals'] is True
+        child_id=api('/api/profiles',{'name':'Native smoke profile'},'POST')['profile']['id']
+        child=api('/api/profiles/'+child_id+'/launch',{},'POST')['profile']
+        assert child['ready'] and child['running']
+        with opener.open(child['url'],timeout=10) as response:child_html=response.read().decode()
+        child_token=re.search(r'name="pyla-ui-token" content="([^"]+)"',child_html).group(1)
+        child_payload=api('/api/bootstrap',base=child['url'],secret=child_token)
+        assert child_payload['queue']==[] and child_payload['profiles']['enabled'] is False
+        assert child_payload['auth']['premium'] is False
+        api('/api/settings/general',{'run_for_minutes':37},'PUT',base=child['url'],secret=child_token)
+        assert api('/api/bootstrap')['settings']['general']['run_for_minutes']!=37
+        stopped=api('/api/profiles/'+child_id+'/stop',{},'POST')['profile']
+        assert not stopped['running']
+        child_id=None
+        print(json.dumps({'exe_started':True,'ui_html':True,'bootstrap':True,'invalid_fps_rejected':True,'promotion_links_removed':True,'import_snapshot':True,'push_all':True,'debug_settings':True,'real_child_profile_started':True,'profile_queue_and_settings_isolated':True,'profile_stopped':True,'premium_entitlement':False,'game_automation_tested':False,'live_external_api_tested':False}))
     finally:
+        if child_id:
+            try:api('/api/profiles/'+child_id+'/stop',{},'POST')
+            except Exception:pass
         process.terminate()
         try:process.wait(timeout=10)
         except subprocess.TimeoutExpired:process.kill();process.wait(timeout=10)

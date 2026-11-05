@@ -14,6 +14,7 @@ from discord_bot import DiscordBot
 from utils import get_brawler_icon_path, resolve_project_path, resolve_within
 from .runtime import RuntimeManager
 from .services import WebDataService
+from profiles import ProfileManager
 
 
 class _SuppressRuntimeStatusPolling(logging.Filter):
@@ -100,6 +101,8 @@ def create_app(pyla_main, start_discord_bot=False):
     runtime_manager.configure_start_gate(data_service.get_queue_data, data_service.get_auth_state)
     app.config["runtime_manager"] = runtime_manager
     app.config["data_service"] = data_service
+    profile_manager = ProfileManager(resolve_project_path(""))
+    app.config["profile_manager"] = profile_manager
     app.config["discord_bot"] = discord_bot
     app.config["discord_bot_thread"] = None
     app.config["discord_bot_lock"] = threading.Lock()
@@ -179,7 +182,56 @@ def create_app(pyla_main, start_discord_bot=False):
 
     @app.get("/api/bootstrap")
     def bootstrap():
-        return jsonify(data_service.get_bootstrap_payload())
+        payload = data_service.get_bootstrap_payload()
+        payload["profiles"] = {"enabled": profile_manager.enabled, "items": profile_manager.list_profiles()}
+        return jsonify(payload)
+
+    @app.get("/api/profiles")
+    def profiles_list():
+        return jsonify({"ok": True, "enabled": profile_manager.enabled, "items": profile_manager.list_profiles()})
+
+    @app.post("/api/profiles")
+    def profiles_create():
+        payload = request.get_json(silent=True) or {}
+        created = profile_manager.create(payload.get("name", ""))
+        return jsonify({"ok": True, "profile": created, "items": profile_manager.list_profiles()})
+
+    @app.post("/api/profiles/<profile_id>/launch")
+    def profiles_launch(profile_id):
+        result = profile_manager.launch(profile_id, interface_mode="headless", readiness_timeout=10)
+        if not result.get("ready"):
+            return jsonify({"ok": False, "message": "Profile is still starting or failed to start. Use Launch again or inspect its local log.", "profile": result}), 503
+        return jsonify({"ok": True, "profile": result})
+
+    @app.post("/api/profiles/<profile_id>/stop")
+    def profiles_stop(profile_id):
+        result = profile_manager.stop(profile_id)
+        return jsonify({"ok": True, "profile": result})
+
+    @app.get("/api/player")
+    def player_data():
+        return jsonify(data_service.get_player_info_payload(request.args.get("tag")))
+
+    @app.post("/api/player/refresh")
+    def refresh_player_data():
+        payload = request.get_json(silent=True) or {}
+        tag = payload.get("player_tag") or data_service.get_settings_payload("general").get("player_tag")
+        if not tag:
+            raise ValueError("Enter a player tag first.")
+        result = data_service.get_player_info_payload(tag, refresh=True)
+        if result.get("ok"):
+            data_service.update_settings("general", {"player_tag": result["player_tag"]})
+        return jsonify(result)
+
+    @app.post("/api/player/import")
+    def import_player_data():
+        uploaded = request.files.get("file")
+        payload = uploaded.read() if uploaded is not None else request.get_json(silent=True)
+        return jsonify(data_service.import_player_data(payload))
+
+    @app.post("/api/queue/push-all")
+    def push_all_queue():
+        return jsonify({"ok": True, **data_service.push_all_to_default_target()})
 
     @app.errorhandler(KeyError)
     @app.errorhandler(FileNotFoundError)

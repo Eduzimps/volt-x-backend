@@ -1,6 +1,7 @@
 import asyncio
 import time
 from io import BytesIO
+from typing import Literal
 
 from discord import app_commands
 import discord
@@ -374,6 +375,111 @@ class DiscordBot:
                     await interaction.followup.send(message, ephemeral=True)
 
         @self.tree.command(
+            name="add_to_queue",
+            description="Add a brawler to the queue or update its target while the bot is stopped",
+        )
+        @app_commands.describe(
+            brawler="Brawler name from the catalog",
+            target="Nonnegative trophy or win target",
+            target_type="Whether the target counts trophies or wins",
+        )
+        async def add_to_queue(
+            interaction: discord.Interaction,
+            brawler: str,
+            target: int = 1000,
+            target_type: Literal["trophies", "wins"] = "trophies",
+        ):
+            if not await self.require_authorized_user(interaction):
+                return
+
+            try:
+                if target < 0:
+                    raise ValueError("Target must be nonnegative.")
+                if target_type not in {"trophies", "wins"}:
+                    raise ValueError("Target type must be trophies or wins.")
+                name = brawler.strip()
+                catalog = {
+                    item["name"].casefold(): item["name"]
+                    for item in self.data_service.get_brawler_catalog()
+                }
+                if name.casefold() not in catalog:
+                    raise ValueError(f"Unknown brawler '{name}'. Use a name from the brawler catalog.")
+                name = catalog[name.casefold()]
+                queue = self.data_service.get_queue_data()
+                existing = next(
+                    (item for item in queue if item["brawler"].casefold() == name.casefold()),
+                    None,
+                )
+                item = dict(existing) if existing else {"automatically_pick": bool(queue)}
+                item.update(brawler=name, push_until=target, type=target_type)
+                self.data_service.add_or_update_queue_item(item)
+            except (ValueError, KeyError, OSError) as exc:
+                await interaction.response.send_message(f"Failed to update queue: {exc}", ephemeral=True)
+                return
+
+            await interaction.response.send_message(
+                f"{'Updated' if existing else 'Added'} {name}: target {target} {target_type}.",
+                ephemeral=True,
+            )
+
+        @self.tree.command(
+            name="remove_from_queue",
+            description="Remove a brawler from the queue while the bot is stopped",
+        )
+        async def remove_from_queue(interaction: discord.Interaction, brawler: str):
+            if not await self.require_authorized_user(interaction):
+                return
+
+            try:
+                name = brawler.strip()
+                existing = next(
+                    (item for item in self.data_service.get_queue_data()
+                     if item["brawler"].casefold() == name.casefold()),
+                    None,
+                )
+                if existing is None:
+                    raise ValueError(f"Brawler '{name}' is not in the queue.")
+                self.data_service.delete_queue_item(existing["brawler"])
+            except (ValueError, KeyError, OSError) as exc:
+                await interaction.response.send_message(f"Failed to remove brawler: {exc}", ephemeral=True)
+                return
+
+            await interaction.response.send_message(f"Removed {existing['brawler']} from the queue.", ephemeral=True)
+
+        @self.tree.command(
+            name="clear_queue",
+            description="Clear the queue while the bot is stopped",
+        )
+        async def clear_queue(interaction: discord.Interaction):
+            if not await self.require_authorized_user(interaction):
+                return
+
+            try:
+                self.data_service.clear_queue()
+            except (ValueError, KeyError, OSError) as exc:
+                await interaction.response.send_message(f"Failed to clear queue: {exc}", ephemeral=True)
+                return
+
+            await interaction.response.send_message("The queue is now empty.", ephemeral=True)
+
+        @self.tree.command(
+            name="activate_playstyle",
+            description="Activate an installed playstyle by its .pyla filename",
+        )
+        async def activate_playstyle(interaction: discord.Interaction, filename: str):
+            if not await self.require_authorized_user(interaction):
+                return
+
+            try:
+                filename = filename.strip()
+                self.data_service.activate_playstyle(filename)
+            except (ValueError, KeyError, OSError) as exc:
+                await interaction.response.send_message(f"Failed to activate playstyle: {exc}", ephemeral=True)
+                return
+
+            await interaction.response.send_message(f"Activated playstyle {filename}.", ephemeral=True)
+
+        @self.tree.command(
             name="help",
             description="Show the list of available commands",
         )
@@ -381,23 +487,10 @@ class DiscordBot:
             if not await self.require_authorized_user(interaction):
                 return
 
-            commands = {
-                "screenshot": "Get a screenshot of the current game window (only works when the bot is running)",
-                "stop": "Makes the bot stop once it reaches the lobby",
-                "pause": "Makes the bot pause once it reaches the lobby",
-                "start": "Starts the bot if it's not already running",
-                "status": "Returns the current status of the bot",
-                "restart_brawl_stars": "Restarts Brawl Stars if the bot is running",
-                "view_queue": "View the current queue of the bot",
-                "add_to_queue": "**Premium Only:** Add a brawler to the queue remotely.",
-                "remove_from_queue": "**Premium Only:** Remove a brawler from the queue remotely.",
-                "clear_queue": "**Premium Only:** Clear the current queue remotely.",
-                "push_all": "**Premium Only:** Add all brawlers below the target remotely.",
-                "switch_player_tag": "**Premium Only:** Switch the player profile remotely.",
-                "activate_playstyle": "**Premium Only:** Activate a playstyle remotely.",
-            }
-            message = "**Available commands:**\n" + "\n".join(f"- `{command}`: {description}" for command, description in commands.items())
-            message += "\n\n**Unlock Premium:** Visit https://pyla-ai.angelfirela.dev/premium for additional features and commands."
+            message = "**Available commands:**\n" + "\n".join(
+                f"- `/{command.name}`: {command.description}"
+                for command in self.tree.get_commands()
+            )
             await interaction.response.send_message(
                 message,
                 ephemeral=True

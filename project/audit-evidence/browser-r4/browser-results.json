@@ -1,0 +1,24 @@
+{
+  "checks": [
+    "navigation:dashboard",
+    "navigation:queue",
+    "navigation:playstyles",
+    "navigation:history",
+    "navigation:logs",
+    "navigation:settings",
+    "settings:autosave-and-reload",
+    "queue:add-via-button",
+    "playstyles:library",
+    "local-edition:no-upsell-entitlement-unchanged",
+    "tips:no-subscription-promotion",
+    "language:Spanish",
+    "mobile:menu-and-navigation",
+    "player:import-snapshot-sort-and-push-all",
+    "profiles:create-launch-real-child-isolated-queue",
+    "profiles:stop-real-child"
+  ],
+  "page_errors": [],
+  "failed_local_assets": [],
+  "optional_fonts_blocked": true,
+  "game_worker_started": false
+}

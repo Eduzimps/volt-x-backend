@@ -324,7 +324,7 @@ async function bootstrap(cachedPayload = null) {
         setStorageItem("historySort", state.historySort);
     }
     state.selectedBrawler = state.selectedBrawler || payload.queue[0]?.brawler || payload.brawlers[0]?.name || "";
-    state.playerInfo = { ok: false, player_tag: "", player_name: "", stats: {}, message: "Premium player data is unavailable in the public edition." };
+    state.playerInfo = payload.player_data || { ok: false, player_tag: "", player_name: "", stats: {} };
     syncQueueFormState();
     updateChrome();
     renderAll();
@@ -543,29 +543,55 @@ function renderDashboard() {
                 </section>
             </div>
 
-            <section class="panel profile-switcher-card">
-                <div class="profile-switcher-heading">
-                    <div class="profile-heading-copy">
-                        <p class="eyebrow">Profiles</p>
-                        <div class="profile-title-row"><h3 class="panel-title">Local profile</h3></div>
-                    </div>
-                </div>
-                <div class="profile-list premium-profile-list">
-                    <div class="profile-entry is-active">
-                        <div class="profile-entry-main">
-                            <span class="profile-entry-name">Public profile</span>
-                            <span class="profile-entry-details"><span class="profile-runtime-status status-${runtimeState}"><span class="profile-status-dot"></span>${escapeHtml(runtimeLabel(runtime))}</span><span class="profile-port-summary">ADB ${emulatorPort}</span></span>
-                        </div>
-                        <span class="profile-active-label">Active</span>
-                    </div>
-                </div>
-            </section>
+            ${renderLocalProfiles()}
         </div>`;
 
     document.getElementById("browsePlaystylesBtn")?.addEventListener("click", () => setView("playstyles"));
     document.getElementById("goToBrawlersBtn")?.addEventListener("click", () => setView("queue"));
     bindRuntimeButtons();
+    bindLocalProfiles();
     updateSessionTimer();
+}
+
+function renderLocalProfiles() {
+    const profiles = state.bootstrap.profiles || {enabled:false,items:[]};
+    const items = profiles.items.map(profile => `<div class="profile-entry"><div class="profile-entry-main"><strong>${escapeHtml(profile.name)}</strong><span>${profile.running ? "Application open" : "Stopped"} · separate queue and settings</span></div><button class="btn" type="button" data-launch-profile="${escapeHtml(profile.id)}">${profile.running ? "Open" : "Launch"}</button>${profile.running ? `<button class="btn" type="button" data-stop-profile="${escapeHtml(profile.id)}">Stop instance</button>` : ""}</div>`).join("");
+    return `<section class="panel local-profiles-card"><div class="panel-header"><div><p class="eyebrow">Profiles</p><h3>Independent local instances</h3></div><button id="refreshProfilesBtn" class="btn" type="button">Refresh</button></div><p>Choose a different emulator port in each instance before starting the game.</p>${profiles.enabled ? `<form id="createProfileForm" class="queue-toolbar-fields"><input id="newProfileName" aria-label="New profile name" maxlength="80" placeholder="Profile name" required><button class="btn" type="submit">Create profile</button></form>${items || '<p>No additional profiles yet.</p>'}` : '<p>This is an independent profile. Create other profiles from the main application.</p>'}</section>`;
+}
+
+function bindLocalProfiles() {
+    const refresh = async () => {
+        state.bootstrap.profiles = await fetchJSON("/api/profiles");
+        renderDashboard();
+    };
+    document.getElementById("refreshProfilesBtn")?.addEventListener("click", () => refresh().catch(error => showToast(error.message,"error")));
+    document.getElementById("createProfileForm")?.addEventListener("submit", async event => {
+        event.preventDefault();
+        const button=event.target.querySelector('button'); button.disabled=true;
+        try {
+            const result=await fetchJSON("/api/profiles",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:document.getElementById("newProfileName").value})});
+            state.bootstrap.profiles={enabled:true,items:result.items}; renderDashboard();
+            showToast("Profile created. Set its emulator port separately.");
+        } catch(error) {showToast(error.message,"error");button.disabled=false;}
+    });
+    document.querySelectorAll('[data-stop-profile]').forEach(button => button.addEventListener('click',async () => {
+        button.disabled=true;
+        try {
+            await fetchJSON(`/api/profiles/${encodeURIComponent(button.dataset.stopProfile)}/stop`,{method:"POST"});
+            await refresh();
+        } catch(error) {showToast(error.message,"error");button.disabled=false;}
+    }));
+    document.querySelectorAll('[data-launch-profile]').forEach(button => button.addEventListener('click',async () => {
+        const child=window.open('about:blank','_blank'); if(child) child.opener=null;
+        button.disabled=true;
+        try {
+            const result=await fetchJSON(`/api/profiles/${encodeURIComponent(button.dataset.launchProfile)}/launch`,{method:"POST"});
+            const url=new URL(result.profile.url);
+            if(url.protocol!=="http:" || url.hostname!=="127.0.0.1") throw new Error("Invalid profile URL.");
+            if(child) child.location=url.href; else showToast(`Profile ready at ${url.href}. Allow popups to open it automatically.`,"info");
+            await refresh();
+        } catch(error) {if(child)child.close();showToast(error.message,"error");button.disabled=false;}
+    }));
 }
 
 function renderDashboardStats(runtime) {
@@ -652,14 +678,6 @@ function formatSettingValue(field, value) {
 }
 
 function getPlayerPillState() {
-    if (!state.bootstrap?.auth?.premium) {
-        return {
-            className: "",
-            title: "Manual mode",
-            detail: "Enter queue values locally. Live player sync is not included in this build.",
-        };
-    }
-
     if (state.playerTagLoading) {
         return {
             className: "is-loading",
@@ -672,21 +690,22 @@ function getPlayerPillState() {
     if (state.playerInfo.ok === false && cleanTag) {
         return {
             className: "has-error",
-            title: "Player tag is incorrect",
-            detail: "Use your Brawl Stars player tag, not your Supercell ID.",
+            title: "Player data unavailable",
+            detail: state.playerInfo.message || "Import a snapshot or configure official API access.",
         };
     }
     if (state.playerInfo.player_name) {
         return {
             className: "has-player",
             title: state.playerInfo.player_name,
-            detail: `#${cleanTag}`,
+            detail: `#${cleanTag} · ${state.playerInfo.source === "imported" ? "Imported snapshot" : "Official API snapshot"}`,
+
         };
     }
     return {
         className: "",
         title: "Manual mode",
-        detail: "Enter a player tag to pull live trophies and streaks.",
+        detail: "Import player JSON or sync using your official API key.",
     };
 }
 
@@ -694,7 +713,7 @@ function renderQueue() {
     const view = document.getElementById("view-queue");
     const hasValidPlayerInfo = hasLivePlayerStats();
     if (["trophies", "win_streak", "power_level"].includes(state.brawlerSort)
-        && (!state.bootstrap?.auth?.premium || !hasValidPlayerInfo)) {
+        && (!state.bootstrap?.capabilities?.player_data || !hasValidPlayerInfo)) {
         state.brawlerSort = "alphabetical";
         setStorageItem("brawlerSort", state.brawlerSort);
     }
@@ -713,13 +732,9 @@ function renderQueue() {
     const playerPill = getPlayerPillState();
     const defaultTarget = Number(state.bootstrap.settings.general.default_trophy_target || 1000);
     const playOrder = state.bootstrap.settings.general.play_order || "in_order";
-    const dynamicSortsLocked = !state.bootstrap?.auth?.premium;
+    const dynamicSortsLocked = !hasValidPlayerInfo;
     const targetHelp = `<span class="tooltip-anchor push-all-help" data-tooltip="Change this amount by editing Default Trophy Target in Settings." aria-label="How to change the Push All target">?</span>`;
-    const pushAllButton = !state.bootstrap?.auth?.premium
-        ? ""
-        : hasValidPlayerInfo
-            ? `<div class="push-all-control"><button id="pushAllQueueBtn" class="btn" type="button">${iconMarkup("queue")} Push All to ${defaultTarget}</button>${targetHelp}</div>`
-            : "";
+    const pushAllButton = `<div class="push-all-control"><button id="pushAllQueueBtn" class="btn" type="button" ${hasValidPlayerInfo ? "" : "disabled"}>${iconMarkup("queue")} Push All to ${defaultTarget}</button>${targetHelp}</div>`;
     state.brawlerScrollbarCleanup?.();
     state.brawlerScrollbarCleanup = null;
 
@@ -745,10 +760,10 @@ function renderQueue() {
                             <input id="brawlerSearch" type="search" placeholder="Search by brawler name" value="${escapeHtml(state.brawlerSearch)}">
                         </label>
                         ${pushAllButton}
-                        ${state.bootstrap?.auth?.premium ? `                        <label class="input-group ${!state.bootstrap?.auth?.premium ? "disabled-premium" : ""}">
-                            <span>Player Tag ${!state.bootstrap?.auth?.premium ? `<span class="premium-badge">Premium</span>` : ""}</span>
-                            <input id="playerTagInput" type="text" placeholder="${!state.bootstrap?.auth?.premium ? "Locked - Premium Only" : "#PLAYER"}" value="${!state.bootstrap?.auth?.premium ? "" : escapeHtml(formatPlayerTagInput(state.bootstrap.settings.general.player_tag || ""))}" ${!state.bootstrap?.auth?.premium ? "disabled" : ""}>
-                        </label>` : ""}
+                        <label class="input-group"><span>Player Tag</span><input id="playerTagInput" type="text" placeholder="#PLAYER" value="${escapeHtml(formatPlayerTagInput(state.bootstrap.settings.general.player_tag || ""))}"></label>
+                        <button id="syncPlayerDataBtn" class="btn" type="button">Sync official API</button>
+                        <button id="importPlayerDataBtn" class="btn" type="button">Import player JSON</button>
+                        <input id="playerDataFileInput" type="file" accept=".json,application/json" class="hidden">
                     </div>
                     <div class="queue-toolbar-bottom">
                         <div class="toolbar-actions brawler-sort-actions">
@@ -827,7 +842,7 @@ function renderBrawlerCards() {
     return filtered.map((item) => {
         const liveValue = statSort ? getLiveBrawlerStats(item.name)?.[state.brawlerSort] : null;
         const rarityStyle = state.brawlerSort === "rarity" ? ` style="color: ${BRAWLER_RARITIES[item.rarity]?.color || BRAWLER_RARITIES.Unknown.color}"` : "";
-        const value = Number(liveValue ?? 0);
+        const value = liveValue == null ? "—" : Number(liveValue);
         const valueMarkup = state.brawlerSort === "trophies"
             ? `<small class="brawler-sort-value">${value}${trophyIconMarkup()}</small>`
             : state.brawlerSort === "win_streak"
@@ -1780,7 +1795,7 @@ function renderSettings() {
 }
 
 function renderShowAllBrawlersPreference() {
-    if (!state.bootstrap?.auth?.premium) {
+    if (!state.bootstrap?.capabilities?.player_data) {
         return "";
     }
 
@@ -1804,7 +1819,7 @@ function renderSettingField(section, field, value) {
     }
 
     if (field.type === "checkbox") {
-        const isPremiumLocked = !state.bootstrap?.auth?.premium && (field.key === "advanced_debug_visuals" || field.key === "recover_when_wrong_brawler_used");
+        const isPremiumLocked = false; // Local public debug implementation; no subscription lookup.
         return `
             <div class="setting-row check-card check-card-right ${isPremiumLocked ? "setting-locked premium-locked-action" : ""}">
                 <div class="check-info">
@@ -1848,7 +1863,7 @@ function renderSettingField(section, field, value) {
         `;
     }
 
-    const isPremiumLocked = !state.bootstrap?.auth?.premium && field.key === "player_tag";
+    const isPremiumLocked = false;
     const secretStatus = state.bootstrap?.settings?.[section]?._secret_status?.[field.key];
     const configuredSecretPlaceholder = field.secret && secretStatus?.configured
         ? `Configured (${secretStatus.masked || "hidden"}) - enter a replacement`
@@ -1873,9 +1888,6 @@ function renderSettingField(section, field, value) {
 }
 
 function shouldRenderSettingField(section, field) {
-    if (!state.bootstrap?.auth?.premium && ["player_tag", "advanced_debug_visuals", "recover_when_wrong_brawler_used"].includes(field.key)) {
-        return false;
-    }
     if (!field.visibleIf) {
         return true;
     }
@@ -2476,6 +2488,9 @@ function bindQueueEvents() {
     document.getElementById("queueFileInput")?.addEventListener("change", handleQueueImport);
 
     document.getElementById("pushAllQueueBtn")?.addEventListener("click", pushAllToDefaultTarget);
+    document.getElementById("syncPlayerDataBtn")?.addEventListener("click", () => refreshPlayerInfo(document.getElementById("playerTagInput").value, true, true));
+    document.getElementById("importPlayerDataBtn")?.addEventListener("click", () => document.getElementById("playerDataFileInput").click());
+    document.getElementById("playerDataFileInput")?.addEventListener("change", importPlayerSnapshot);
 
     document.getElementById("playOrderSelect")?.addEventListener("change", async (event) => {
         await savePlayOrder(event.target.value);
@@ -2506,7 +2521,7 @@ function bindBrawlerCardEvents() {
 function handleBrawlerSortChange(event) {
     const requestedSort = event.target.value;
     const requiresPlayerData = ["trophies", "win_streak", "power_level"].includes(requestedSort);
-    if (requiresPlayerData && !state.bootstrap?.auth?.premium) {
+    if (requiresPlayerData && !state.bootstrap?.capabilities?.player_data) {
         event.target.value = state.brawlerSort;
         showPremiumModal();
         return;
@@ -2514,7 +2529,7 @@ function handleBrawlerSortChange(event) {
     const hasValidPlayerInfo = hasLivePlayerStats();
     if (requiresPlayerData && !hasValidPlayerInfo) {
         event.target.value = state.brawlerSort;
-        showToast("Enter and validate a player tag before sorting by live brawler stats.", "error");
+        showToast("Enter and validate a player tag before sorting by imported or official brawler stats.", "error");
         return;
     }
     state.brawlerSort = requestedSort;
@@ -2847,12 +2862,12 @@ function setSliderVisual(slider) {
 }
 
 async function commitPlayerTagUpdate(tag) {
-    showPremiumModal();
+    const saved = await fetchJSON("/api/settings/general", { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify({player_tag: cleanPlayerTag(tag)}) });
+    state.bootstrap.settings.general = saved;
+    await refreshPlayerInfo(tag, false, false);
 }
 
-async function updatePlayerTag(tag) {
-    showPremiumModal();
-}
+async function updatePlayerTag(tag) { return commitPlayerTagUpdate(tag); }
 
 function setPlayerTagLoading(isLoading) {
     state.playerTagLoading = isLoading;
@@ -2872,18 +2887,29 @@ function setPlayerTagLoading(isLoading) {
     }
 }
 
-async function refreshPlayerInfo(tag, notify) {
-    state.playerInfo = {
-        ok: false,
-        player_tag: "",
-        player_name: "",
-        stats: {},
-        message: "Live player profiles are available in Premium.",
-    };
-    renderQueue();
-    if (notify) {
-        showPremiumModal();
-    }
+async function refreshPlayerInfo(tag, notify = false, refresh = false) {
+    setPlayerTagLoading(true);
+    try {
+        const result = refresh
+            ? await fetchJSON("/api/player/refresh", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({player_tag:cleanPlayerTag(tag)})})
+            : await fetchJSON(`/api/player?tag=${encodeURIComponent(cleanPlayerTag(tag))}`);
+        state.playerInfo = result;
+        if (notify) showToast(result.ok ? "Player snapshot loaded." : result.message, result.ok ? "success" : "error");
+    } catch (error) { if (notify) showToast(error.message, "error"); }
+    finally { setPlayerTagLoading(false); renderQueue(); }
+}
+
+async function importPlayerSnapshot(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const data = new FormData(); data.append("file", file);
+    try {
+        const result = await fetchJSON("/api/player/import", {method:"POST",body:data});
+        if (!result.ok) throw new Error(result.message || "Player import failed.");
+        state.playerInfo = result;
+        state.bootstrap.settings.general.player_tag = result.player_tag;
+        renderQueue(); showToast("Imported player snapshot. Values are not live.");
+    } catch (error) { showToast(error.message, "error"); }
 }
 
 async function saveQueueItem() {
@@ -2918,7 +2944,12 @@ async function saveQueueItem() {
 }
 
 async function pushAllToDefaultTarget() {
-    showPremiumModal();
+    try {
+        const result = await fetchJSON("/api/queue/push-all", {method:"POST"});
+        state.bootstrap.queue = result.items;
+        renderQueue(); renderDashboard(); renderQueueDock();
+        showToast(`${result.added_count} brawlers below the target added/updated.`);
+    } catch (error) { showToast(error.message, "error"); }
 }
 
 async function savePlayOrder(playOrder) {

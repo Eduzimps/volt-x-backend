@@ -13,6 +13,7 @@ def application(tmp_path, monkeypatch):
     from webui import create_app
     for name in ('cfg', 'playstyles'):
         shutil.copytree(PROJECT/name, tmp_path/name)
+    shutil.copy2(PROJECT/'main.py', tmp_path/'main.py')
     for name in ('templates', 'static', 'images', 'api'):
         if os.name == 'nt':
             shutil.copytree(PROJECT/name, tmp_path/name)

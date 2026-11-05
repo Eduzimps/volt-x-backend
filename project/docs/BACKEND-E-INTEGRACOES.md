@@ -25,7 +25,7 @@ Não há banco MongoDB/SQL obrigatório para a aplicação. Configurações usam
 
 `WebDataService.get_auth_state()` já retorna `required=False`, `authenticated=True`, `premium=False` na edição pública correspondente ao binário. `get_player_info`/`get_brawler_stats` têm retornos vazios nessa edição e não implementam sincronização remota real. Os arquivos ignorados `api/licensing_backend.py`/`api/licensing_bot.py` e o módulo Early Access não estão presentes no código entregue; não se afirma recuperar seus serviços.
 
-Não foi fornecida prova de propriedade desses serviços privados. Portanto não foram removidas restrições premium, forjado estado de assinatura, reproduzidos endpoints de autenticação ou incluídas credenciais. A edição local gratuita legítima foi mantida. Funcionalidades proprietárias indisponíveis foram documentadas; não foram criadas alternativas próprias completas para estatísticas remotas, multiprofile ou pagamento nesta auditoria. Qualquer alternativa futura deve ser implementação independente e testada, com APIs e autorizações legítimas.
+A R4 adiciona alternativas próprias: `profiles.py`, `player_data.py`, APIs locais correspondentes e comandos Discord. O cliente oficial de estatísticas usa `https://api.brawlstars.com/v1/players/%23TAG` e a variável opcional `BRAWL_STARS_API_TOKEN`. Não depende do backend privado Pyla e não altera autenticação/licenciamento. Consulte `RECURSOS-LOCAIS-R4.md` para configuração e limites.
 
 A licença CC BY-NC 4.0 original e a atribuição permanecem. Uma edição sem cobrança é possível sob seus termos; transformar isso em software sem restrições de uso comercial exige autorização adicional do titular. O sistema não foi relicenciado.
 

@@ -24,7 +24,7 @@ Use `--desktop` para a janela pywebview ou `--web` para o navegador. A janela de
 ./scripts/build-windows.ps1
 ```
 
-O script usa `pyla.spec`, instala as dependências declaradas, compila com PyInstaller e monta `dist/pyla-v0.8.19-auditado-r3-windows.zip`. Ele substitui apenas suas próprias saídas de build. O runtime padrão de inferência declarado pelo projeto é DirectML com CPU disponível; CUDA não é instalado automaticamente por esse script. `setup.py` original permanece para referência, mas não é necessário para essa compilação.
+O script usa `pyla.spec`, instala as dependências declaradas, compila com PyInstaller e monta `dist/pyla-v0.8.19-auditado-r4-windows.zip`. Ele substitui apenas suas próprias saídas de build. O runtime padrão de inferência declarado pelo projeto é DirectML com CPU disponível; CUDA não é instalado automaticamente por esse script. `setup.py` original permanece para referência, mas não é necessário para essa compilação.
 
 ## Auditar em Linux
 
@@ -39,7 +39,7 @@ python3.11 -m venv .venv
 CHROMIUM_EXECUTABLE=/usr/bin/chromium .venv/bin/python scripts/browser_audit.py
 ```
 
-O script de navegador modifica temporariamente uma configuração e cria/remove uma entrada de fila. Execute-o apenas em uma cópia de teste, sem dados de produção ou bot em execução. `serve_audit.py` inicia a API e interface reais sem conectar o Discord; não substitui o fluxo de inicialização normal.
+O script de navegador altera configurações de teste, importa um snapshot sintético, modifica a fila e cria/abre/encerra um perfil. Execute-o apenas em uma cópia de teste, sem dados de produção ou bot em execução. `serve_audit.py` inicia a API e interface reais sem conectar o Discord; não substitui o fluxo de inicialização normal.
 
 ## Configuração e dependências
 
@@ -48,3 +48,7 @@ O script de navegador modifica temporariamente uma configuração e cria/remove 
 O modo público local usa o catálogo e os modelos incluídos. Não precisa do backend antigo Volt-X, MongoDB ou de um servidor de pagamentos. A automação requer emulador/aparelho Android com ADB autorizado e o jogo; os comandos ADB/scrcpy e o reconhecimento de tela dependem dessa conexão. O jogo e serviços opcionais continuam dependendo da sua própria infraestrutura e autenticação legítima. Consulte `docs/BACKEND-E-INTEGRACOES.md`.
 
 Os relatórios finais ficam em `docs/` e `audit-evidence/`. Distinguem testes de componentes, testes da interface real e cenários de Windows/dispositivo que não tenham sido executados.
+
+## Recursos próprios da revisão R4
+
+Foram implementados perfis locais independentes, estatísticas por importação de JSON ou API oficial, Push All e controles adicionais de fila/estilo pelo Discord. São implementações novas; não são código recuperado da edição Premium nem ativação de assinatura. Veja `docs/RECURSOS-LOCAIS-R4.md` para uso e limites.

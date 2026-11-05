@@ -357,13 +357,14 @@
   },
   {
     "path": "discord_bot.py",
-    "sha256": "09d51a1ee0c8c7526bd434a79ae80bb2131134679f78eede0339715e7c99df6a",
+    "sha256": "bb72ffa63073b9ee9ca7935fae300a8f43ec85781d8c7f130856cff199f213ba",
     "imports": [
       "PIL",
       "asyncio",
       "discord",
       "io",
       "time",
+      "typing",
       "utils",
       "window_controller"
     ],
@@ -371,127 +372,151 @@
       {
         "name": "DiscordBot",
         "kind": "class",
-        "line": 13,
+        "line": 14,
         "doc": ""
       },
       {
         "name": "DiscordBot.__init__",
         "kind": "function",
-        "line": 14,
+        "line": 15,
         "doc": ""
       },
       {
         "name": "DiscordBot.set_window_controller",
         "kind": "function",
-        "line": 30,
+        "line": 31,
         "doc": ""
       },
       {
         "name": "DiscordBot._extract_discord_id",
         "kind": "function",
-        "line": 34,
+        "line": 35,
         "doc": ""
       },
       {
         "name": "DiscordBot.get_authorized_user_id",
         "kind": "function",
-        "line": 43,
+        "line": 44,
         "doc": ""
       },
       {
         "name": "DiscordBot.get_configured_guild_id",
         "kind": "function",
-        "line": 47,
+        "line": 48,
         "doc": ""
       },
       {
         "name": "DiscordBot.get_configured_guild",
         "kind": "function",
-        "line": 58,
+        "line": 59,
         "doc": ""
       },
       {
         "name": "DiscordBot.require_authorized_user",
         "kind": "function",
-        "line": 65,
+        "line": 66,
         "doc": ""
       },
       {
         "name": "DiscordBot.sync_commands",
         "kind": "function",
-        "line": 83,
+        "line": 84,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_events",
         "kind": "function",
-        "line": 93,
+        "line": 94,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_events.on_ready",
         "kind": "function",
-        "line": 95,
+        "line": 96,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_commands",
         "kind": "function",
-        "line": 111,
+        "line": 112,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_commands.screenshot",
         "kind": "function",
-        "line": 116,
+        "line": 117,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_commands.stop",
         "kind": "function",
-        "line": 148,
+        "line": 149,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_commands.pause",
         "kind": "function",
-        "line": 207,
+        "line": 208,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_commands.start",
         "kind": "function",
-        "line": 273,
+        "line": 274,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_commands.status",
         "kind": "function",
-        "line": 287,
+        "line": 288,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_commands.restart_brawl_stars",
         "kind": "function",
-        "line": 318,
+        "line": 319,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_commands.view_queue",
         "kind": "function",
-        "line": 339,
+        "line": 340,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.add_to_queue",
+        "kind": "function",
+        "line": 386,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.remove_from_queue",
+        "kind": "function",
+        "line": 429,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.clear_queue",
+        "kind": "function",
+        "line": 453,
+        "doc": ""
+      },
+      {
+        "name": "DiscordBot.register_commands.activate_playstyle",
+        "kind": "function",
+        "line": 469,
         "doc": ""
       },
       {
         "name": "DiscordBot.register_commands.help_command",
         "kind": "function",
-        "line": 380,
+        "line": 486,
         "doc": ""
       },
       {
         "name": "DiscordBot.run_bot",
         "kind": "function",
-        "line": 405,
+        "line": 498,
         "doc": ""
       }
     ]
@@ -568,7 +593,7 @@
   },
   {
     "path": "main.py",
-    "sha256": "74209261efb891d0358e20feadeb1d68f16da9a67ce6e446201c3fe275687fa1",
+    "sha256": "1d448874c53d261ec898553dc661d21b249f5ae1e18a4b0b21ef7e7ccf2c2258",
     "imports": [
       "adbutils",
       "argparse",
@@ -579,6 +604,7 @@
       "os",
       "pathlib",
       "play",
+      "profiles",
       "socket",
       "stage_manager",
       "state_finder",
@@ -608,187 +634,187 @@
       {
         "name": "_startup_project_root",
         "kind": "function",
-        "line": 74,
+        "line": 77,
         "doc": ""
       },
       {
         "name": "load_saved_interface_mode",
         "kind": "function",
-        "line": 80,
+        "line": 83,
         "doc": ""
       },
       {
         "name": "resolve_interface_mode",
         "kind": "function",
-        "line": 95,
+        "line": 98,
         "doc": ""
       },
       {
         "name": "apply_play_order",
         "kind": "function",
-        "line": 134,
+        "line": 144,
         "doc": ""
       },
       {
         "name": "pyla_main",
         "kind": "function",
-        "line": 148,
+        "line": 158,
         "doc": ""
       },
       {
         "name": "pyla_main.Main",
         "kind": "class",
-        "line": 149,
+        "line": 159,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.__init__",
         "kind": "function",
-        "line": 150,
+        "line": 160,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.update_trophy_observer",
         "kind": "function",
-        "line": 201,
+        "line": 211,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.load_models",
         "kind": "function",
-        "line": 208,
+        "line": 218,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.restart_brawl_stars",
         "kind": "function",
-        "line": 215,
+        "line": 225,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.should_stop",
         "kind": "function",
-        "line": 232,
+        "line": 242,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.should_pause",
         "kind": "function",
-        "line": 235,
+        "line": 245,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.sleep_interruptible",
         "kind": "function",
-        "line": 238,
+        "line": 248,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.stop_gracefully",
         "kind": "function",
-        "line": 248,
+        "line": 258,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.start_state_checker",
         "kind": "function",
-        "line": 255,
+        "line": 265,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.stop_state_checker",
         "kind": "function",
-        "line": 266,
+        "line": 276,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.set_latest_state",
         "kind": "function",
-        "line": 271,
+        "line": 281,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.get_latest_state",
         "kind": "function",
-        "line": 275,
+        "line": 285,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.handle_detected_state",
         "kind": "function",
-        "line": 279,
+        "line": 289,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.state_checker_loop",
         "kind": "function",
-        "line": 292,
+        "line": 302,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.wait_while_paused",
         "kind": "function",
-        "line": 307,
+        "line": 317,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.handle_pause_request",
         "kind": "function",
-        "line": 329,
+        "line": 339,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.manage_time_tasks",
         "kind": "function",
-        "line": 334,
+        "line": 344,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.check_and_handle_brawl_stars_crash",
         "kind": "function",
-        "line": 355,
+        "line": 365,
         "doc": ""
       },
       {
         "name": "pyla_main.Main.main",
         "kind": "function",
-        "line": 373,
+        "line": 383,
         "doc": ""
       },
       {
         "name": "find_open_port",
         "kind": "function",
-        "line": 489,
+        "line": 499,
         "doc": ""
       },
       {
         "name": "open_browser_later",
         "kind": "function",
-        "line": 498,
+        "line": 508,
         "doc": ""
       },
       {
         "name": "open_browser_later._open",
         "kind": "function",
-        "line": 499,
+        "line": 509,
         "doc": ""
       },
       {
         "name": "stop_on_window_close",
         "kind": "function",
-        "line": 507,
+        "line": 517,
         "doc": "Ask a running bot instance to stop when its desktop window closes."
       },
       {
         "name": "stop_on_window_close._on_close",
         "kind": "function",
-        "line": 509,
+        "line": 519,
         "doc": ""
       },
       {
         "name": "run_interface",
         "kind": "function",
-        "line": 519,
+        "line": 529,
         "doc": "Present the loopback web UI using the selected startup interface."
       }
     ]
@@ -1207,6 +1233,170 @@
     ]
   },
   {
+    "path": "player_data.py",
+    "sha256": "c7a058e0743c1d2124b0d60b9574e9ab3b03c91f8a97dbfea2fc3ba1ab42b24e",
+    "imports": [
+      "__future__",
+      "collections.abc",
+      "datetime",
+      "json",
+      "os",
+      "pathlib",
+      "re",
+      "requests",
+      "tempfile",
+      "threading",
+      "typing",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "_BearerAuth",
+        "kind": "class",
+        "line": 33,
+        "doc": "Explicit auth prevents requests from substituting credentials from netrc."
+      },
+      {
+        "name": "_BearerAuth.__init__",
+        "kind": "function",
+        "line": 36,
+        "doc": ""
+      },
+      {
+        "name": "_BearerAuth.__call__",
+        "kind": "function",
+        "line": 39,
+        "doc": ""
+      },
+      {
+        "name": "PlayerDataError",
+        "kind": "class",
+        "line": 44,
+        "doc": "A safe error whose message never includes an upstream body or credential."
+      },
+      {
+        "name": "PlayerDataError.__init__",
+        "kind": "function",
+        "line": 47,
+        "doc": ""
+      },
+      {
+        "name": "normalize_player_tag",
+        "kind": "function",
+        "line": 54,
+        "doc": "Return an uppercase tag without its optional leading # or %23."
+      },
+      {
+        "name": "OfficialBrawlStarsClient",
+        "kind": "class",
+        "line": 68,
+        "doc": "Only the official, fixed HTTPS host is used; API tokens stay in memory."
+      },
+      {
+        "name": "OfficialBrawlStarsClient.__init__",
+        "kind": "function",
+        "line": 71,
+        "doc": ""
+      },
+      {
+        "name": "OfficialBrawlStarsClient.credential_available",
+        "kind": "function",
+        "line": 75,
+        "doc": ""
+      },
+      {
+        "name": "OfficialBrawlStarsClient.fetch_player",
+        "kind": "function",
+        "line": 78,
+        "doc": ""
+      },
+      {
+        "name": "_parse_json",
+        "kind": "function",
+        "line": 136,
+        "doc": ""
+      },
+      {
+        "name": "_nonempty_name",
+        "kind": "function",
+        "line": 149,
+        "doc": ""
+      },
+      {
+        "name": "_stats_fields",
+        "kind": "function",
+        "line": 155,
+        "doc": ""
+      },
+      {
+        "name": "_snapshot_time",
+        "kind": "function",
+        "line": 176,
+        "doc": ""
+      },
+      {
+        "name": "_normalize_snapshot",
+        "kind": "function",
+        "line": 194,
+        "doc": ""
+      },
+      {
+        "name": "PlayerDataService",
+        "kind": "class",
+        "line": 234,
+        "doc": "Read or replace one profile's snapshot; network refresh is always explicit."
+      },
+      {
+        "name": "PlayerDataService.__init__",
+        "kind": "function",
+        "line": 237,
+        "doc": ""
+      },
+      {
+        "name": "PlayerDataService.credential_available",
+        "kind": "function",
+        "line": 249,
+        "doc": ""
+      },
+      {
+        "name": "PlayerDataService._payload",
+        "kind": "function",
+        "line": 252,
+        "doc": ""
+      },
+      {
+        "name": "PlayerDataService._error_payload",
+        "kind": "function",
+        "line": 271,
+        "doc": ""
+      },
+      {
+        "name": "PlayerDataService.load",
+        "kind": "function",
+        "line": 286,
+        "doc": "Return a validated saved payload, or None; never contacts the network."
+      },
+      {
+        "name": "PlayerDataService._save",
+        "kind": "function",
+        "line": 306,
+        "doc": ""
+      },
+      {
+        "name": "PlayerDataService.import_snapshot",
+        "kind": "function",
+        "line": 326,
+        "doc": "Validate supported JSON and atomically persist it as imported data."
+      },
+      {
+        "name": "PlayerDataService.get",
+        "kind": "function",
+        "line": 333,
+        "doc": "Use saved data unless a caller explicitly requests an official refresh."
+      }
+    ]
+  },
+  {
     "path": "playstyles/skeleton.py",
     "sha256": "5b74fefa1da37a11a33a4082c766c6a652db3066c432e6f9b3f2a73bfbc0228f",
     "imports": [
@@ -1347,6 +1537,240 @@
         "kind": "function",
         "line": 212,
         "doc": "Whether a box is an enemy spawnable. find_closest_enemy remembers this for ability calls:\nnormal attacks are unchanged, but gadget/super/hypercharge are blocked when its target is a spawnable."
+      }
+    ]
+  },
+  {
+    "path": "profiles.py",
+    "sha256": "a3dff0ddf2a2dbf73cba797f173666fc598fd79c5b21fdbbaac97f6c0bc835cb",
+    "imports": [
+      "__future__",
+      "contextlib",
+      "ctypes",
+      "datetime",
+      "fcntl",
+      "html.parser",
+      "json",
+      "msvcrt",
+      "os",
+      "pathlib",
+      "re",
+      "shutil",
+      "subprocess",
+      "sys",
+      "tempfile",
+      "threading",
+      "time",
+      "toml",
+      "unicodedata",
+      "urllib.parse",
+      "urllib.request",
+      "uuid"
+    ],
+    "definitions": [
+      {
+        "name": "_atomic_json",
+        "kind": "function",
+        "line": 43,
+        "doc": ""
+      },
+      {
+        "name": "_FileLock",
+        "kind": "class",
+        "line": 61,
+        "doc": "Small OS lock shared by threads, app processes and profile children."
+      },
+      {
+        "name": "_FileLock.__init__",
+        "kind": "function",
+        "line": 64,
+        "doc": ""
+      },
+      {
+        "name": "_FileLock.acquire",
+        "kind": "function",
+        "line": 68,
+        "doc": ""
+      },
+      {
+        "name": "_FileLock.release",
+        "kind": "function",
+        "line": 90,
+        "doc": ""
+      },
+      {
+        "name": "_profile_id",
+        "kind": "function",
+        "line": 106,
+        "doc": ""
+      },
+      {
+        "name": "_profile_name",
+        "kind": "function",
+        "line": 112,
+        "doc": ""
+      },
+      {
+        "name": "_link_or_copy",
+        "kind": "function",
+        "line": 124,
+        "doc": ""
+      },
+      {
+        "name": "_copy_tree",
+        "kind": "function",
+        "line": 132,
+        "doc": "Copy an explicit resource tree, rejecting links that leave the install."
+      },
+      {
+        "name": "_pid_alive",
+        "kind": "function",
+        "line": 143,
+        "doc": ""
+      },
+      {
+        "name": "_local_url",
+        "kind": "function",
+        "line": 175,
+        "doc": ""
+      },
+      {
+        "name": "_url_ready",
+        "kind": "function",
+        "line": 187,
+        "doc": ""
+      },
+      {
+        "name": "_UITokenParser",
+        "kind": "class",
+        "line": 196,
+        "doc": ""
+      },
+      {
+        "name": "_UITokenParser.handle_starttag",
+        "kind": "function",
+        "line": 199,
+        "doc": ""
+      },
+      {
+        "name": "_stop_runtime",
+        "kind": "function",
+        "line": 205,
+        "doc": "Ask the owned child to stop, and confirm the bot thread has finished."
+      },
+      {
+        "name": "_stop_runtime.fetch",
+        "kind": "function",
+        "line": 212,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager",
+        "kind": "class",
+        "line": 241,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager.__init__",
+        "kind": "function",
+        "line": 242,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager._require_enabled",
+        "kind": "function",
+        "line": 254,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager._locked_registry",
+        "kind": "function",
+        "line": 259,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager._path",
+        "kind": "function",
+        "line": 280,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager._entry",
+        "kind": "function",
+        "line": 286,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager._running",
+        "kind": "function",
+        "line": 294,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager._view",
+        "kind": "function",
+        "line": 310,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager.list_profiles",
+        "kind": "function",
+        "line": 326,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager.get",
+        "kind": "function",
+        "line": 332,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager.create",
+        "kind": "function",
+        "line": 336,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager.launch",
+        "kind": "function",
+        "line": 380,
+        "doc": ""
+      },
+      {
+        "name": "ProfileManager.stop",
+        "kind": "function",
+        "line": 417,
+        "doc": "Stop only a child launched by this manager, never an arbitrary PID."
+      },
+      {
+        "name": "ProfileInstance",
+        "kind": "class",
+        "line": 445,
+        "doc": "Keep the instance lock alive until the child process exits."
+      },
+      {
+        "name": "ProfileInstance.__init__",
+        "kind": "function",
+        "line": 448,
+        "doc": ""
+      },
+      {
+        "name": "ProfileInstance.publish_url",
+        "kind": "function",
+        "line": 460,
+        "doc": ""
+      },
+      {
+        "name": "ProfileInstance.close",
+        "kind": "function",
+        "line": 466,
+        "doc": ""
+      },
+      {
+        "name": "bootstrap_profile",
+        "kind": "function",
+        "line": 470,
+        "doc": "Select cwd and lock a profile before utils or the application is imported."
       }
     ]
   },
@@ -1569,7 +1993,7 @@
   },
   {
     "path": "scripts/browser_audit.py",
-    "sha256": "068691b0021d8c4716b2c4863fcb25f64ad25c4240a24dfaada34e1eac3f401d",
+    "sha256": "a3cea878e3804cd19735ee13a8b62a9d9995f052aa758e785f4c888e8cae6824",
     "imports": [
       "json",
       "os",
@@ -1581,7 +2005,7 @@
   },
   {
     "path": "scripts/inventory.py",
-    "sha256": "e9481c9565f646432ea5f7565f7efa98f8771cac0da8fffdae5fe38476877fef",
+    "sha256": "288d09a0ab6d2cbb24c4de53832873589073ece6558bf249971d8148cb2375b7",
     "imports": [
       "ast",
       "hashlib",
@@ -1592,7 +2016,7 @@
   },
   {
     "path": "scripts/package_source.py",
-    "sha256": "80854ff687952af52d852b1acfe9ce122ab0146d9edb2c43cb262018d621eb22",
+    "sha256": "2d45498b055e4abc720e489a9450e49a38f446765c064ca9ba2d997aeeed578f",
     "imports": [
       "pathlib",
       "sys",
@@ -1614,7 +2038,7 @@
   },
   {
     "path": "scripts/smoke_windows_exe.py",
-    "sha256": "be4f33e8154fe4be4d5685b704992631c7b93fe4d0868df58304424bcc503180",
+    "sha256": "efbb97471809feb3889160d10d9fca03e8be42f4daa25043cfd444ee3b73cb57",
     "imports": [
       "json",
       "pathlib",
@@ -1897,7 +2321,7 @@
   },
   {
     "path": "tests/conftest.py",
-    "sha256": "242c494b84a8f9f5e7720caf1ab4760868fa5b326bb1a8ec2193e53554f16632",
+    "sha256": "5656941ed90e5e593c25abc776db1ed1d274865d910abcb697f2301caa4e8408",
     "imports": [
       "os",
       "pathlib",
@@ -1917,13 +2341,13 @@
       {
         "name": "client",
         "kind": "function",
-        "line": 30,
+        "line": 31,
         "doc": ""
       },
       {
         "name": "headers",
         "kind": "function",
-        "line": 34,
+        "line": 35,
         "doc": ""
       }
     ]
@@ -2074,6 +2498,166 @@
     ]
   },
   {
+    "path": "tests/test_discord_controls.py",
+    "sha256": "b8617b95b32e8ce082b0af496a5da297afa059f284607860a2849f9361c1146d",
+    "imports": [
+      "asyncio",
+      "json",
+      "pytest",
+      "re",
+      "requests",
+      "types",
+      "unittest.mock",
+      "utils"
+    ],
+    "definitions": [
+      {
+        "name": "offline_discord_controls",
+        "kind": "function",
+        "line": 20,
+        "doc": ""
+      },
+      {
+        "name": "offline_discord_controls.unexpected_network",
+        "kind": "function",
+        "line": 24,
+        "doc": ""
+      },
+      {
+        "name": "controls",
+        "kind": "function",
+        "line": 32,
+        "doc": ""
+      },
+      {
+        "name": "invoke_command",
+        "kind": "function",
+        "line": 38,
+        "doc": ""
+      },
+      {
+        "name": "test_control_commands_require_explicit_owner",
+        "kind": "function",
+        "line": 54,
+        "doc": ""
+      },
+      {
+        "name": "test_existing_controls_still_reject_other_users",
+        "kind": "function",
+        "line": 68,
+        "doc": ""
+      },
+      {
+        "name": "test_authorized_queue_crud_persists_and_preserves_progress",
+        "kind": "function",
+        "line": 80,
+        "doc": ""
+      },
+      {
+        "name": "test_authorized_queue_crud_persists_and_preserves_progress.scenario",
+        "kind": "function",
+        "line": 85,
+        "doc": ""
+      },
+      {
+        "name": "test_invalid_add_does_not_mutate_queue",
+        "kind": "function",
+        "line": 120,
+        "doc": ""
+      },
+      {
+        "name": "test_queue_controls_respect_runtime_edit_gate",
+        "kind": "function",
+        "line": 128,
+        "doc": ""
+      },
+      {
+        "name": "test_missing_queue_brawler_reports_failure",
+        "kind": "function",
+        "line": 142,
+        "doc": ""
+      },
+      {
+        "name": "test_authorized_playstyle_activation_persists",
+        "kind": "function",
+        "line": 148,
+        "doc": ""
+      },
+      {
+        "name": "test_invalid_playstyle_cannot_change_selection",
+        "kind": "function",
+        "line": 159,
+        "doc": ""
+      },
+      {
+        "name": "test_expected_service_failures_are_ephemeral",
+        "kind": "function",
+        "line": 173,
+        "doc": ""
+      },
+      {
+        "name": "test_help_matches_registered_commands_without_premium_promises",
+        "kind": "function",
+        "line": 185,
+        "doc": ""
+      },
+      {
+        "name": "test_add_slash_command_exposes_typed_target_and_choices",
+        "kind": "function",
+        "line": 196,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "tests/test_local_features.py",
+    "sha256": "f329a5c1a800f684901a507ee4bd8f84076491dae1d42015e5a84077c8d89f7a",
+    "imports": [
+      "debug_view",
+      "io",
+      "json",
+      "numpy"
+    ],
+    "definitions": [
+      {
+        "name": "test_import_sort_data_and_push_all",
+        "kind": "function",
+        "line": 8,
+        "doc": ""
+      },
+      {
+        "name": "test_refresh_without_key_is_explicit_and_no_network",
+        "kind": "function",
+        "line": 26,
+        "doc": ""
+      },
+      {
+        "name": "test_invalid_import_preserves_previous_snapshot",
+        "kind": "function",
+        "line": 31,
+        "doc": ""
+      },
+      {
+        "name": "test_debug_controls_real_draw_and_roundtrip",
+        "kind": "function",
+        "line": 36,
+        "doc": ""
+      },
+      {
+        "name": "test_profile_api_creation",
+        "kind": "function",
+        "line": 47,
+        "doc": ""
+      },
+      {
+        "name": "test_new_routes_require_session",
+        "kind": "function",
+        "line": 54,
+        "doc": ""
+      }
+    ]
+  },
+  {
     "path": "tests/test_models.py",
     "sha256": "a723a3991da4981eaebc17a9a179431ed200a7581f0aa2591a3f954554a3e57d",
     "imports": [
@@ -2096,6 +2680,408 @@
         "name": "test_actual_detect_pipeline",
         "kind": "function",
         "line": 20,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "tests/test_player_data.py",
+    "sha256": "a7dfd729d34d11462a1d4c48d5e4e3352078853572a55ea03bef1d8d886b6a38",
+    "imports": [
+      "json",
+      "player_data",
+      "pytest",
+      "requests"
+    ],
+    "definitions": [
+      {
+        "name": "prohibit_external_requests",
+        "kind": "function",
+        "line": 12,
+        "doc": ""
+      },
+      {
+        "name": "prohibit_external_requests.forbidden_request",
+        "kind": "function",
+        "line": 13,
+        "doc": ""
+      },
+      {
+        "name": "official_player",
+        "kind": "function",
+        "line": 18,
+        "doc": ""
+      },
+      {
+        "name": "service",
+        "kind": "function",
+        "line": 32,
+        "doc": ""
+      },
+      {
+        "name": "test_official_json_import_maps_catalog_and_preserves_absent_fields",
+        "kind": "function",
+        "line": 40,
+        "doc": ""
+      },
+      {
+        "name": "test_local_format_import_accepts_object_or_json",
+        "kind": "function",
+        "line": 65,
+        "doc": ""
+      },
+      {
+        "name": "test_invalid_import_preserves_previous_snapshot",
+        "kind": "function",
+        "line": 98,
+        "doc": ""
+      },
+      {
+        "name": "test_malformed_tags_rejected_before_any_network",
+        "kind": "function",
+        "line": 110,
+        "doc": ""
+      },
+      {
+        "name": "test_missing_credential_is_explicit_and_never_invents_statistics",
+        "kind": "function",
+        "line": 121,
+        "doc": ""
+      },
+      {
+        "name": "test_cached_snapshot_needs_no_api_credential",
+        "kind": "function",
+        "line": 130,
+        "doc": ""
+      },
+      {
+        "name": "test_profiles_keep_separate_snapshots",
+        "kind": "function",
+        "line": 141,
+        "doc": ""
+      },
+      {
+        "name": "test_corrupt_persisted_snapshot_does_not_become_fake_player_data",
+        "kind": "function",
+        "line": 152,
+        "doc": ""
+      },
+      {
+        "name": "FakeResponse",
+        "kind": "class",
+        "line": 160,
+        "doc": ""
+      },
+      {
+        "name": "FakeResponse.__init__",
+        "kind": "function",
+        "line": 161,
+        "doc": ""
+      },
+      {
+        "name": "FakeResponse.iter_content",
+        "kind": "function",
+        "line": 166,
+        "doc": ""
+      },
+      {
+        "name": "FakeResponse.close",
+        "kind": "function",
+        "line": 169,
+        "doc": ""
+      },
+      {
+        "name": "FakeSession",
+        "kind": "class",
+        "line": 173,
+        "doc": ""
+      },
+      {
+        "name": "FakeSession.__init__",
+        "kind": "function",
+        "line": 174,
+        "doc": ""
+      },
+      {
+        "name": "FakeSession.get",
+        "kind": "function",
+        "line": 179,
+        "doc": ""
+      },
+      {
+        "name": "test_official_request_is_fixed_host_tls_verified_and_bounded",
+        "kind": "function",
+        "line": 186,
+        "doc": ""
+      },
+      {
+        "name": "test_official_bearer_auth_ignores_netrc_and_session_credentials",
+        "kind": "function",
+        "line": 202,
+        "doc": ""
+      },
+      {
+        "name": "test_official_bearer_auth_ignores_netrc_and_session_credentials.forbidden_netrc",
+        "kind": "function",
+        "line": 208,
+        "doc": ""
+      },
+      {
+        "name": "test_missing_official_credential_does_not_request",
+        "kind": "function",
+        "line": 220,
+        "doc": ""
+      },
+      {
+        "name": "test_upstream_status_errors_never_echo_response_or_secret",
+        "kind": "function",
+        "line": 242,
+        "doc": ""
+      },
+      {
+        "name": "test_upstream_network_exception_is_redacted",
+        "kind": "function",
+        "line": 258,
+        "doc": ""
+      },
+      {
+        "name": "test_invalid_upstream_response_is_rejected",
+        "kind": "function",
+        "line": 270,
+        "doc": ""
+      },
+      {
+        "name": "test_refresh_persists_official_snapshot_for_later_offline_use",
+        "kind": "function",
+        "line": 279,
+        "doc": ""
+      },
+      {
+        "name": "test_snapshot_for_different_tag_is_not_reused",
+        "kind": "function",
+        "line": 293,
+        "doc": ""
+      },
+      {
+        "name": "test_import_marks_local_origin_and_discards_unrelated_fields",
+        "kind": "function",
+        "line": 303,
+        "doc": ""
+      },
+      {
+        "name": "test_local_snapshot_timestamp_reports_age",
+        "kind": "function",
+        "line": 314,
+        "doc": ""
+      },
+      {
+        "name": "test_malformed_saved_source_is_reported_safely",
+        "kind": "function",
+        "line": 327,
+        "doc": ""
+      },
+      {
+        "name": "test_failed_atomic_replace_preserves_previous_snapshot",
+        "kind": "function",
+        "line": 343,
+        "doc": ""
+      },
+      {
+        "name": "test_failed_atomic_replace_preserves_previous_snapshot.fail_replace",
+        "kind": "function",
+        "line": 350,
+        "doc": ""
+      }
+    ]
+  },
+  {
+    "path": "tests/test_profiles.py",
+    "sha256": "b6244de6dd47bdd3ce1006be0079ee84d8b87ae32350aed3b79b36c6d1fc7390",
+    "imports": [
+      "concurrent.futures",
+      "json",
+      "os",
+      "pathlib",
+      "profiles",
+      "pytest",
+      "subprocess",
+      "sys",
+      "toml",
+      "urllib.request"
+    ],
+    "definitions": [
+      {
+        "name": "installation",
+        "kind": "function",
+        "line": 20,
+        "doc": ""
+      },
+      {
+        "name": "test_profiles_have_independent_writable_data_and_clear_notifications",
+        "kind": "function",
+        "line": 70,
+        "doc": ""
+      },
+      {
+        "name": "test_immutable_resources_fall_back_to_copy",
+        "kind": "function",
+        "line": 98,
+        "doc": ""
+      },
+      {
+        "name": "test_immutable_resources_fall_back_to_copy.unsupported",
+        "kind": "function",
+        "line": 99,
+        "doc": ""
+      },
+      {
+        "name": "test_profile_names_reject_paths_and_invalid_input",
+        "kind": "function",
+        "line": 107,
+        "doc": ""
+      },
+      {
+        "name": "test_ids_and_duplicate_names_are_validated",
+        "kind": "function",
+        "line": 113,
+        "doc": ""
+      },
+      {
+        "name": "test_child_cannot_create_nested_profiles",
+        "kind": "function",
+        "line": 125,
+        "doc": ""
+      },
+      {
+        "name": "test_symlink_paths_and_recursive_resources_are_rejected",
+        "kind": "function",
+        "line": 137,
+        "doc": ""
+      },
+      {
+        "name": "test_registry_writes_do_not_lose_concurrent_profiles",
+        "kind": "function",
+        "line": 150,
+        "doc": ""
+      },
+      {
+        "name": "test_registry_writes_do_not_lose_concurrent_profiles.create",
+        "kind": "function",
+        "line": 151,
+        "doc": ""
+      },
+      {
+        "name": "FakeProcess",
+        "kind": "class",
+        "line": 159,
+        "doc": ""
+      },
+      {
+        "name": "FakeProcess.__init__",
+        "kind": "function",
+        "line": 160,
+        "doc": ""
+      },
+      {
+        "name": "FakeProcess.poll",
+        "kind": "function",
+        "line": 165,
+        "doc": ""
+      },
+      {
+        "name": "FakeProcess.terminate",
+        "kind": "function",
+        "line": 168,
+        "doc": ""
+      },
+      {
+        "name": "FakeProcess.wait",
+        "kind": "function",
+        "line": 171,
+        "doc": ""
+      },
+      {
+        "name": "test_frozen_launch_uses_private_runtime_and_argv",
+        "kind": "function",
+        "line": 175,
+        "doc": ""
+      },
+      {
+        "name": "test_frozen_launch_uses_private_runtime_and_argv.popen",
+        "kind": "function",
+        "line": 182,
+        "doc": ""
+      },
+      {
+        "name": "test_real_source_children_are_isolated_ready_and_not_duplicated",
+        "kind": "function",
+        "line": 206,
+        "doc": ""
+      },
+      {
+        "name": "test_bootstrap_selects_root_before_app_imports_and_guards_duplicate",
+        "kind": "function",
+        "line": 231,
+        "doc": ""
+      },
+      {
+        "name": "test_readiness_requires_the_child_response_header",
+        "kind": "function",
+        "line": 251,
+        "doc": ""
+      },
+      {
+        "name": "test_readiness_requires_the_child_response_header.Response",
+        "kind": "class",
+        "line": 252,
+        "doc": ""
+      },
+      {
+        "name": "test_readiness_requires_the_child_response_header.Response.__enter__",
+        "kind": "function",
+        "line": 255,
+        "doc": ""
+      },
+      {
+        "name": "test_readiness_requires_the_child_response_header.Response.__exit__",
+        "kind": "function",
+        "line": 257,
+        "doc": ""
+      },
+      {
+        "name": "test_readiness_requires_the_child_response_header.Opener",
+        "kind": "class",
+        "line": 259,
+        "doc": ""
+      },
+      {
+        "name": "test_readiness_requires_the_child_response_header.Opener.open",
+        "kind": "function",
+        "line": 260,
+        "doc": ""
+      },
+      {
+        "name": "test_stop_leaves_an_active_or_unidentified_child_running",
+        "kind": "function",
+        "line": 268,
+        "doc": ""
+      },
+      {
+        "name": "test_stop_leaves_an_active_or_unidentified_child_running.popen",
+        "kind": "function",
+        "line": 270,
+        "doc": ""
+      },
+      {
+        "name": "test_stop_leaves_an_active_or_unidentified_child_running.still_playing",
+        "kind": "function",
+        "line": 277,
+        "doc": ""
+      },
+      {
+        "name": "test_source_launcher_preserves_virtualenv_interpreter",
+        "kind": "function",
+        "line": 285,
         "doc": ""
       }
     ]
@@ -2646,7 +3632,7 @@
   },
   {
     "path": "webui/app.py",
-    "sha256": "7142a85e06cbd1a0371c6c0abc551a22bfe83daee8ffb9584b6c5ae59c112eb7",
+    "sha256": "fca466f8573c6b0b1be79a935e7e53729477fdf21a62d7e5efd1e8ef47dfa089",
     "imports": [
       ".runtime",
       ".services",
@@ -2656,6 +3642,7 @@
       "flask",
       "hmac",
       "logging",
+      "profiles",
       "secrets",
       "threading",
       "urllib.parse",
@@ -2666,283 +3653,331 @@
       {
         "name": "_SuppressRuntimeStatusPolling",
         "kind": "class",
-        "line": 19,
+        "line": 20,
         "doc": ""
       },
       {
         "name": "_SuppressRuntimeStatusPolling.filter",
         "kind": "function",
-        "line": 20,
+        "line": 21,
         "doc": ""
       },
       {
         "name": "_SuppressQueuePolling",
         "kind": "class",
-        "line": 27,
+        "line": 28,
         "doc": ""
       },
       {
         "name": "_SuppressQueuePolling.filter",
         "kind": "function",
-        "line": 28,
+        "line": 29,
         "doc": ""
       },
       {
         "name": "_SuppressAssetsGetting",
         "kind": "class",
-        "line": 35,
+        "line": 36,
         "doc": ""
       },
       {
         "name": "_SuppressAssetsGetting.filter",
         "kind": "function",
-        "line": 36,
+        "line": 37,
         "doc": ""
       },
       {
         "name": "_SupressHistoryPolling",
         "kind": "class",
-        "line": 42,
+        "line": 43,
         "doc": ""
       },
       {
         "name": "_SupressHistoryPolling.filter",
         "kind": "function",
-        "line": 43,
+        "line": 44,
         "doc": ""
       },
       {
         "name": "_SuppressWebhookPutting",
         "kind": "class",
-        "line": 50,
+        "line": 51,
         "doc": ""
       },
       {
         "name": "_SuppressWebhookPutting.filter",
         "kind": "function",
-        "line": 51,
+        "line": 52,
         "doc": ""
       },
       {
         "name": "_configure_request_logging",
         "kind": "function",
-        "line": 57,
+        "line": 58,
         "doc": ""
       },
       {
         "name": "_start_discord_bot_thread",
         "kind": "function",
-        "line": 72,
+        "line": 73,
         "doc": ""
       },
       {
         "name": "create_app",
         "kind": "function",
-        "line": 88,
+        "line": 89,
         "doc": ""
       },
       {
         "name": "create_app._parsed_request_host",
         "kind": "function",
-        "line": 109,
+        "line": 112,
         "doc": ""
       },
       {
         "name": "create_app._is_allowed_origin",
         "kind": "function",
-        "line": 115,
+        "line": 118,
         "doc": ""
       },
       {
         "name": "create_app.protect_local_control_api",
         "kind": "function",
-        "line": 131,
+        "line": 134,
         "doc": ""
       },
       {
         "name": "create_app.add_local_security_headers",
         "kind": "function",
-        "line": 166,
+        "line": 169,
         "doc": ""
       },
       {
         "name": "create_app.index",
         "kind": "function",
-        "line": 174,
+        "line": 177,
         "doc": ""
       },
       {
         "name": "create_app.bootstrap",
         "kind": "function",
-        "line": 181,
+        "line": 184,
         "doc": ""
       },
       {
-        "name": "create_app.handle_known_errors",
+        "name": "create_app.profiles_list",
         "kind": "function",
-        "line": 187,
+        "line": 190,
         "doc": ""
       },
       {
-        "name": "create_app.handle_unexpected_error",
+        "name": "create_app.profiles_create",
         "kind": "function",
-        "line": 192,
+        "line": 194,
         "doc": ""
       },
       {
-        "name": "create_app.get_queue",
+        "name": "create_app.profiles_launch",
         "kind": "function",
-        "line": 199,
+        "line": 200,
         "doc": ""
       },
       {
-        "name": "create_app.add_queue",
+        "name": "create_app.profiles_stop",
         "kind": "function",
-        "line": 203,
+        "line": 207,
         "doc": ""
       },
       {
-        "name": "create_app.import_queue",
+        "name": "create_app.player_data",
         "kind": "function",
-        "line": 209,
+        "line": 212,
         "doc": ""
       },
       {
-        "name": "create_app.update_queue_item",
+        "name": "create_app.refresh_player_data",
         "kind": "function",
-        "line": 215,
+        "line": 216,
         "doc": ""
       },
       {
-        "name": "create_app.reorder_queue",
+        "name": "create_app.import_player_data",
         "kind": "function",
-        "line": 222,
+        "line": 227,
         "doc": ""
       },
       {
-        "name": "create_app.clear_queue",
-        "kind": "function",
-        "line": 228,
-        "doc": ""
-      },
-      {
-        "name": "create_app.delete_queue_item",
+        "name": "create_app.push_all_queue",
         "kind": "function",
         "line": 233,
         "doc": ""
       },
       {
-        "name": "create_app.get_playstyles",
+        "name": "create_app.handle_known_errors",
         "kind": "function",
-        "line": 238,
+        "line": 239,
         "doc": ""
       },
       {
-        "name": "create_app.import_playstyle",
+        "name": "create_app.handle_unexpected_error",
         "kind": "function",
-        "line": 242,
+        "line": 244,
         "doc": ""
       },
       {
-        "name": "create_app.delete_playstyle",
+        "name": "create_app.get_queue",
         "kind": "function",
-        "line": 247,
+        "line": 251,
         "doc": ""
       },
       {
-        "name": "create_app.activate_playstyle",
+        "name": "create_app.add_queue",
         "kind": "function",
-        "line": 252,
+        "line": 255,
         "doc": ""
       },
       {
-        "name": "create_app.import_settings",
+        "name": "create_app.import_queue",
         "kind": "function",
-        "line": 258,
+        "line": 261,
         "doc": ""
       },
       {
-        "name": "create_app.get_adb_devices",
-        "kind": "function",
-        "line": 263,
-        "doc": ""
-      },
-      {
-        "name": "create_app.scan_adb_devices",
+        "name": "create_app.update_queue_item",
         "kind": "function",
         "line": 267,
         "doc": ""
       },
       {
-        "name": "create_app.get_settings",
+        "name": "create_app.reorder_queue",
         "kind": "function",
-        "line": 272,
+        "line": 274,
         "doc": ""
       },
       {
-        "name": "create_app.update_settings",
+        "name": "create_app.clear_queue",
         "kind": "function",
-        "line": 276,
+        "line": 280,
         "doc": ""
       },
       {
-        "name": "create_app.reset_settings",
-        "kind": "function",
-        "line": 281,
-        "doc": ""
-      },
-      {
-        "name": "create_app.runtime_start",
+        "name": "create_app.delete_queue_item",
         "kind": "function",
         "line": 285,
         "doc": ""
       },
       {
+        "name": "create_app.get_playstyles",
+        "kind": "function",
+        "line": 290,
+        "doc": ""
+      },
+      {
+        "name": "create_app.import_playstyle",
+        "kind": "function",
+        "line": 294,
+        "doc": ""
+      },
+      {
+        "name": "create_app.delete_playstyle",
+        "kind": "function",
+        "line": 299,
+        "doc": ""
+      },
+      {
+        "name": "create_app.activate_playstyle",
+        "kind": "function",
+        "line": 304,
+        "doc": ""
+      },
+      {
+        "name": "create_app.import_settings",
+        "kind": "function",
+        "line": 310,
+        "doc": ""
+      },
+      {
+        "name": "create_app.get_adb_devices",
+        "kind": "function",
+        "line": 315,
+        "doc": ""
+      },
+      {
+        "name": "create_app.scan_adb_devices",
+        "kind": "function",
+        "line": 319,
+        "doc": ""
+      },
+      {
+        "name": "create_app.get_settings",
+        "kind": "function",
+        "line": 324,
+        "doc": ""
+      },
+      {
+        "name": "create_app.update_settings",
+        "kind": "function",
+        "line": 328,
+        "doc": ""
+      },
+      {
+        "name": "create_app.reset_settings",
+        "kind": "function",
+        "line": 333,
+        "doc": ""
+      },
+      {
+        "name": "create_app.runtime_start",
+        "kind": "function",
+        "line": 337,
+        "doc": ""
+      },
+      {
         "name": "create_app.runtime_status",
         "kind": "function",
-        "line": 298,
+        "line": 350,
         "doc": ""
       },
       {
         "name": "create_app.runtime_pause",
         "kind": "function",
-        "line": 302,
+        "line": 354,
         "doc": ""
       },
       {
         "name": "create_app.runtime_stop",
         "kind": "function",
-        "line": 308,
+        "line": 360,
         "doc": ""
       },
       {
         "name": "create_app.runtime_logs",
         "kind": "function",
-        "line": 314,
+        "line": 366,
         "doc": ""
       },
       {
         "name": "create_app.clear_runtime_logs",
         "kind": "function",
-        "line": 318,
+        "line": 370,
         "doc": ""
       },
       {
         "name": "create_app.history",
         "kind": "function",
-        "line": 323,
+        "line": 375,
         "doc": ""
       },
       {
         "name": "create_app.brawler_icon",
         "kind": "function",
-        "line": 347,
+        "line": 399,
         "doc": ""
       },
       {
         "name": "create_app.support_asset",
         "kind": "function",
-        "line": 354,
+        "line": 406,
         "doc": ""
       }
     ]
@@ -3121,7 +4156,7 @@
   },
   {
     "path": "webui/services.py",
-    "sha256": "9b0474d4792b0b7819f88c8e85a0c2bd28f9037e04ffc022bb6a8e8c6b42daec",
+    "sha256": "d52370644dbac02d6b860abdb2cba47776173ffb37422d882980bc4e1991585c",
     "imports": [
       "__future__",
       "concurrent.futures",
@@ -3132,6 +4167,7 @@
       "math",
       "packaging",
       "pathlib",
+      "player_data",
       "shutil",
       "socket",
       "threading",
@@ -3146,199 +4182,199 @@
       {
         "name": "get_brawler_stats",
         "kind": "function",
-        "line": 36,
+        "line": 37,
         "doc": ""
       },
       {
         "name": "get_player_info",
         "kind": "function",
-        "line": 40,
+        "line": 41,
         "doc": ""
       },
       {
         "name": "WebDataService",
         "kind": "class",
-        "line": 50,
+        "line": 51,
         "doc": ""
       },
       {
         "name": "WebDataService.__init__",
         "kind": "function",
-        "line": 122,
+        "line": 123,
         "doc": ""
       },
       {
         "name": "WebDataService._bool_from_string",
         "kind": "function",
-        "line": 132,
+        "line": 134,
         "doc": ""
       },
       {
         "name": "WebDataService._deserialize",
         "kind": "function",
-        "line": 135,
+        "line": 137,
         "doc": ""
       },
       {
         "name": "WebDataService._serialize",
         "kind": "function",
-        "line": 160,
+        "line": 162,
         "doc": ""
       },
       {
         "name": "WebDataService._select_fields",
         "kind": "function",
-        "line": 165,
+        "line": 167,
         "doc": ""
       },
       {
         "name": "WebDataService._apply_updates",
         "kind": "function",
-        "line": 172,
+        "line": 174,
         "doc": ""
       },
       {
         "name": "WebDataService._normalize_debug_settings",
         "kind": "function",
-        "line": 197,
+        "line": 199,
         "doc": ""
       },
       {
         "name": "WebDataService._load_config",
         "kind": "function",
-        "line": 203,
+        "line": 205,
         "doc": ""
       },
       {
         "name": "WebDataService._save_config",
         "kind": "function",
-        "line": 206,
+        "line": 208,
         "doc": ""
       },
       {
         "name": "WebDataService._load_startup_queue_if_enabled",
         "kind": "function",
-        "line": 209,
+        "line": 211,
         "doc": ""
       },
       {
         "name": "WebDataService.get_auth_state",
         "kind": "function",
-        "line": 228,
+        "line": 230,
         "doc": ""
       },
       {
         "name": "WebDataService.get_current_version",
         "kind": "function",
-        "line": 235,
+        "line": 237,
         "doc": ""
       },
       {
         "name": "WebDataService.get_latest_version_safe",
         "kind": "function",
-        "line": 238,
+        "line": 240,
         "doc": ""
       },
       {
         "name": "WebDataService.get_warnings",
         "kind": "function",
-        "line": 249,
+        "line": 251,
         "doc": ""
       },
       {
         "name": "WebDataService.get_announcements_safe",
         "kind": "function",
-        "line": 261,
+        "line": 263,
         "doc": ""
       },
       {
         "name": "WebDataService._resolve_brawler_catalog",
         "kind": "function",
-        "line": 275,
+        "line": 277,
         "doc": ""
       },
       {
         "name": "WebDataService.get_brawler_catalog",
         "kind": "function",
-        "line": 281,
+        "line": 283,
         "doc": ""
       },
       {
         "name": "WebDataService.normalize_queue_entry",
         "kind": "function",
-        "line": 291,
+        "line": 293,
         "doc": ""
       },
       {
         "name": "WebDataService._sorted_play_order_enabled",
         "kind": "function",
-        "line": 313,
+        "line": 315,
         "doc": ""
       },
       {
         "name": "WebDataService.get_queue_data",
         "kind": "function",
-        "line": 317,
+        "line": 319,
         "doc": ""
       },
       {
         "name": "WebDataService._assert_queue_editable",
         "kind": "function",
-        "line": 332,
+        "line": 334,
         "doc": ""
       },
       {
         "name": "WebDataService.save_queue_data",
         "kind": "function",
-        "line": 337,
+        "line": 339,
         "doc": ""
       },
       {
         "name": "WebDataService._sync_running_queue_from_saved_file",
         "kind": "function",
-        "line": 343,
+        "line": 345,
         "doc": ""
       },
       {
         "name": "WebDataService.import_queue_file",
         "kind": "function",
-        "line": 361,
+        "line": 363,
         "doc": ""
       },
       {
         "name": "WebDataService.add_or_update_queue_item",
         "kind": "function",
-        "line": 386,
+        "line": 388,
         "doc": ""
       },
       {
         "name": "WebDataService.delete_queue_item",
         "kind": "function",
-        "line": 399,
+        "line": 401,
         "doc": ""
       },
       {
         "name": "WebDataService.clear_queue",
         "kind": "function",
-        "line": 405,
+        "line": 407,
         "doc": ""
       },
       {
         "name": "WebDataService.reorder_queue",
         "kind": "function",
-        "line": 411,
+        "line": 413,
         "doc": ""
       },
       {
         "name": "WebDataService.save_queue_to_file",
         "kind": "function",
-        "line": 436,
+        "line": 438,
         "doc": ""
       },
       {
         "name": "WebDataService.push_all_to_default_target",
         "kind": "function",
-        "line": 441,
+        "line": 443,
         "doc": ""
       },
       {
@@ -3390,69 +4426,75 @@
         "doc": ""
       },
       {
+        "name": "WebDataService.import_player_data",
+        "kind": "function",
+        "line": 699,
+        "doc": ""
+      },
+      {
         "name": "WebDataService._has_player_values",
         "kind": "function",
-        "line": 740,
+        "line": 707,
         "doc": ""
       },
       {
         "name": "WebDataService.get_match_history_payload",
         "kind": "function",
-        "line": 745,
+        "line": 712,
         "doc": ""
       },
       {
         "name": "WebDataService._parse_match_datetime",
         "kind": "function",
-        "line": 904,
+        "line": 871,
         "doc": ""
       },
       {
         "name": "WebDataService._parse_int",
         "kind": "function",
-        "line": 917,
+        "line": 884,
         "doc": ""
       },
       {
         "name": "WebDataService._build_match_history_response",
         "kind": "function",
-        "line": 924,
+        "line": 891,
         "doc": ""
       },
       {
         "name": "WebDataService.get_bootstrap_payload",
         "kind": "function",
-        "line": 957,
+        "line": 924,
         "doc": ""
       },
       {
         "name": "WebDataService.import_settings_from_folder",
         "kind": "function",
-        "line": 996,
+        "line": 966,
         "doc": ""
       },
       {
         "name": "WebDataService.scan_adb_devices",
         "kind": "function",
-        "line": 1067,
+        "line": 1033,
         "doc": ""
       },
       {
         "name": "WebDataService._scan_adb_devices_unlocked",
         "kind": "function",
-        "line": 1075,
+        "line": 1041,
         "doc": ""
       },
       {
         "name": "WebDataService._scan_adb_devices_unlocked.open_port",
         "kind": "function",
-        "line": 1083,
+        "line": 1049,
         "doc": ""
       },
       {
         "name": "WebDataService._scan_adb_devices_unlocked.connect",
         "kind": "function",
-        "line": 1093,
+        "line": 1059,
         "doc": ""
       }
     ]
